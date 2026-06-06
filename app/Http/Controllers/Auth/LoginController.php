@@ -10,7 +10,7 @@ class LoginController extends Controller
 {
     public function showLoginForm()
     {
-        return view('auth.login'); // nanti Blade UI di frontend
+        return view('auth.login'); // Blade UI di frontend
     }
 
     public function login(Request $request)
@@ -22,7 +22,16 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials, $request->remember)) {
             $request->session()->regenerate();
-            return redirect()->intended('/dashboard'); // redirect ke dashboard
+            $user = Auth::user();
+
+            // Redirect sesuai role
+            if ($user->role === 'admin') {
+                return redirect('/admin/dashboard');
+            } elseif ($user->role === 'user') {
+                return redirect('/user/home');
+            } else {
+                return redirect('/guest/welcome');
+            }
         }
 
         return back()->withErrors([
