@@ -12,7 +12,7 @@ class RegisterController extends Controller
     // Tampilkan form register
     public function showRegisterForm()
     {
-        return view('auth.register'); // nanti frontend timmu buat Blade UI
+        return view('auth.register'); // Blade UI untuk form register
     }
 
     // Proses register
@@ -28,6 +28,7 @@ class RegisterController extends Controller
         User::create([
             'nim' => $request->nim,
             'password' => Hash::make($request->password),
+            'role' => 'user', // default role untuk yang register
         ]);
 
         // Redirect ke login setelah berhasil
