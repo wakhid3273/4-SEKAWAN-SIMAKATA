@@ -10,6 +10,7 @@ return new class extends Migration {
             $table->id();
             $table->string('nim')->unique();
             $table->string('password');
+            $table->enum('role', ['admin', 'user', 'guest'])->default('user'); // tambahkan role
             $table->rememberToken();
             $table->timestamps();
         });
