@@ -20,17 +20,17 @@ class LoginController extends Controller
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt($credentials, $request->remember)) {
+        if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
             $user = Auth::user();
 
             // Redirect sesuai role
             if ($user->role === 'admin') {
-                return redirect('/admin/dashboard');
+                return redirect()->route('admin.dashboard');
             } elseif ($user->role === 'user') {
-                return redirect('/user/home');
+                return redirect()->route('user.dashboard');
             } else {
-                return redirect('/guest/welcome');
+                return redirect()->route('dashboard'); // fallback
             }
         }
 
@@ -44,6 +44,8 @@ class LoginController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/login');
+
+        // Redirect ke halaman login
+        return redirect()->route('login.form');
     }
 }

@@ -17,6 +17,7 @@ Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register.form');
 Route::post('/register', [RegisterController::class, 'register'])->name('register');
 
+// Logout pakai POST
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Dashboard Routes (hanya untuk user yang sudah login)
@@ -26,14 +27,15 @@ Route::middleware('auth')->group(function () {
         ->middleware('role:admin')
         ->name('admin.dashboard');
 
+    // Route untuk export PDF
+    Route::get('/admin/dashboard/export', [AdminDashboardController::class, 'export'])
+        ->middleware('role:admin')
+        ->name('admin.dashboard.export');
+
     // User dashboard
     Route::get('/user/dashboard', [UserDashboardController::class, 'index'])
         ->middleware('role:user')
         ->name('user.dashboard');
-
-    // Route untuk export PDF
-    Route::get('/admin/dashboard/export', [AdminDashboardController::class, 'export'])
-        ->name('admin.dashboard.export');
 
     // Default dashboard jika tidak pakai role middleware
     Route::get('/dashboard', function () {
