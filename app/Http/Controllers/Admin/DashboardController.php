@@ -33,13 +33,13 @@ class DashboardController extends Controller
             'SUN' => 25,
         ];
 
-        return response()->json([
-            'total_perusahaan'    => $totalPerusahaan,
-            'total_user_aktif'    => $totalUserAktif,
-            'menunggu_verifikasi' => $menungguVerifikasi,
-            'pending_mahasiswa'   => $pendingMahasiswa,
-            'activity_trends'     => $activityTrends,
-        ]);
+        return view('dashboard.admin', compact(
+            'totalPerusahaan',
+            'totalUserAktif',
+            'menungguVerifikasi',
+            'pendingMahasiswa',
+            'activityTrends'
+        ));
     }
 
     public function export()
