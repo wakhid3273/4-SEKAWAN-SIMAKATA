@@ -33,7 +33,7 @@ Route::middleware('auth')->group(function () {
         ->name('admin.dashboard.export');
 
     // User dashboard
-    Route::get('/user/dashboard', [UserDashboardController::class, 'index'])
+    Route::get('/user/dashboard', [DashboardController::class, 'user'])
         ->middleware('role:user')
         ->name('user.dashboard');
 
