@@ -6,9 +6,14 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\PerusahaanController;
 
 // Landing Page
 Route::get('/', [LandingController::class, 'index'])->name('landing');
+
+// Database Perusahaan (Public)
+Route::get('/perusahaan', [PerusahaanController::class, 'index'])->name('perusahaan.index');
+Route::get('/perusahaan/{id}', [PerusahaanController::class, 'show'])->name('perusahaan.detail');
 
 // Auth Routes
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login.form');
@@ -32,13 +37,31 @@ Route::middleware('auth')->group(function () {
         ->middleware('role:admin')
         ->name('admin.dashboard.export');
 
+    // Admin Perusahaan Management
+    Route::middleware('role:admin')->group(function () {
+        Route::get('/admin/perusahaan', [PerusahaanController::class, 'manage'])->name('admin.perusahaan.index');
+        Route::get('/admin/perusahaan/create', [PerusahaanController::class, 'create'])->name('admin.perusahaan.create');
+        Route::post('/admin/perusahaan', [PerusahaanController::class, 'store'])->name('admin.perusahaan.store');
+        Route::get('/admin/perusahaan/{id}/edit', [PerusahaanController::class, 'edit'])->name('admin.perusahaan.edit');
+        Route::put('/admin/perusahaan/{id}', [PerusahaanController::class, 'update'])->name('admin.perusahaan.update');
+        Route::delete('/admin/perusahaan/{id}', [PerusahaanController::class, 'destroy'])->name('admin.perusahaan.destroy');
+    });
+
     // User dashboard
     Route::get('/user/dashboard', [UserDashboardController::class, 'index'])
         ->middleware('role:user')
         ->name('user.dashboard');
 
-    // Default dashboard jika tidak pakai role middleware
+    // Default dashboard redirect sesuai role
     Route::get('/dashboard', function () {
-        return "Selamat datang di Dashboard SIMAKATA!";
+        $role = trim(auth()->user()->role);
+        if ($role === 'admin') {
+            return redirect()->route('admin.dashboard');
+        } elseif ($role === 'user') {
+            return redirect()->route('user.dashboard');
+        }
+        return abort(403, 'Role tidak dikenali: ' . $role);
     })->name('dashboard');
+
+
 });

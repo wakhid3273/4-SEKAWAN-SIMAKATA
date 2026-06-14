@@ -337,7 +337,7 @@
                 <span class="material-icons-outlined">dashboard</span>
                 <span>Dashboard</span>
             </a>
-            <a href="#" id="nav-perusahaan" class="nav-item {{ request()->routeIs('admin.perusahaan*') ? 'active' : '' }}">
+            <a href="{{ route('admin.perusahaan.index') }}" id="nav-perusahaan" class="nav-item {{ request()->routeIs('admin.perusahaan*') ? 'active' : '' }}">
                 <span class="material-icons-outlined">business</span>
                 <span>Kelola Perusahaan</span>
             </a>

@@ -14,7 +14,7 @@ class DashboardController extends Controller
     public function index()
     {
         $totalPerusahaan    = Company::count();
-        $totalUserAktif     = User::where('status', 'active')->count();
+        $totalUserAktif     = User::count();
         $menungguVerifikasi = FinalProject::where('status', 'pending')->count();
 
         $pendingMahasiswa = FinalProject::with('student')
@@ -47,7 +47,7 @@ class DashboardController extends Controller
         // Ambil data dashboard
         $data = [
             'total_perusahaan'    => Company::count(),
-            'total_user_aktif'    => User::where('status', 'active')->count(),
+            'total_user_aktif'    => User::count(),
             'menunggu_verifikasi' => FinalProject::where('status', 'pending')->count(),
             'pending_mahasiswa'   => FinalProject::with('student')
                                         ->where('status', 'pending')

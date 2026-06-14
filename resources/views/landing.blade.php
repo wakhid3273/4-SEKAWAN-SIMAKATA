@@ -779,7 +779,7 @@
 
     <ul class="navbar-links">
         <li><a href="{{ route('landing') }}" class="active" id="nav-beranda">Beranda</a></li>
-        <li><a href="#features" id="nav-perusahaan">Perusahaan</a></li>
+        <li><a href="{{ route('perusahaan.index') }}" id="nav-perusahaan">Perusahaan</a></li>
         <li><a href="#features" id="nav-judul">Judul TA</a></li>
         <li><a href="#features" id="nav-riwayat">Riwayat</a></li>
     </ul>
@@ -790,10 +790,13 @@
             <a href="{{ route('register.form') }}" class="btn-nav-register" id="btn-navbar-register">Daftar</a>
         @endguest
         @auth
-            <form method="POST" action="{{ route('logout') }}" style="margin:0;">
-                @csrf
-                <button type="submit" class="btn-nav-logout" id="btn-navbar-logout">Logout</button>
-            </form>
+            <div style="display: flex; gap: 10px;">
+                <a href="{{ route('dashboard') }}" class="btn-nav-register" style="background:#1a5fb4; color:#fff; padding:8px 20px; border-radius:8px; font-size:13px; font-weight:600; text-decoration:none;">Dashboard</a>
+                <form method="POST" action="{{ route('logout') }}" style="margin:0;">
+                    @csrf
+                    <button type="submit" class="btn-nav-logout" id="btn-navbar-logout">Logout</button>
+                </form>
+            </div>
         @endauth
     </div>
 
