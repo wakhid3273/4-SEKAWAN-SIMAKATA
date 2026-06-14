@@ -26,9 +26,9 @@ Route::middleware('auth')->group(function () {
         ->name('admin.dashboard');
 
     // User dashboard
-    Route::get('/user/home', [DashboardController::class, 'user'])
+    Route::get('/user/dashboard', [DashboardController::class, 'user'])
         ->middleware('role:user')
-        ->name('user.home');
+        ->name('user.dashboard');
 
     // Default dashboard jika tidak pakai role middleware
     Route::get('/dashboard', function () {
