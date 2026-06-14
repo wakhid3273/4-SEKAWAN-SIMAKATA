@@ -10,6 +10,7 @@ class Perusahaan extends Model
     protected $fillable = [
         'nama',
         'lokasi',
+        'jenis_kegiatan',
         'tentang',
         'website',
         'email',
@@ -20,5 +21,11 @@ class Perusahaan extends Model
     public function magang()
     {
         return $this->hasMany(MahasiswaMagang::class);
+    }
+
+    // Jumlah alumni = total mahasiswa magang yang pernah ada
+    public function getJumlahAlumniAttribute(): int
+    {
+        return $this->magang()->count() ?: $this->jumlah_mahasiswa;
     }
 }

@@ -8,10 +8,42 @@ use App\Models\MahasiswaMagang;
 
 class PerusahaanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $perusahaan = Perusahaan::all();
-        return view('perusahaan.index', compact('perusahaan'));
+        $query = Perusahaan::query();
+
+        // Search by nama or keyword
+        if ($request->filled('q')) {
+            $q = $request->q;
+            $query->where(function ($builder) use ($q) {
+                $builder->where('nama', 'like', "%{$q}%")
+                        ->orWhere('tentang', 'like', "%{$q}%")
+                        ->orWhere('lokasi', 'like', "%{$q}%");
+            });
+        }
+
+        // Filter by lokasi
+        if ($request->filled('lokasi') && $request->lokasi !== 'Semua Lokasi') {
+            $query->where('lokasi', $request->lokasi);
+        }
+
+        // Filter by jenis kegiatan
+        if ($request->filled('jenis_kegiatan') && $request->jenis_kegiatan !== 'Semua Kegiatan') {
+            $query->where('jenis_kegiatan', $request->jenis_kegiatan);
+        }
+
+        // Paginate 6 per halaman (3 kolom x 2 baris sesuai desain)
+        $perusahaan = $query->withCount('magang')->paginate(6)->withQueryString();
+
+        // Data untuk dropdown filter lokasi (unik)
+        $lokasiList    = Perusahaan::select('lokasi')->whereNotNull('lokasi')->distinct()->pluck('lokasi');
+        $jenisKegiatan = ['Magang', 'Kerja Praktik', 'Tugas Akhir'];
+
+        return view('perusahaan.index', compact(
+            'perusahaan',
+            'lokasiList',
+            'jenisKegiatan'
+        ));
     }
 
     public function show($id)
@@ -41,6 +73,7 @@ class PerusahaanController extends Controller
         $request->validate([
             'nama' => 'required',
             'lokasi' => 'required',
+            'jenis_kegiatan' => 'nullable',
             'tentang' => 'nullable',
             'website' => 'nullable|url',
             'email' => 'nullable|email',
@@ -64,6 +97,7 @@ class PerusahaanController extends Controller
         $request->validate([
             'nama' => 'required',
             'lokasi' => 'required',
+            'jenis_kegiatan' => 'nullable',
             'tentang' => 'nullable',
             'website' => 'nullable|url',
             'email' => 'nullable|email',
