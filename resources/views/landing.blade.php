@@ -912,7 +912,7 @@
             </div>
             <div class="feature-text">
                 <h3>Database Perusahaan</h3>
-                <p>Akses ribuan profil perusahaan teknologi ternama yang siap menerima mahasiswa magang dan kerja praktik dengan skema kerja sama yang jelas.</p>
+                <p>Akses puluhan profil perusahaan teknologi ternama yang mahasiswa Informatika pernah magang dan kerja praktik dengan skema kerja sama yang jelas.</p>
             </div>
         </div>
 
@@ -934,7 +934,7 @@
             </div>
             <div class="feature-text">
                 <h3>Rekomendasi Magang</h3>
-                <p>Dapatkan saran tempat magang terbaik berdasarkan minat, nilai, dan kompetensi spesifik Anda di bidang informatika.</p>
+                <p>Dapatkan saran tempat magang terbaik berdasarkan minat dan kompetensi spesifik Anda di bidang informatika.</p>
             </div>
         </div>
 
@@ -945,7 +945,7 @@
             </div>
             <div class="feature-text">
                 <h3>Riwayat Magang</h3>
-                <p>Pantau progress kerja praktik Anda secara real-time dan simpan catatan lengkap riwayat akademik profesional Anda di satu tempat.</p>
+                <p>Tersedia riwayat lengkap magang dan kerja praktik mahasiswa  Informatika yang terintegrasi di satu platform.</p>
             </div>
         </div>
     </div>
