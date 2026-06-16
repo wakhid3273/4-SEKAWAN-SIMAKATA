@@ -322,13 +322,15 @@
         <div class="sidebar-logo">SIMAKATA</div>
 
         {{-- Admin user info --}}
-        <div class="sidebar-user">
-            <div class="sidebar-user-avatar">A</div>
-            <div class="sidebar-user-info">
-                <div class="name">Admin Panel</div>
-                <div class="role">System Administrator</div>
+        <a href="{{ route('admin.profil') }}" style="text-decoration:none;">
+            <div class="sidebar-user" style="cursor:pointer; {{ request()->routeIs('admin.profil') ? 'background: rgba(255,255,255,0.08);' : '' }}">
+                <div class="sidebar-user-avatar">A</div>
+                <div class="sidebar-user-info">
+                    <div class="name">{{ auth()->user()->nama_lengkap ?? 'Admin Panel' }}</div>
+                    <div class="role">System Administrator</div>
+                </div>
             </div>
-        </div>
+        </a>
 
         {{-- Navigation --}}
         <nav class="sidebar-nav">

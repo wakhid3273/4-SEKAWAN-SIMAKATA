@@ -39,6 +39,7 @@ Route::middleware('auth')->group(function () {
 
     // Admin Perusahaan Management
     Route::middleware('role:admin')->group(function () {
+        Route::get('/admin/profil', [\App\Http\Controllers\Admin\ProfileController::class, 'index'])->name('admin.profil');
         Route::get('/admin/perusahaan', [PerusahaanController::class, 'manage'])->name('admin.perusahaan.index');
         Route::get('/admin/perusahaan/create', [PerusahaanController::class, 'create'])->name('admin.perusahaan.create');
         Route::post('/admin/perusahaan', [PerusahaanController::class, 'store'])->name('admin.perusahaan.store');
