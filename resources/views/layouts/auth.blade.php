@@ -322,7 +322,7 @@
             font-size: 13px;
             color: #6b7280;
             cursor: pointer;
-            user-select: none;
+ user-select: none;
         }
 
         /* ===== SUBMIT BUTTON ===== */
