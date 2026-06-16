@@ -52,6 +52,11 @@ Route::middleware('auth')->group(function () {
         ->middleware('role:user')
         ->name('user.dashboard');
 
+    // User Profil
+    Route::get('/user/profil', [\App\Http\Controllers\User\ProfileController::class, 'index'])
+        ->middleware('role:user')
+        ->name('user.profil');
+
     // Default dashboard redirect sesuai role
     Route::get('/dashboard', function () {
         $role = trim(auth()->user()->role);

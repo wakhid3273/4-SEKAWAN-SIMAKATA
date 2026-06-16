@@ -24,6 +24,9 @@ class LoginController extends Controller
             $request->session()->regenerate();
             $user = Auth::user();
 
+            // Update last_login_at
+            $user->update(['last_login_at' => now()]);
+
             // Redirect sesuai role
             if ($user->role === 'admin') {
                 return redirect()->route('admin.dashboard');
