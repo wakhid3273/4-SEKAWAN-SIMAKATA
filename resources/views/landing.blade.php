@@ -854,7 +854,7 @@
                     <a href="{{ route('login.form') }}" class="btn-secondary" id="btn-hero-login">Login</a>
                 @endauth
                 @auth
-                    <a href="{{ route('user.dashboard') }}" class="btn-primary" id="btn-hero-dashboard">
+                    <a href="{{ route('dashboard') }}" class="btn-primary" id="btn-hero-dashboard">
                         <span class="material-icons-outlined">dashboard</span>
                         Ke Dashboard
                     </a>
@@ -965,7 +965,7 @@
                 <a href="#" class="btn-cta-secondary" id="btn-cta-hubungi">Hubungi Admin</a>
             @endguest
             @auth
-                <a href="{{ route('user.dashboard') }}" class="btn-cta-primary" id="btn-cta-dashboard">Ke Dashboard Saya</a>
+                <a href="{{ route('dashboard') }}" class="btn-cta-primary" id="btn-cta-dashboard">Ke Dashboard Saya</a>
                 <form method="POST" action="{{ route('logout') }}" style="margin:0;">
                     @csrf
                     <button type="submit" class="btn-cta-secondary" id="btn-cta-logout">Logout</button>
