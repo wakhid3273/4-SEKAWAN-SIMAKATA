@@ -4,19 +4,8 @@
 
 @section('extra_styles')
 <style>
-    /* ===== BROWN PALETTE VARS ===== */
-    :root {
-        --brown-primary: #7c4a1e;
-        --brown-dark:    #5a330f;
-        --brown-medium:  #a0522d;
-        --brown-light:   #f5ebe0;
-        --brown-badge:   #ede0d4;
-        --brown-badge-text: #7c4a1e;
-    }
-
-    /* ===== PROFILE HEADER ===== */
     .profile-header-card {
-        background: linear-gradient(135deg, #5a330f 0%, #a0522d 100%);
+        background: linear-gradient(135deg, #0a3d6b 0%, #1a5fb4 100%);
         border-radius: 16px;
         padding: 30px;
         display: flex;
@@ -34,18 +23,7 @@
         right: -50px;
         width: 200px;
         height: 200px;
-        background: rgba(255,255,255,0.08);
-        border-radius: 50%;
-        pointer-events: none;
-    }
-    .profile-header-card::before {
-        content: '';
-        position: absolute;
-        bottom: -60px;
-        right: 120px;
-        width: 150px;
-        height: 150px;
-        background: rgba(255,255,255,0.05);
+        background: rgba(255,255,255,0.1);
         border-radius: 50%;
         pointer-events: none;
     }
@@ -105,7 +83,6 @@
         background: #e59a05;
     }
 
-    /* ===== STATS ===== */
     .stats-grid-profile {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
@@ -121,8 +98,8 @@
     .stat-box-icon {
         width: 32px;
         height: 32px;
-        background: var(--brown-light);
-        color: var(--brown-primary);
+        background: #f3f6fb;
+        color: #1a5fb4;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -152,7 +129,6 @@
         gap: 4px;
     }
 
-    /* ===== CONTENT GRID ===== */
     .content-grid {
         display: grid;
         grid-template-columns: 1fr 1.5fr;
@@ -173,10 +149,10 @@
         gap: 10px;
         font-weight: 700;
         color: #111827;
-        background: #faf7f4;
+        background: #f8fafc;
     }
     .info-card-header .material-icons-outlined {
-        color: var(--brown-primary);
+        color: #1a5fb4;
         font-size: 20px;
     }
     .info-card-body {
@@ -202,22 +178,14 @@
     .info-badge {
         display: inline-block;
         padding: 4px 10px;
-        background: var(--brown-badge);
-        color: var(--brown-badge-text);
+        background: #e8f0fb;
+        color: #1a5fb4;
         border-radius: 6px;
         font-size: 12px;
         font-weight: 600;
         margin-top: 4px;
     }
 
-    /* ===== SECURITY CARD ===== */
-    .security-last-login {
-        font-size: 11px;
-        color: var(--brown-primary);
-        font-weight: 600;
-    }
-
-    /* ===== ACTIVITY TIMELINE ===== */
     .activity-list {
         display: flex;
         flex-direction: column;
@@ -239,7 +207,7 @@
         gap: 16px;
         position: relative;
         z-index: 1;
-        background: #faf7f4;
+        background: #f8fafc;
         padding: 16px;
         border-radius: 12px;
         border: 1px solid #e5e7eb;
@@ -254,9 +222,9 @@
         color: white;
         flex-shrink: 0;
     }
-    .activity-icon.blue    { background: var(--brown-primary); }
-    .activity-icon.amber   { background: #d97706; }
-    .activity-icon.slate   { background: #64748b; }
+    .activity-icon.blue  { background: #1a5fb4; }
+    .activity-icon.amber { background: #d97706; }
+    .activity-icon.slate { background: #64748b; }
     .activity-content {
         flex: 1;
     }
@@ -289,21 +257,9 @@
         border-radius: 4px;
         letter-spacing: 0.5px;
     }
-    .status-success  { background: #dcfce7; color: #15803d; }
-    .status-update   { background: #e0f2fe; color: #0369a1; }
+    .status-success { background: #dcfce7; color: #15803d; }
+    .status-update  { background: #e0f2fe; color: #0369a1; }
 
-    /* ===== ACTIVITY "LIHAT SEMUA" LINK ===== */
-    .activity-view-all {
-        font-size: 12px;
-        color: var(--brown-primary);
-        font-weight: 600;
-        text-decoration: none;
-    }
-    .activity-view-all:hover {
-        color: var(--brown-dark);
-    }
-
-    /* ===== RESPONSIVE ===== */
     @media (max-width: 900px) {
         .content-grid          { grid-template-columns: 1fr; }
         .stats-grid-profile    { grid-template-columns: repeat(2, 1fr); }
@@ -325,7 +281,7 @@
 <div class="profile-header-card">
     <div class="profile-avatar-wrapper">
         <img
-            src="https://ui-avatars.com/api/?name={{ urlencode($admin->nama_lengkap ?? 'Admin') }}&background=7c4a1e&color=fff&size=128"
+            src="https://ui-avatars.com/api/?name={{ urlencode($admin->nama_lengkap ?? 'Admin') }}&background=0D8ABC&color=fff&size=128"
             alt="Avatar"
             class="profile-avatar"
         >
@@ -447,7 +403,7 @@
                 <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #f3f4f6; padding-bottom:12px; margin-bottom:12px;">
                     <div>
                         <div style="font-weight:600; font-size:13px;">Terakhir Login</div>
-                        <div class="security-last-login">
+                        <div style="font-size:11px; color:#1a5fb4; font-weight:600;">
                             {{ $admin->last_login_at ? $admin->last_login_at->diffForHumans() : '2 Jam yang lalu' }}
                         </div>
                     </div>
@@ -479,7 +435,7 @@
                     <span class="material-icons-outlined">history</span>
                     Riwayat Aktivitas Terbaru
                 </div>
-                <a href="#" class="activity-view-all">Lihat Semua</a>
+                <a href="#" style="font-size:12px; color:#1a5fb4; font-weight:600; text-decoration:none;">Lihat Semua</a>
             </div>
             <div class="info-card-body">
                 <div class="activity-list">
