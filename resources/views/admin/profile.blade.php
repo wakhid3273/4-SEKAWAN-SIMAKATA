@@ -4,8 +4,19 @@
 
 @section('extra_styles')
 <style>
+    /* ===== BROWN PALETTE VARS ===== */
+    :root {
+        --brown-primary: #7c4a1e;
+        --brown-dark:    #5a330f;
+        --brown-medium:  #a0522d;
+        --brown-light:   #f5ebe0;
+        --brown-badge:   #ede0d4;
+        --brown-badge-text: #7c4a1e;
+    }
+
+    /* ===== PROFILE HEADER ===== */
     .profile-header-card {
-        background: linear-gradient(135deg, #0a3d6b 0%, #1a5fb4 100%);
+        background: linear-gradient(135deg, #5a330f 0%, #a0522d 100%);
         border-radius: 16px;
         padding: 30px;
         display: flex;
@@ -23,7 +34,18 @@
         right: -50px;
         width: 200px;
         height: 200px;
-        background: rgba(255,255,255,0.1);
+        background: rgba(255,255,255,0.08);
+        border-radius: 50%;
+        pointer-events: none;
+    }
+    .profile-header-card::before {
+        content: '';
+        position: absolute;
+        bottom: -60px;
+        right: 120px;
+        width: 150px;
+        height: 150px;
+        background: rgba(255,255,255,0.05);
         border-radius: 50%;
         pointer-events: none;
     }
@@ -83,6 +105,7 @@
         background: #e59a05;
     }
 
+    /* ===== STATS ===== */
     .stats-grid-profile {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
@@ -98,8 +121,8 @@
     .stat-box-icon {
         width: 32px;
         height: 32px;
-        background: #f3f6fb;
-        color: #1a5fb4;
+        background: var(--brown-light);
+        color: var(--brown-primary);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -129,6 +152,7 @@
         gap: 4px;
     }
 
+    /* ===== CONTENT GRID ===== */
     .content-grid {
         display: grid;
         grid-template-columns: 1fr 1.5fr;
@@ -149,10 +173,10 @@
         gap: 10px;
         font-weight: 700;
         color: #111827;
-        background: #f8fafc;
+        background: #faf7f4;
     }
     .info-card-header .material-icons-outlined {
-        color: #1a5fb4;
+        color: var(--brown-primary);
         font-size: 20px;
     }
     .info-card-body {
@@ -178,14 +202,22 @@
     .info-badge {
         display: inline-block;
         padding: 4px 10px;
-        background: #e8f0fb;
-        color: #1a5fb4;
+        background: var(--brown-badge);
+        color: var(--brown-badge-text);
         border-radius: 6px;
         font-size: 12px;
         font-weight: 600;
         margin-top: 4px;
     }
 
+    /* ===== SECURITY CARD ===== */
+    .security-last-login {
+        font-size: 11px;
+        color: var(--brown-primary);
+        font-weight: 600;
+    }
+
+    /* ===== ACTIVITY TIMELINE ===== */
     .activity-list {
         display: flex;
         flex-direction: column;
@@ -207,7 +239,7 @@
         gap: 16px;
         position: relative;
         z-index: 1;
-        background: #f8fafc;
+        background: #faf7f4;
         padding: 16px;
         border-radius: 12px;
         border: 1px solid #e5e7eb;
@@ -222,9 +254,9 @@
         color: white;
         flex-shrink: 0;
     }
-    .activity-icon.blue { background: #1a5fb4; }
-    .activity-icon.amber { background: #d97706; }
-    .activity-icon.slate { background: #64748b; }
+    .activity-icon.blue    { background: var(--brown-primary); }
+    .activity-icon.amber   { background: #d97706; }
+    .activity-icon.slate   { background: #64748b; }
     .activity-content {
         flex: 1;
     }
@@ -257,14 +289,26 @@
         border-radius: 4px;
         letter-spacing: 0.5px;
     }
-    .status-success { background: #dcfce7; color: #15803d; }
-    .status-update { background: #e0f2fe; color: #0369a1; }
-    
+    .status-success  { background: #dcfce7; color: #15803d; }
+    .status-update   { background: #e0f2fe; color: #0369a1; }
+
+    /* ===== ACTIVITY "LIHAT SEMUA" LINK ===== */
+    .activity-view-all {
+        font-size: 12px;
+        color: var(--brown-primary);
+        font-weight: 600;
+        text-decoration: none;
+    }
+    .activity-view-all:hover {
+        color: var(--brown-dark);
+    }
+
+    /* ===== RESPONSIVE ===== */
     @media (max-width: 900px) {
-        .content-grid { grid-template-columns: 1fr; }
-        .stats-grid-profile { grid-template-columns: repeat(2, 1fr); }
-        .profile-header-card { flex-direction: column; text-align: center; }
-        .btn-edit-profile { margin: 16px auto 0; }
+        .content-grid          { grid-template-columns: 1fr; }
+        .stats-grid-profile    { grid-template-columns: repeat(2, 1fr); }
+        .profile-header-card   { flex-direction: column; text-align: center; }
+        .btn-edit-profile      { margin: 16px auto 0; }
     }
 </style>
 @endsection
@@ -277,52 +321,86 @@
     </div>
 </div>
 
+{{-- ===== HERO BANNER ===== --}}
 <div class="profile-header-card">
     <div class="profile-avatar-wrapper">
-        <img src="https://ui-avatars.com/api/?name={{ urlencode($admin->nama_lengkap ?? 'Admin') }}&background=0D8ABC&color=fff&size=128" alt="Avatar" class="profile-avatar">
+        <img
+            src="https://ui-avatars.com/api/?name={{ urlencode($admin->nama_lengkap ?? 'Admin') }}&background=7c4a1e&color=fff&size=128"
+            alt="Avatar"
+            class="profile-avatar"
+        >
         <div class="profile-avatar-icon">
-            <span class="material-icons-outlined" style="font-size: 16px;">verified</span>
+            <span class="material-icons-outlined" style="font-size:16px;">verified</span>
         </div>
     </div>
     <div class="profile-info">
         <h2>{{ $admin->nama_lengkap ?? 'Admin Utama' }}</h2>
-        <p><span class="material-icons-outlined" style="font-size: 16px;">admin_panel_settings</span> System Administrator</p>
+        <p>
+            <span class="material-icons-outlined" style="font-size:16px;">admin_panel_settings</span>
+            System Administrator
+        </p>
     </div>
     <button class="btn-edit-profile">
-        <span class="material-icons-outlined" style="font-size: 18px;">edit</span>
+        <span class="material-icons-outlined" style="font-size:18px;">edit</span>
         Edit Profil
     </button>
 </div>
 
+{{-- ===== STATS CARDS ===== --}}
 <div class="stats-grid-profile">
     <div class="stat-box">
-        <div class="stat-box-icon"><span class="material-icons-outlined">verified_user</span></div>
+        <div class="stat-box-icon">
+            <span class="material-icons-outlined">verified_user</span>
+        </div>
         <div class="stat-box-title">Total Verifikasi</div>
         <div class="stat-box-value">{{ number_format($totalVerifikasi) }}</div>
-        <div class="stat-box-trend"><span class="material-icons-outlined" style="font-size:14px;">trending_up</span> +12% dari bulan lalu</div>
+        <div class="stat-box-trend">
+            <span class="material-icons-outlined" style="font-size:14px;">trending_up</span>
+            +12% dari bulan lalu
+        </div>
     </div>
     <div class="stat-box">
-        <div class="stat-box-icon" style="color:#d97706; background:#fef3c7;"><span class="material-icons-outlined">domain</span></div>
+        <div class="stat-box-icon" style="color:#d97706; background:#fef3c7;">
+            <span class="material-icons-outlined">domain</span>
+        </div>
         <div class="stat-box-title">Total Perusahaan</div>
         <div class="stat-box-value">{{ number_format($totalPerusahaan) }}</div>
-        <div class="stat-box-trend" style="color:#d97706;"><span class="material-icons-outlined" style="font-size:14px;">fiber_new</span> 5 Baru diverifikasi</div>
+        <div class="stat-box-trend" style="color:#d97706;">
+            <span class="material-icons-outlined" style="font-size:14px;">fiber_new</span>
+            5 Baru diverifikasi
+        </div>
     </div>
     <div class="stat-box">
-        <div class="stat-box-icon" style="color:#7c3aed; background:#ede9fe;"><span class="material-icons-outlined">school</span></div>
+        <div class="stat-box-icon" style="color:#7c3aed; background:#ede9fe;">
+            <span class="material-icons-outlined">school</span>
+        </div>
         <div class="stat-box-title">Total Mahasiswa</div>
         <div class="stat-box-value">{{ number_format($totalMahasiswa) }}</div>
-        <div class="stat-box-trend" style="color:#7c3aed;"><span class="material-icons-outlined" style="font-size:14px;">sync</span> Angkatan 2024 Terintegrasi</div>
+        <div class="stat-box-trend" style="color:#7c3aed;">
+            <span class="material-icons-outlined" style="font-size:14px;">sync</span>
+            Angkatan 2024 Terintegrasi
+        </div>
     </div>
     <div class="stat-box">
-        <div class="stat-box-icon" style="color:#dc2626; background:#fee2e2;"><span class="material-icons-outlined">pending_actions</span></div>
+        <div class="stat-box-icon" style="color:#dc2626; background:#fee2e2;">
+            <span class="material-icons-outlined">pending_actions</span>
+        </div>
         <div class="stat-box-title">Pending Review</div>
         <div class="stat-box-value">{{ number_format($pendingReview) }}</div>
-        <div class="stat-box-trend" style="color:#dc2626;"><span class="material-icons-outlined" style="font-size:14px;">warning</span> Segera selesaikan</div>
+        <div class="stat-box-trend" style="color:#dc2626;">
+            <span class="material-icons-outlined" style="font-size:14px;">warning</span>
+            Segera selesaikan
+        </div>
     </div>
 </div>
 
+{{-- ===== MAIN CONTENT GRID ===== --}}
 <div class="content-grid">
+
+    {{-- LEFT COLUMN --}}
     <div class="left-col">
+
+        {{-- Informasi Akun --}}
         <div class="info-card">
             <div class="info-card-header">
                 <span class="material-icons-outlined">badge</span>
@@ -343,17 +421,21 @@
                 </div>
                 <div class="info-row">
                     <div class="info-label">ID Administrator</div>
-                    <div class="info-value" style="background:#f3f4f6; padding:6px 10px; border-radius:6px; display:inline-block; font-family:monospace; margin-top:4px;">{{ $admin->nim ?? 'ADM-2024-001' }}</div>
+                    <div class="info-value" style="background:#f3f4f6; padding:6px 10px; border-radius:6px; display:inline-block; font-family:monospace; margin-top:4px;">
+                        {{ $admin->nim ?? 'ADM-2024-001' }}
+                    </div>
                 </div>
             </div>
         </div>
 
+        {{-- Keamanan Akun --}}
         <div class="info-card">
             <div class="info-card-header">
                 <span class="material-icons-outlined">security</span>
                 Keamanan Akun
             </div>
             <div class="info-card-body">
+                {{-- Ubah Password --}}
                 <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #f3f4f6; padding-bottom:12px; margin-bottom:12px;">
                     <div>
                         <div style="font-weight:600; font-size:13px;">Ubah Password</div>
@@ -361,34 +443,43 @@
                     </div>
                     <span class="material-icons-outlined" style="color:#9ca3af; cursor:pointer;">chevron_right</span>
                 </div>
+                {{-- Terakhir Login --}}
                 <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #f3f4f6; padding-bottom:12px; margin-bottom:12px;">
                     <div>
                         <div style="font-weight:600; font-size:13px;">Terakhir Login</div>
-                        <div style="font-size:11px; color:#1a5fb4; font-weight:600;">{{ $admin->last_login_at ? $admin->last_login_at->diffForHumans() : '2 Jam yang lalu' }}</div>
+                        <div class="security-last-login">
+                            {{ $admin->last_login_at ? $admin->last_login_at->diffForHumans() : '2 Jam yang lalu' }}
+                        </div>
                     </div>
                     <span class="material-icons-outlined" style="color:#9ca3af;">history</span>
                 </div>
+                {{-- Status Akun --}}
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                     <div>
                         <div style="font-weight:600; font-size:13px;">Status Akun</div>
                         <div style="font-size:11px; color:#10b981; font-weight:600; display:flex; align-items:center; gap:4px;">
-                            <span style="width:6px; height:6px; background:#10b981; border-radius:50%; display:inline-block;"></span> Aktif
+                            <span style="width:6px; height:6px; background:#10b981; border-radius:50%; display:inline-block;"></span>
+                            Aktif
                         </div>
                     </div>
                     <span class="material-icons-outlined" style="color:#10b981;">check_circle</span>
                 </div>
             </div>
         </div>
+
     </div>
 
+    {{-- RIGHT COLUMN --}}
     <div class="right-col">
+
+        {{-- Riwayat Aktivitas --}}
         <div class="info-card">
             <div class="info-card-header" style="justify-content:space-between;">
                 <div style="display:flex; align-items:center; gap:10px;">
                     <span class="material-icons-outlined">history</span>
                     Riwayat Aktivitas Terbaru
                 </div>
-                <a href="#" style="font-size:12px; color:#1a5fb4; font-weight:600; text-decoration:none;">Lihat Semua</a>
+                <a href="#" class="activity-view-all">Lihat Semua</a>
             </div>
             <div class="info-card-body">
                 <div class="activity-list">
@@ -404,7 +495,9 @@
                             <div class="activity-meta">
                                 <div class="activity-time">{{ $aktivitas['waktu'] }}</div>
                                 @if($aktivitas['status'])
-                                    <div class="activity-status {{ $aktivitas['status'] === 'BERHASIL' || $aktivitas['status'] === 'DITERIMA' ? 'status-success' : 'status-update' }}">{{ $aktivitas['status'] }}</div>
+                                    <div class="activity-status {{ in_array($aktivitas['status'], ['BERHASIL','DITERIMA']) ? 'status-success' : 'status-update' }}">
+                                        {{ $aktivitas['status'] }}
+                                    </div>
                                 @endif
                             </div>
                         </div>
@@ -412,6 +505,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 @endsection

@@ -235,7 +235,7 @@
         .footer-brand-name {
             font-size: 16px;
             font-weight: 800;
-            color: var(--accent-blue);
+            color: #7c4a1e;
             letter-spacing: 1.5px;
             margin-bottom: 8px;
         }
@@ -261,7 +261,7 @@
             margin-bottom: 6px;
             transition: color 0.2s;
         }
-        .footer-links a:hover { color: var(--accent-blue); }
+        .footer-links a:hover { color: #7c4a1e; }
         .footer-copy {
             font-size: 11px;
             color: var(--text-muted);
@@ -287,7 +287,7 @@
             color: var(--text-secondary);
             transition: border-color 0.2s, color 0.2s;
         }
-        .footer-icon-btn:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
+        .footer-icon-btn:hover { border-color: #7c4a1e; color: #7c4a1e; }
         .footer-icon-btn .material-icons-outlined { font-size: 14px; }
 
         /* ===== RESPONSIVE ===== */
