@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Dashboard Mahasiswa SIMAKATA - Monitoring Kemajuan Akademik">
     <title>Dashboard — SIMAKATA</title>
-
+    
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,9 +14,8 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 
     <style>
-        /* ===== RESET ===== */
+                /* ===== RESET ===== */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
         :root {
             --sidebar-w: 220px;
             --sidebar-bg: #0d1b2e;
@@ -36,7 +35,6 @@
             --shadow-sm: 0 1px 4px rgba(0,0,0,0.07);
             --shadow-md: 0 4px 18px rgba(0,0,0,0.09);
         }
-
         html, body {
             height: 100%;
             font-family: 'Inter', -apple-system, sans-serif;
@@ -45,10 +43,8 @@
             font-size: 14px;
             line-height: 1.5;
         }
-
         /* ===== SHELL ===== */
         .shell { display: flex; min-height: 100vh; }
-
         /* ===== SIDEBAR ===== */
         .sidebar {
             width: var(--sidebar-w);
@@ -64,7 +60,6 @@
             scrollbar-width: none;
         }
         .sidebar::-webkit-scrollbar { display: none; }
-
         .sidebar-brand {
             padding: 24px 22px 18px;
             border-bottom: 1px solid rgba(255,255,255,0.06);
@@ -80,7 +75,6 @@
             color: rgba(255,255,255,0.38);
             margin-top: 3px;
         }
-
         .sidebar-nav {
             flex: 1;
             padding: 14px 12px;
@@ -103,7 +97,6 @@
         .nav-item .material-icons-outlined { font-size: 20px; flex-shrink: 0; }
         .nav-item:hover { background: var(--sidebar-hover); color: rgba(255,255,255,0.9); }
         .nav-item.active { background: var(--sidebar-active-bg); color: #fff; font-weight: 600; }
-
         .sidebar-new-request { margin: 0 12px 12px; }
         .btn-new-request {
             display: flex;
@@ -124,7 +117,6 @@
         }
         .btn-new-request:hover { background: #1450a0; }
         .btn-new-request .material-icons-outlined { font-size: 18px; }
-
         .sidebar-footer {
             padding: 14px 12px 18px;
             border-top: 1px solid rgba(255,255,255,0.06);
@@ -148,7 +140,6 @@
         }
         .btn-logout .material-icons-outlined { font-size: 20px; }
         .btn-logout:hover { background: rgba(239,68,68,0.12); color: #f87171; }
-
         /* ===== MAIN ===== */
         .main {
             margin-left: var(--sidebar-w);
@@ -157,7 +148,6 @@
             flex-direction: column;
             min-height: 100vh;
         }
-
         /* ===== TOPBAR ===== */
         .topbar {
             background: #fff;
@@ -212,10 +202,8 @@
             font-size: 14px; font-weight: 700;
             flex-shrink: 0;
         }
-
         /* ===== PAGE BODY ===== */
         .page-body { flex: 1; padding: 28px 32px 32px; display: flex; flex-direction: column; gap: 20px; }
-
         /* ===== WELCOME BANNER ===== */
         .welcome-banner {
             background: linear-gradient(120deg, #1a5fb4 0%, #0a3d6b 100%);
@@ -263,7 +251,6 @@
         }
         .btn-banner-white:hover { background: #f0f5ff; }
         .btn-banner-white .material-icons-outlined { font-size: 16px; }
-
         /* ===== CONTENT GRID ===== */
         .content-grid {
             display: grid;
@@ -271,7 +258,6 @@
             gap: 20px;
             align-items: start;
         }
-
         /* ===== CARD ===== */
         .card {
             background: var(--card-bg);
@@ -304,7 +290,6 @@
             text-decoration: none;
         }
         .card-link:hover { opacity: 0.75; }
-
         /* ===== STATUS CARD ===== */
         .status-card {
             background: var(--card-bg);
@@ -335,7 +320,6 @@
             margin-top: 6px;
             font-style: italic;
         }
-
         /* ===== ACTIVITY FEED ===== */
         .activity-item {
             display: flex;
@@ -360,10 +344,8 @@
         .activity-content h4 { font-size: 13px; font-weight: 700; color: var(--text-1); margin-bottom: 3px; }
         .activity-content p { font-size: 12px; color: var(--text-2); line-height: 1.6; }
         .activity-time { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-3); margin-top: 5px; display: block; }
-
         /* ===== RIGHT PANEL ===== */
         .right-col { display: flex; flex-direction: column; gap: 16px; }
-
         /* Quick actions */
         .quick-action {
             display: flex;
@@ -392,7 +374,6 @@
         .qa-sub { font-size: 11px; color: var(--text-2); margin-top: 1px; }
         .qa-arrow { margin-left: auto; color: var(--text-3); }
         .qa-arrow .material-icons-outlined { font-size: 18px; }
-
         /* Profile mini card */
         .profile-mini {
             display: flex;
@@ -420,7 +401,6 @@
             text-decoration: none;
         }
         .profile-mini-link:hover { text-decoration: underline; }
-
         /* ===== FOOTER ===== */
         .page-footer {
             background: var(--card-bg);
@@ -437,7 +417,6 @@
         }
         .footer-brand { font-size: 14px; font-weight: 800; color: var(--blue-primary); letter-spacing: 1.5px; }
         .footer-copy { font-size: 11px; color: var(--text-3); }
-
         /* ===== RESPONSIVE ===== */
         @media (max-width: 1100px) {
             .content-grid { grid-template-columns: 1fr; }
@@ -456,26 +435,30 @@
 <body>
 <div class="shell">
 
+    <!-- MOBILE HEADER -->
     {{-- ===== SIDEBAR ===== --}}
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-brand">
             <div class="brand-name">SIMAKATA</div>
             <div class="brand-sub">Academic Management</div>
         </div>
-
         <nav class="sidebar-nav">
             <a href="{{ route('user.dashboard') }}" id="nav-dashboard" class="nav-item active">
                 <span class="material-icons-outlined">dashboard</span>
                 <span>Dashboard</span>
             </a>
+
             <a href="#" id="nav-kp" class="nav-item">
                 <span class="material-icons-outlined">work_outline</span>
                 <span>Input KP/Magang</span>
             </a>
+
             <a href="#" id="nav-ta" class="nav-item">
                 <span class="material-icons-outlined">description</span>
                 <span>Input Tugas Akhir</span>
             </a>
+
+
             <a href="#" id="nav-rekomendasi" class="nav-item">
                 <span class="material-icons-outlined">location_on</span>
                 <span>Rekomendasi Lokasi</span>
@@ -490,13 +473,13 @@
             </a>
         </nav>
 
+        <!-- Sidebar Bottom: Logout -->
         <div class="sidebar-new-request">
             <a href="#" class="btn-new-request" id="btn-new-request">
                 <span class="material-icons-outlined">add</span>
                 New Request
             </a>
         </div>
-
         <div class="sidebar-footer">
             <form method="POST" action="{{ route('logout') }}" style="margin:0;">
                 @csrf
@@ -510,18 +493,20 @@
 
     {{-- ===== MAIN ===== --}}
     <div class="main">
-
         {{-- Topbar --}}
         <header class="topbar">
             <div class="topbar-heading">
                 <h1>Dashboard</h1>
                 <p>Monitoring kemajuan akademik Anda secara real-time.</p>
             </div>
+            
             <div class="topbar-right">
                 <button class="topbar-icon-btn" id="btn-notif" aria-label="Notifikasi">
                     <span class="material-icons-outlined">notifications</span>
                     <span class="notif-dot"></span>
                 </button>
+                
+                <!-- Profile Pic -->
                 <div class="topbar-divider"></div>
                 <div class="topbar-user">
                     <div>
@@ -535,10 +520,11 @@
             </div>
         </header>
 
+        <!-- MAIN VIEW PORTION -->
         {{-- Page Content --}}
         <main class="page-body">
 
-            {{-- ===== WELCOME BANNER ===== --}}
+           {{-- ===== WELCOME BANNER ===== --}}
             <div class="welcome-banner" id="welcome-banner">
                 <div class="banner-inner">
                     <h2>Selamat Datang, {{ $user->nama_lengkap ?? 'Mahasiswa Informatika' }} 👋</h2>
@@ -562,7 +548,7 @@
                 {{-- LEFT COLUMN --}}
                 <div style="display: flex; flex-direction: column; gap: 16px;">
 
-                    {{-- Status Verifikasi --}}
+                {{-- Status Verifikasi --}}
                     <div class="status-card" id="card-status-ta">
                         @if($status_verifikasi === 'pending')
                             <div class="status-icon-wrap si-amber">
@@ -646,12 +632,10 @@
                             @endforeach
                         </div>
                     </div>
-
                 </div>{{-- /left --}}
 
                 {{-- RIGHT COLUMN --}}
                 <div class="right-col">
-
                     {{-- Profile Mini --}}
                     <div class="card" id="card-profile-mini">
                         <div class="profile-mini">
@@ -665,7 +649,6 @@
                             <a href="{{ route('user.profil') }}" class="profile-mini-link" id="link-profil-mini">Lihat Profil</a>
                         </div>
                     </div>
-
                     {{-- Aksi Cepat --}}
                     <div class="card" id="card-aksi-cepat">
                         <div class="card-header">
@@ -679,17 +662,17 @@
                                 <div class="qa-icon qa-indigo">
                                     <span class="material-icons-outlined">description</span>
                                 </div>
-                                <div>
+                            <div>
                                     <div class="qa-label">Input Tugas Akhir</div>
                                     <div class="qa-sub">Ajukan judul TA baru</div>
                                 </div>
-                                <div class="qa-arrow"><span class="material-icons-outlined">chevron_right</span></div>
+                            <div class="qa-arrow"><span class="material-icons-outlined">chevron_right</span></div>
                             </a>
                             <a href="#" class="quick-action" id="qa-input-kp">
                                 <div class="qa-icon qa-blue">
                                     <span class="material-icons-outlined">work_outline</span>
                                 </div>
-                                <div>
+                            <div>
                                     <div class="qa-label">Input KP/Magang</div>
                                     <div class="qa-sub">Daftarkan pengajuan magang</div>
                                 </div>
@@ -717,20 +700,17 @@
                             </a>
                         </div>
                     </div>
-
                 </div>{{-- /right-col --}}
             </div>{{-- /content-grid --}}
-
         </main>
 
-        {{-- Footer --}}
+            {{-- Footer --}}
         <footer class="page-footer">
             <div class="footer-inner">
                 <div class="footer-brand">SIMAKATA</div>
                 <div class="footer-copy">© 2024 HMIF Informatics SIMAKATA. All rights reserved.</div>
             </div>
         </footer>
-
     </div>{{-- /main --}}
 </div>{{-- /shell --}}
 </body>
