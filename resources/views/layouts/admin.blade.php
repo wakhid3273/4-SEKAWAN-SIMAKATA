@@ -343,7 +343,7 @@
                 <span class="material-icons-outlined">business</span>
                 <span>Kelola Perusahaan</span>
             </a>
-            <a href="#" id="nav-verifikasi" class="nav-item {{ request()->routeIs('admin.verifikasi*') ? 'active' : '' }}">
+            <a href="{{ route('admin.verifikasi.index') }}" id="nav-verifikasi" class="nav-item {{ request()->routeIs('admin.verifikasi*') ? 'active' : '' }}">
                 <span class="material-icons-outlined">verified_user</span>
                 <span>Verifikasi Data</span>
             </a>

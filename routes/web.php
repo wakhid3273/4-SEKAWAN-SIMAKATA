@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\PerusahaanController;
+use App\Http\Controllers\Admin\VerifikasiController;
 
 // Landing Page
 Route::get('/', [LandingController::class, 'index'])->name('landing');
@@ -46,6 +47,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/perusahaan/{id}/edit', [PerusahaanController::class, 'edit'])->name('admin.perusahaan.edit');
         Route::put('/admin/perusahaan/{id}', [PerusahaanController::class, 'update'])->name('admin.perusahaan.update');
         Route::delete('/admin/perusahaan/{id}', [PerusahaanController::class, 'destroy'])->name('admin.perusahaan.destroy');
+
+        // Verifikasi Data
+        Route::get('/admin/verifikasi', [VerifikasiController::class, 'index'])->name('admin.verifikasi.index');
+        Route::get('/admin/verifikasi/ta/{id}', [VerifikasiController::class, 'showTa'])->name('admin.verifikasi.show_ta');
+        Route::post('/admin/verifikasi/ta/{id}/approve', [VerifikasiController::class, 'approveTa'])->name('admin.verifikasi.approve_ta');
+        Route::post('/admin/verifikasi/ta/{id}/reject', [VerifikasiController::class, 'rejectTa'])->name('admin.verifikasi.reject_ta');
     });
 
     // User dashboard
