@@ -110,7 +110,7 @@
                 <a href="#" class="social-icon" title="Instagram" id="social-instagram">
                     <span class="material-icons-outlined">photo_camera</span>
                 </a>
-                <a href="#" class="social-icon" title="WhatsApp" id="social-whatsapp">
+                <a href="https://wa.me/6281234567890" target="_blank" class="social-icon" title="WhatsApp" id="social-whatsapp">
                     <span class="material-icons-outlined">chat</span>
                 </a>
                 <a href="{{ route('login.form') }}" class="social-icon" title="Settings / Admin" id="social-admin">
@@ -122,10 +122,5 @@
 
     <div class="footer-bottom">
         <p>&copy; {{ date('Y') }} HMIF Informatics SIMAKATA. Managed by Informatics Department.</p>
-        <div class="footer-bottom-links">
-            <a href="#">Privacy</a>
-            <a href="#">Terms</a>
-            <a href="#">Help</a>
-        </div>
     </div>
 </footer>

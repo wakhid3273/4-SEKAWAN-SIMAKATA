@@ -921,8 +921,7 @@
         </div>
     </div>
 </section>
-
-</footer>
+<x-footer />
 
 <script>
     // ===== Navbar sticky shadow =====
