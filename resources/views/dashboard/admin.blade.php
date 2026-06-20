@@ -569,19 +569,19 @@
                     <td>
                         <div class="entity-cell">
                             @php
-                                $initials = strtoupper(substr($item->student->nim ?? 'U', 0, 2));
+                                $initials = strtoupper(substr($item->nim ?? 'U', 0, 2));
                                 $colors = ['blue','teal','purple','orange'];
                                 $color = $colors[$loop->index % count($colors)];
                             @endphp
                             <div class="entity-avatar {{ $color }}">{{ $initials }}</div>
                             <div class="entity-name">
-                                {{ $item->student->nim ?? 'Unknown' }} (Student)
+                                {{ $item->nim ?? 'Unknown' }} (Student)
                             </div>
                         </div>
                     </td>
-                    <td>{{ $item->title }}</td>
+                    <td>{{ $item->kegiatan }}</td>
                     <td>
-                        {{ $item->submitted_at ? \Carbon\Carbon::parse($item->submitted_at)->format('M d, Y') : '-' }}
+                        {{ $item->created_at ? \Carbon\Carbon::parse($item->created_at)->format('M d, Y') : '-' }}
                     </td>
                     <td>
                         @if($item->status === 'pending')
