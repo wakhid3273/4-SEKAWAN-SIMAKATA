@@ -350,7 +350,7 @@
             max-width: 1200px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 0;
         }
         .stat-item {
@@ -363,7 +363,6 @@
         .stat-item:nth-child(1) { animation-delay: 0.05s; }
         .stat-item:nth-child(2) { animation-delay: 0.12s; }
         .stat-item:nth-child(3) { animation-delay: 0.19s; }
-        .stat-item:nth-child(4) { animation-delay: 0.26s; }
 
         @keyframes fade-up {
             from { opacity:0; transform: translateY(20px); }
@@ -749,7 +748,7 @@
             .hero-float-chip.chip-2 { top: 5%; right: -2%; }
 
             .stats-section { padding: 36px 24px; }
-            .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+            .stats-inner { grid-template-columns: 1fr; gap: 24px; }
             .stat-item { border-right: none; border-bottom: 1px solid var(--border); padding: 16px; }
             .stat-item:last-child { border-bottom: none; }
 
@@ -774,56 +773,7 @@
 </head>
 <body>
 
-{{-- ===== NAVBAR ===== --}}
-<header class="navbar" id="mainNavbar">
-    <a href="{{ route('landing') }}" class="navbar-logo">SIMAKATA</a>
-
-    <ul class="navbar-links">
-        <li><a href="{{ route('landing') }}" class="active" id="nav-beranda">Beranda</a></li>
-        <li><a href="#features" id="nav-perusahaan">Perusahaan</a></li>
-        <li><a href="#features" id="nav-judul">Judul TA</a></li>
-        <li><a href="#features" id="nav-riwayat">Riwayat</a></li>
-    </ul>
-
-    <div class="navbar-actions">
-        @guest
-            <a href="{{ route('login.form') }}" class="btn-nav-login" id="btn-navbar-login">Login</a>
-            <a href="{{ route('register.form') }}" class="btn-nav-register" id="btn-navbar-register">Daftar</a>
-        @endguest
-        @auth
-            <form method="POST" action="{{ route('logout') }}" style="margin:0;">
-                @csrf
-                <button type="submit" class="btn-nav-logout" id="btn-navbar-logout">Logout</button>
-            </form>
-        @endauth
-    </div>
-
-    {{-- Mobile hamburger --}}
-    <div class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
-        <span></span><span></span><span></span>
-    </div>
-</header>
-
-{{-- Mobile nav overlay --}}
-<nav class="mobile-nav" id="mobileNav">
-    <button class="mobile-close" id="mobileClose" aria-label="Close menu">
-        <span class="material-icons-outlined">close</span>
-    </button>
-    <a href="{{ route('landing') }}">Beranda</a>
-    <a href="#features">Perusahaan</a>
-    <a href="#features">Judul TA</a>
-    <a href="#features">Riwayat</a>
-    @guest
-        <a href="{{ route('login.form') }}" id="btn-mobile-login">Login</a>
-        <a href="{{ route('register.form') }}" id="btn-mobile-register" style="color:var(--blue-main)">Daftar</a>
-    @endguest
-    @auth
-        <form method="POST" action="{{ route('logout') }}" style="margin:0;">
-            @csrf
-            <button type="submit" id="btn-mobile-logout">Logout</button>
-        </form>
-    @endauth
-</nav>
+@include('components.navbar')
 
 {{-- ===== HERO SECTION ===== --}}
 <section class="hero" id="beranda">
@@ -850,11 +800,11 @@
                     </a>
                     <a href="{{ route('register.form') }}" class="btn-secondary" id="btn-hero-register">Daftar Akun</a>
                     <a href="{{ route('login.form') }}" class="btn-secondary" id="btn-hero-login">Login</a>
-                @endauth
+                @endguest
                 @auth
-                    <a href="#features" class="btn-primary" id="btn-hero-dashboard">
-                        <span class="material-icons-outlined">apps</span>
-                        Lihat Fitur Utama Platform
+                    <a href="{{ route('dashboard') }}" class="btn-primary" id="btn-hero-dashboard">
+                        <span class="material-icons-outlined">dashboard</span>
+                        Ke Dashboard
                     </a>
                 @endauth
             </div>
@@ -869,11 +819,11 @@
             {{-- Floating chips --}}
             <div class="hero-float-chip chip-1">
                 <span class="chip-dot chip-green"></span>
-                {{ $perusahaanCount ?? 0 }}+ Daftar Perusahaan
+                50+ Perusahaan Aktif
             </div>
             <div class="hero-float-chip chip-2">
                 <span class="chip-dot chip-blue"></span>
-                {{ $mahasiswaKpCount ?? 0 }}+ Judul Kerja Praktik
+                150+ Judul TA Sukses
             </div>
         </div>
     </div>
@@ -883,20 +833,16 @@
 <section class="stats-section">
     <div class="stats-inner">
         <div class="stat-item">
-            <div class="stat-number">{{ $mahasiswaKpCount ?? 0 }}+</div>
-            <div class="stat-label-text">Mahasiswa KP</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-number">{{ $mahasiswaMagangCount ?? 0 }}+</div>
-            <div class="stat-label-text">Mahasiswa Magang</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-number">{{ $perusahaanCount ?? 0 }}+</div>
+            <div class="stat-number">50+</div>
             <div class="stat-label-text">Perusahaan Terdaftar</div>
         </div>
         <div class="stat-item">
-            <div class="stat-number">{{ $mahasiswaKpCount ?? 0 }}+</div>
-            <div class="stat-label-text">Kerja Praktik</div>
+            <div class="stat-number">120+</div>
+            <div class="stat-label-text">Mahasiswa Magang</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">150+</div>
+            <div class="stat-label-text">Judul TA Sukses</div>
         </div>
     </div>
 </section>
@@ -911,18 +857,18 @@
 
     <div class="features-grid">
         {{-- Feature 1: Database Perusahaan --}}
-        <div class="feature-card has-bg-right">
+        <a href="{{ route('perusahaan.index') }}" class="feature-card has-bg-right" id="feature-database-perusahaan" style="display:block; text-decoration:none; color:inherit; cursor:pointer; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.10)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
             <div class="feature-icon fi-blue">
                 <span class="material-icons-outlined">corporate_fare</span>
             </div>
             <div class="feature-text">
                 <h3>Database Perusahaan</h3>
-                <p>Akses puluhan profil perusahaan teknologi ternama yang mahasiswa Informatika pernah magang dan kerja praktik dengan skema kerja sama yang jelas.</p>
+                <p>Akses ribuan profil perusahaan teknologi ternama yang siap menerima mahasiswa magang dan kerja praktik dengan skema kerja sama yang jelas.</p>
             </div>
-        </div>
+        </a>
 
         {{-- Feature 2: Validasi Judul TA --}}
-        <div class="feature-card has-bg-right">
+        <a href="{{ route('judul-ta.index') }}" class="feature-card has-bg-right" id="feature-validasi-ta" style="display:block; text-decoration:none; color:inherit; cursor:pointer; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.10)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
             <div class="feature-icon fi-amber">
                 <span class="material-icons-outlined">verified_user</span>
             </div>
@@ -930,29 +876,29 @@
                 <h3>Validasi Judul TA</h3>
                 <p>Proses pengajuan dan verifikasi judul Tugas Akhir yang lebih cepat, transparan, dan terdokumentasi.</p>
             </div>
-        </div>
+        </a>
 
         {{-- Feature 3: Rekomendasi Magang --}}
-        <div class="feature-card has-bg-right">
+        <a href="{{ route('perusahaan.index') }}" class="feature-card has-bg-right" id="feature-rekomendasi-magang" style="display:block; text-decoration:none; color:inherit; cursor:pointer; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.10)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
             <div class="feature-icon fi-teal">
                 <span class="material-icons-outlined">recommend</span>
             </div>
             <div class="feature-text">
                 <h3>Rekomendasi Magang</h3>
-                <p>Dapatkan saran tempat magang terbaik berdasarkan minat dan kompetensi spesifik Anda di bidang informatika.</p>
+                <p>Dapatkan saran tempat magang terbaik berdasarkan minat, nilai, dan kompetensi spesifik Anda di bidang informatika.</p>
             </div>
-        </div>
+        </a>
 
         {{-- Feature 4: Riwayat Magang --}}
-        <div class="feature-card has-bg-right">
+        <a href="{{ route('riwayat.index') }}" class="feature-card has-bg-right" id="feature-riwayat-magang" style="display:block; text-decoration:none; color:inherit; cursor:pointer; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.10)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
             <div class="feature-icon fi-purple">
                 <span class="material-icons-outlined">history</span>
             </div>
             <div class="feature-text">
                 <h3>Riwayat Magang</h3>
-                <p>Tersedia riwayat lengkap magang dan kerja praktik mahasiswa  Informatika yang terintegrasi di satu platform.</p>
+                <p>Pantau progress kerja praktik Anda secara real-time dan simpan catatan lengkap riwayat akademik profesional Anda di satu tempat.</p>
             </div>
-        </div>
+        </a>
     </div>
 </section>
 
@@ -962,12 +908,11 @@
         <h2>Siap Memulai Langkah Karir Anda?</h2>
         <p>Bergabunglah dengan ribuan mahasiswa lainnya yang telah sukses menempuh magang dan tugas akhir melalui SIMAKATA.</p>
         <div class="cta-buttons">
+            <a href="{{ auth()->check() ? route('dashboard') : route('login.form') }}" class="btn-cta-primary" id="btn-cta-dashboard">Dashboard Saya</a>
             @guest
-                <a href="{{ route('register.form') }}" class="btn-cta-primary" id="btn-cta-register">Daftar Sekarang</a>
                 <a href="#" class="btn-cta-secondary" id="btn-cta-hubungi">Hubungi Admin</a>
             @endguest
             @auth
-                <a href="{{ route('user.dashboard') }}" class="btn-cta-primary" id="btn-cta-dashboard">Ke Dashboard Saya</a>
                 <form method="POST" action="{{ route('logout') }}" style="margin:0;">
                     @csrf
                     <button type="submit" class="btn-cta-secondary" id="btn-cta-logout">Logout</button>
@@ -977,46 +922,6 @@
     </div>
 </section>
 
-{{-- ===== FOOTER ===== --}}
-<footer class="site-footer">
-    <div class="footer-grid">
-        {{-- Brand col --}}
-        <div>
-            <div class="footer-brand-name">SIMAKATA</div>
-            <p class="footer-brand-desc">Sistem informasi terpadu untuk mendukung perjalanan akademik mahasiswa Informatika dalam mengejar masa depan profesional.</p>
-            <p class="footer-copy-small">&copy; {{ date('Y') }} HMIF Informatics SIMAKATA. All rights reserved.</p>
-        </div>
-
-        {{-- Quick Links --}}
-        <div class="footer-col">
-            <h4>Quick Links</h4>
-            <a href="#">Contact Us</a>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-        </div>
-
-        {{-- Follow Us --}}
-        <div class="footer-col">
-            <h4>Follow Us</h4>
-            <div class="footer-social-icons">
-                <a href="#" class="social-icon" title="Instagram" id="social-instagram">
-                    <span class="material-icons-outlined">photo_camera</span>
-                </a>
-                <a href="#" class="social-icon" title="Settings / Admin" id="social-admin">
-                    <span class="material-icons-outlined">settings</span>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <div class="footer-bottom">
-        <p>&copy; {{ date('Y') }} HMIF Informatics SIMAKATA. Managed by Informatics Department.</p>
-        <div class="footer-bottom-links">
-            <a href="#">Privacy</a>
-            <a href="#">Terms</a>
-            <a href="#">Help</a>
-        </div>
-    </div>
 </footer>
 
 <script>
