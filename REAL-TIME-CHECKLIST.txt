@@ -1,0 +1,163 @@
+╔═══════════════════════════════════════════════════════════════════╗
+║         ⚠️  CHECKLIST: REAL-TIME TIDAK BERFUNGSI?  ⚠️             ║
+╚═══════════════════════════════════════════════════════════════════╝
+
+📋 PERIKSA SATU PER SATU:
+
+┌───────────────────────────────────────────────────────────────────┐
+│ 1. REVERB SERVER JALAN?                                           │
+└───────────────────────────────────────────────────────────────────┘
+
+   Cek dengan: php check-reverb.php
+   
+   ❌ Jika "NOT running":
+      → Jalankan: php artisan reverb:start
+      → Atau double-click: START-REVERB.bat
+
+   ✅ Jika "running":
+      → Lanjut ke checklist berikutnya
+
+┌───────────────────────────────────────────────────────────────────┐
+│ 2. CONSOLE BROWSER (F12) MENUNJUKKAN APA?                         │
+└───────────────────────────────────────────────────────────────────┘
+
+   Tekan F12 → Tab Console
+   
+   ✅ Harus terlihat:
+      - "Real-time synchronization initialized"
+      - "✅ WebSocket connected successfully"
+   
+   ❌ Jika ada error:
+      - "WebSocket connection failed" 
+        → Reverb tidak jalan atau port blocked
+      
+      - "Cannot connect to ws://..."
+        → IP address salah di .env
+
+┌───────────────────────────────────────────────────────────────────┐
+│ 3. INDIKATOR DI POJOK KANAN BAWAH?                                │
+└───────────────────────────────────────────────────────────────────┘
+
+   Lihat pojok kanan bawah halaman
+   
+   ✅ Harus menunjukkan:
+      🟢 "Real-time Active" (hijau)
+   
+   ❌ Jika menunjukkan:
+      ⚪ "Real-time Offline" (abu-abu)
+      → Reverb server tidak jalan!
+
+┌───────────────────────────────────────────────────────────────────┐
+│ 4. AKSES DARI DEVICE LAIN (TEMAN)?                                │
+└───────────────────────────────────────────────────────────────────┘
+
+   Untuk multi-device, pastikan:
+   
+   ✅ Teman menggunakan IP Anda, BUKAN localhost:
+      
+      ❌ SALAH: http://localhost:8000
+      ❌ SALAH: http://127.0.0.1:8000
+      ✅ BENAR: http://192.168.1.100:8000 (contoh)
+   
+   ✅ Laravel server jalan dengan --host=0.0.0.0:
+      php artisan serve --host=0.0.0.0 --port=8000
+   
+   ✅ Reverb server jalan dengan --host=0.0.0.0:
+      php artisan reverb:start --host=0.0.0.0 --port=8080
+   
+   ✅ File .env menggunakan IP jaringan:
+      REVERB_HOST=192.168.1.100  (BUKAN localhost!)
+      VITE_REVERB_HOST=192.168.1.100
+   
+   ✅ Firewall port 8000 dan 8080 terbuka
+
+┌───────────────────────────────────────────────────────────────────┐
+│ 5. ASSETS SUDAH DI-BUILD ULANG?                                   │
+└───────────────────────────────────────────────────────────────────┘
+
+   Setelah ubah .env atau pull dari git:
+   
+   npm run build
+   php artisan config:clear
+   php artisan cache:clear
+   
+   Lalu restart Laravel & Reverb server
+
+┌───────────────────────────────────────────────────────────────────┐
+│ 6. NETWORK TAB MENUNJUKKAN WEBSOCKET?                             │
+└───────────────────────────────────────────────────────────────────┘
+
+   Tekan F12 → Tab Network → Filter "WS"
+   
+   ✅ Harus ada koneksi WebSocket:
+      - Name: ws://localhost:8080/app/...
+      - Status: 101 Switching Protocols (hijau)
+   
+   ❌ Jika tidak ada atau status merah:
+      → WebSocket gagal connect
+      → Cek Reverb server jalan
+      → Cek firewall
+
+═══════════════════════════════════════════════════════════════════
+
+🚀 CARA CEPAT: SETUP NETWORK MODE
+
+   Option 1: Manual
+   ────────────────
+   1. Cari IP: ipconfig
+   2. Update .env dengan IP tersebut
+   3. Rebuild: npm run build
+   4. Clear cache: php artisan config:clear
+   5. Jalankan dengan --host=0.0.0.0
+
+   Option 2: Automatic (RECOMMENDED)
+   ──────────────────────────────────
+   Double-click: start-network-mode.bat
+   
+   Script akan otomatis:
+   ✓ Detect IP address
+   ✓ Start Laravel dengan network access
+   ✓ Start Reverb dengan network access
+   ✓ Show URL untuk teman
+
+═══════════════════════════════════════════════════════════════════
+
+🧪 TEST REAL-TIME:
+
+   1. Komputer A (Admin):
+      - Login sebagai admin
+      - Ubah deskripsi perusahaan
+   
+   2. Komputer B (Teman):
+      - Buka halaman /perusahaan
+      - Lihat pojok kanan bawah: harus "Real-time Active"
+      - Data HARUS update otomatis tanpa refresh!
+
+   3. Jika tidak update:
+      - Refresh KEDUA browser
+      - Cek console di KEDUA browser
+      - Pastikan KEDUA menunjukkan "Real-time Active"
+
+═══════════════════════════════════════════════════════════════════
+
+📞 MASIH BERMASALAH?
+
+   Baca dokumentasi lengkap:
+   
+   ► WAJIB-BACA-REAL-TIME.md  (⭐ BACA INI!)
+   ► CARA-MENJALANKAN.md
+   ► REALTIME-GUIDE.md
+
+   Atau jalankan diagnosa:
+   
+   php check-reverb.php
+
+═══════════════════════════════════════════════════════════════════
+
+💡 REMEMBER:
+
+   ⚠️  Real-time TIDAK OTOMATIS aktif!
+   ⚠️  HARUS jalankan Reverb server manual!
+   ⚠️  Untuk multi-device, HARUS setup network mode!
+
+═══════════════════════════════════════════════════════════════════
