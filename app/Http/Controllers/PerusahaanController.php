@@ -59,7 +59,7 @@ class PerusahaanController extends Controller
 
     public function manage()
     {
-        $perusahaan = Perusahaan::all();
+        $perusahaan = Perusahaan::orderBy('nama', 'asc')->paginate(10);
         return view('dashboard.perusahaan.index', compact('perusahaan'));
     }
 
