@@ -38,23 +38,23 @@
         <form method="POST" action="{{ route('login') }}" id="login-form">
             @csrf
 
-            {{-- NIM --}}
+            {{-- Email --}}
             <div class="form-group">
-                <label class="form-label" for="nim">Nomor Induk Mahasiswa (NIM)</label>
+                <label class="form-label" for="email">Email Mahasiswa</label>
                 <div class="input-wrapper">
-                    <span class="material-icons-outlined input-icon">person_outline</span>
+                    <span class="material-icons-outlined input-icon">email</span>
                     <input
-                        type="text"
-                        id="nim"
-                        name="nim"
-                        placeholder="Contoh: 12345678"
-                        value="{{ old('nim') }}"
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="NIM@mhs.unsoed.ac.id"
+                        value="{{ old('email') }}"
                         required
                         autofocus
                         autocomplete="username"
                     >
                 </div>
-                @error('nim')
+                @error('email')
                     <p class="error-text">
                         <span class="material-icons-outlined" style="font-size:14px;">warning</span>
                         {{ $message }}
