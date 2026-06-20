@@ -90,7 +90,6 @@ class VerifikasiController extends Controller
                 'jenis_kegiatan' => $pengajuan->kegiatan,
                 'perusahaan' => $pengajuan->perusahaan->nama ?? '-',
                 'posisi' => $pengajuan->posisi,
-                'bidang' => $pengajuan->bidang,
                 'periode' => $pengajuan->periode,
                 'cv_file' => $pengajuan->cv_file,
                 'transkrip_file' => $pengajuan->transkrip_file,
