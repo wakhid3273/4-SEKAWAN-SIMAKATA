@@ -314,7 +314,7 @@
         /* ===== MAIN CONTENT LAYOUT ===== */
         .content-layout {
             display: grid;
-            grid-template-columns: 1fr 360px;
+            grid-template-columns: 1fr 300px; /* Adjusted proporsi layout */
             gap: 32px;
             margin-bottom: 48px;
         }
@@ -764,39 +764,12 @@
                                 <strong>{{ $riwayatMagang->count() > 0 ? $riwayatMagang->count() : $perusahaan->jumlah_mahasiswa }}</strong> Alumni
                             </div>
                         </div>
-                        <div class="company-badges">
-                            @if($perusahaan->jenis_kegiatan)
-                                @if($perusahaan->jenis_kegiatan == 'Magang')
-                                    <span class="badge badge-magang">
-                                        <span class="material-icons-outlined" style="font-size: 16px;">work</span>
-                                        Terbuka untuk Magang
-                                    </span>
-                                @elseif($perusahaan->jenis_kegiatan == 'Kerja Praktik')
-                                    <span class="badge badge-kp">
-                                        <span class="material-icons-outlined" style="font-size: 16px;">business_center</span>
-                                        Terbuka untuk Kerja Praktik
-                                    </span>
-                                @elseif($perusahaan->jenis_kegiatan == 'Tugas Akhir')
-                                    <span class="badge badge-ta">
-                                        <span class="material-icons-outlined" style="font-size: 16px;">school</span>
-                                        Terbuka untuk Tugas Akhir
-                                    </span>
-                                @endif
-                            @endif
-                            <span class="badge badge-open">
-                                <span class="material-icons-outlined" style="font-size: 16px;">check_circle</span>
-                                500+ Karyawan
-                            </span>
                         </div>
                     </div>
                     <div class="company-actions">
                         <button class="btn-share" onclick="shareCompany()" title="Bagikan">
                             <span class="material-icons-outlined" style="font-size: 20px;">share</span>
                         </button>
-                        <a href="{{ route('perusahaan.index') }}" class="btn btn-primary btn-action">
-                            <span class="material-icons-outlined" style="font-size: 18px;">send</span>
-                            Ajukan KP/Magang
-                        </a>
                     </div>
                 </div>
             </div>
@@ -979,21 +952,6 @@
                             </div>
                         @endif
                     </div>
-                </div>
-
-                {{-- CTA Card --}}
-                <div class="sidebar-card cta-card">
-                    <h3 class="sidebar-title">
-                        <span class="material-icons-outlined">rocket_launch</span>
-                        Ingin Bergabung?
-                    </h3>
-                    <p class="cta-text">
-                        Kami membuka kesempatan magang untuk posisi Frontend, Backend, dan Data Science selama summer.
-                    </p>
-                    <a href="{{ route('perusahaan.index') }}" class="btn btn-cta">
-                        <span class="material-icons-outlined" style="font-size: 18px;">send</span>
-                        Lihat Lowongan
-                    </a>
                 </div>
             </div>
         </div>
