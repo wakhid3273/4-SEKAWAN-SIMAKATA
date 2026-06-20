@@ -23,22 +23,36 @@ class DashboardController extends Controller
             ->take(10)
             ->get();
 
-        $activityTrends = [
-            'MON' => 12,
-            'TUE' => 8,
-            'WED' => 15,
-            'THU' => 20,
-            'FRI' => 10,
-            'SAT' => 5,
-            'SUN' => 25,
-        ];
+        // Sebaran Tempat KP (dari FinalProject)
+        $sebaranKP = FinalProject::selectRaw('perusahaan, COUNT(*) as total')
+            ->whereNotNull('perusahaan')
+            ->groupBy('perusahaan')
+            ->orderByDesc('total')
+            ->limit(8)
+            ->pluck('total', 'perusahaan')
+            ->toArray();
+
+        // Sebaran Tempat Magang (dari MahasiswaMagang + Perusahaan)
+        $sebaranMagang = MahasiswaMagang::with('perusahaan')
+            ->selectRaw('perusahaan_id, COUNT(*) as total')
+            ->whereNotNull('perusahaan_id')
+            ->groupBy('perusahaan_id')
+            ->orderByDesc('total')
+            ->limit(8)
+            ->get()
+            ->mapWithKeys(function($item) {
+                $nama = $item->perusahaan->nama ?? 'Lainnya';
+                return [$nama => $item->total];
+            })
+            ->toArray();
 
         return view('dashboard.admin', compact(
             'totalPerusahaan',
             'totalUserAktif',
             'menungguVerifikasi',
             'pendingMahasiswa',
-            'activityTrends'
+            'sebaranKP',
+            'sebaranMagang'
         ));
     }
 

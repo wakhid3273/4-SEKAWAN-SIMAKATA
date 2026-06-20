@@ -112,6 +112,17 @@
     .chart-filter:hover { border-color: #1a5fb4; color: #1a5fb4; }
 
     /* Bar chart */
+    .chart-slider { overflow: hidden; position: relative; }
+    .chart-slide { display: none; }
+    .chart-slide.active { display: block; }
+    .chart-dot {
+        width: 8px; height: 8px;
+        border-radius: 50%;
+        background: #d1d5db;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .chart-dot.active { background: #1a5fb4; }
     .bar-chart-area {
         display: flex;
         align-items: flex-end;
@@ -489,39 +500,53 @@
     </div>
 </div>
 
-{{-- ===== MIDDLE ROW: Chart + System Health ===== --}}
+{{-- ===== MIDDLE ROW: Charts + System Health ===== --}}
 <div class="mid-row">
-    {{-- Activity Trends Chart --}}
+    {{-- Sebaran Bar Charts (auto-slide) --}}
     <div class="card chart-card">
         <div class="chart-header">
-            <h2>Activity Trends</h2>
-            <div class="chart-filter">
-                Last 7 Days
-                <span class="material-icons-outlined">expand_more</span>
+            <h2 id="chart-title">Sebaran Tempat Kerja Praktik</h2>
+        </div>
+        <div class="chart-slider" id="chartSlider">
+            {{-- Slide 1: KP --}}
+            <div class="chart-slide active" id="slide-kp">
+                @php $sebaranKPArr = $sebaranKP ?? []; $maxKP = $sebaranKPArr ? max(array_values($sebaranKPArr)) : 1; @endphp
+                <div class="bar-chart-area">
+                    @forelse($sebaranKPArr as $nama => $jumlah)
+                        @php $pct = $maxKP > 0 ? round(($jumlah/$maxKP)*100) : 10; @endphp
+                        <div class="bar-group">
+                            <div class="bar-wrap">
+                                <div class="bar active" style="height:{{ max($pct,6) }}%" data-value="{{ $jumlah }} mahasiswa"></div>
+                            </div>
+                            <span class="bar-label" title="{{ $nama }}">{{ Str::limit($nama,10,'') }}</span>
+                        </div>
+                    @empty
+                        <div style="color:#9ca3af;font-size:13px;margin:auto;">Belum ada data KP.</div>
+                    @endforelse
+                </div>
+            </div>
+            {{-- Slide 2: Magang --}}
+            <div class="chart-slide" id="slide-magang">
+                @php $sebaranMagangArr = $sebaranMagang ?? []; $maxMag = $sebaranMagangArr ? max(array_values($sebaranMagangArr)) : 1; @endphp
+                <div class="bar-chart-area">
+                    @forelse($sebaranMagangArr as $nama => $jumlah)
+                        @php $pct2 = $maxMag > 0 ? round(($jumlah/$maxMag)*100) : 10; @endphp
+                        <div class="bar-group">
+                            <div class="bar-wrap">
+                                <div class="bar" style="height:{{ max($pct2,6) }}%;background:#10b981;" data-value="{{ $jumlah }} mahasiswa"></div>
+                            </div>
+                            <span class="bar-label" title="{{ $nama }}">{{ Str::limit($nama,10,'') }}</span>
+                        </div>
+                    @empty
+                        <div style="color:#9ca3af;font-size:13px;margin:auto;">Belum ada data Magang.</div>
+                    @endforelse
+                </div>
             </div>
         </div>
-
-        @php
-            $maxVal = max(array_values($activityTrends));
-        @endphp
-
-        <div class="bar-chart-area" role="img" aria-label="Activity Trends Bar Chart">
-            @foreach($activityTrends as $day => $value)
-                @php
-                    $pct = $maxVal > 0 ? round(($value / $maxVal) * 100) : 10;
-                    $isToday = $day === 'SUN';
-                @endphp
-                <div class="bar-group">
-                    <div class="bar-wrap">
-                        <div
-                            class="bar {{ $isToday ? 'active' : '' }}"
-                            style="height: {{ $pct }}%"
-                            data-value="{{ $value }} aktivitas"
-                        ></div>
-                    </div>
-                    <span class="bar-label {{ $isToday ? 'active-label' : '' }}">{{ $day }}</span>
-                </div>
-            @endforeach
+        {{-- Dots --}}
+        <div style="display:flex;gap:6px;justify-content:center;margin-top:14px;">
+            <span class="chart-dot active" id="dot-kp" onclick="showSlide('kp')"></span>
+            <span class="chart-dot" id="dot-magang" onclick="showSlide('magang')"></span>
         </div>
     </div>
 
@@ -642,5 +667,39 @@
             });
         });
     }
+
+    // ===== Chart Autoplay =====
+    const slides = ['kp', 'magang'];
+    const titles = { kp: 'Sebaran Tempat Kerja Praktik', magang: 'Sebaran Tempat Magang' };
+    let currentSlide = 0;
+    let autoplayTimer = null;
+
+    function showSlide(name) {
+        slides.forEach(s => {
+            const el = document.getElementById('slide-' + s);
+            const dot = document.getElementById('dot-' + s);
+            if (el) el.classList.toggle('active', s === name);
+            if (dot) dot.classList.toggle('active', s === name);
+        });
+        const title = document.getElementById('chart-title');
+        if (title) title.textContent = titles[name] || '';
+        currentSlide = slides.indexOf(name);
+    }
+
+    function startAutoplay() {
+        autoplayTimer = setInterval(() => {
+            const next = slides[(currentSlide + 1) % slides.length];
+            showSlide(next);
+        }, 4000);
+    }
+
+    function stopAutoplay() { clearInterval(autoplayTimer); }
+
+    const chartCard = document.querySelector('.chart-card');
+    if (chartCard) {
+        chartCard.addEventListener('mouseenter', stopAutoplay);
+        chartCard.addEventListener('mouseleave', startAutoplay);
+    }
+    startAutoplay();
 </script>
 @endsection
