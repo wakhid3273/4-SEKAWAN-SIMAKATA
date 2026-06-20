@@ -491,13 +491,13 @@
 
 {{-- ===== MIDDLE ROW: Chart + System Health ===== --}}
 <div class="mid-row">
-    {{-- Bar Chart Sebaran Otomatis --}}
+    {{-- Activity Trends Chart --}}
     <div class="card chart-card">
         <div class="chart-header">
-            <h2>Statistik Sebaran</h2>
-            <div class="chart-filter" id="autoplayToggle">
-                <span class="material-icons-outlined" id="autoplayIcon">pause</span>
-                Autoplay
+            <h2>Activity Trends</h2>
+            <div class="chart-filter">
+                Last 7 Days
+                <span class="material-icons-outlined">expand_more</span>
             </div>
         </div>
 
@@ -505,16 +505,21 @@
             $maxVal = max(array_values($activityTrends));
         @endphp
 
-        <div class="bar-chart-area" role="img" aria-label="Statistik Sebaran Bar Chart" id="autoBarChart">
-            @foreach(['Data 1', 'Data 2', 'Data 3', 'Data 4', 'Data 5', 'Data 6', 'Data 7'] as $label)
+        <div class="bar-chart-area" role="img" aria-label="Activity Trends Bar Chart">
+            @foreach($activityTrends as $day => $value)
                 @php
-                    $pct = rand(10, 100);
+                    $pct = $maxVal > 0 ? round(($value / $maxVal) * 100) : 10;
+                    $isToday = $day === 'SUN';
                 @endphp
                 <div class="bar-group">
                     <div class="bar-wrap">
-                        <div class="bar" style="height: {{ $pct }}%" data-value="{{ $pct }} entitas"></div>
+                        <div
+                            class="bar {{ $isToday ? 'active' : '' }}"
+                            style="height: {{ $pct }}%"
+                            data-value="{{ $value }} aktivitas"
+                        ></div>
                     </div>
-                    <span class="bar-label">{{ $label }}</span>
+                    <span class="bar-label {{ $isToday ? 'active-label' : '' }}">{{ $day }}</span>
                 </div>
             @endforeach
         </div>
@@ -564,19 +569,19 @@
                     <td>
                         <div class="entity-cell">
                             @php
-                                $initials = strtoupper(substr($item->student->nim ?? 'U', 0, 2));
+                                $initials = strtoupper(substr($item->nim ?? 'U', 0, 2));
                                 $colors = ['blue','teal','purple','orange'];
                                 $color = $colors[$loop->index % count($colors)];
                             @endphp
                             <div class="entity-avatar {{ $color }}">{{ $initials }}</div>
                             <div class="entity-name">
-                                {{ $item->student->nim ?? 'Unknown' }} (Student)
+                                {{ $item->nim ?? 'Unknown' }} (Student)
                             </div>
                         </div>
                     </td>
-                    <td>{{ $item->title }}</td>
+                    <td>{{ $item->kegiatan }}</td>
                     <td>
-                        {{ $item->submitted_at ? \Carbon\Carbon::parse($item->submitted_at)->format('M d, Y') : '-' }}
+                        {{ $item->created_at ? \Carbon\Carbon::parse($item->created_at)->format('M d, Y') : '-' }}
                     </td>
                     <td>
                         @if($item->status === 'pending')
@@ -637,53 +642,5 @@
             });
         });
     }
-</script>
-@endsection
-
-@section('scripts')
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // Autoplay Bar Chart
-        const bars = document.querySelectorAll('#autoBarChart .bar');
-        const autoplayToggle = document.getElementById('autoplayToggle');
-        const autoplayIcon = document.getElementById('autoplayIcon');
-        let intervalId = null;
-        let isPlaying = true;
-
-        const updateBars = () => {
-            bars.forEach(bar => {
-                const randomPct = Math.floor(Math.random() * 90) + 10;
-                bar.style.height = `${randomPct}%`;
-                bar.setAttribute('data-value', `${randomPct} entitas`);
-            });
-        };
-
-        const startAutoplay = () => {
-            if (!intervalId) {
-                intervalId = setInterval(updateBars, 2000);
-                autoplayIcon.textContent = 'pause';
-                isPlaying = true;
-            }
-        };
-
-        const stopAutoplay = () => {
-            if (intervalId) {
-                clearInterval(intervalId);
-                intervalId = null;
-                autoplayIcon.textContent = 'play_arrow';
-                isPlaying = false;
-            }
-        };
-
-        autoplayToggle.addEventListener('click', () => {
-            if (isPlaying) {
-                stopAutoplay();
-            } else {
-                startAutoplay();
-            }
-        });
-
-        startAutoplay();
-    });
 </script>
 @endsection
