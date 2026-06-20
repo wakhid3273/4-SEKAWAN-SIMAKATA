@@ -758,11 +758,7 @@
                         <div class="u-role">Mahasiswa</div>
                     </div>
                     <div class="topbar-avatar">
-                        @if(Auth::user()->avatar)
-                            <img src="{{ Storage::url(Auth::user()->avatar) }}" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover;">
-                        @else
-                            {{ strtoupper(substr($user->nama_lengkap ?? 'M', 0, 1)) }}
-                        @endif
+                        {{ strtoupper(substr($user->nama_lengkap ?? 'M', 0, 1)) }}
                     </div>
                 </div>
             </div>
@@ -771,212 +767,63 @@
         {{-- Page Content --}}
         <main class="page-body">
 
-            {{-- ===== PROFILE BANNER ===== --}}
-            <div class="profile-banner" id="profile-banner">
-                {{-- Avatar --}}
-                <div class="banner-avatar">
+                        <div style='background: white; border-radius: 14px; padding: 30px; box-shadow: 0 1px 4px rgba(0,0,0,0.07);'>
+                <h2 style='margin-bottom: 20px; font-size: 20px;'>Edit Profil</h2>
+                <form action='{{ route("user.profil.update") }}' method='POST' enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+                    
+                    <div style='margin-bottom: 16px;'>
+                        <label style='display:block; margin-bottom:8px; font-weight:600; font-size:13px;'>Foto Profil (Opsional)</label>
                         @if($user->avatar)
-                            <img src="{{ Storage::url($user->avatar) }}" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover;">
-                        @else
-                            {{ strtoupper(substr($user->nama_lengkap ?? 'M', 0, 1)) }}
+                            <img src="{{ Storage::url($user->avatar) }}" alt="Avatar" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 10px; display: block;">
                         @endif
-                </div>
-
-                {{-- Info + Actions --}}
-                <div class="banner-info">
-                    <div class="banner-name-row">
-                        <div class="banner-name">{{ $user->nama_lengkap ?? 'Nama Belum Diatur' }}</div>
-                        @if(($user->status_akademik ?? '') === 'Aktif')
-                            <span class="badge-status">Aktif Akademik</span>
-                        @else
-                            <span class="badge-status inactive">{{ $user->status_akademik ?? 'Tidak Aktif' }}</span>
-                        @endif
+                        <input type="file" name="avatar" accept="image/*" style='width:100%; padding:10px; border:1px solid #e5e7eb; border-radius:8px;'>
                     </div>
-                    <div class="banner-nim">
-                        <span class="material-icons-outlined">badge</span>
-                        NIM: {{ $user->nim ?? '-' }}
+                    
+                    <div style='margin-bottom: 16px;'>
+                        <label style='display:block; margin-bottom:8px; font-weight:600; font-size:13px;'>Nama Lengkap</label>
+                        <input type='text' name='nama_lengkap' value='{{ old("nama_lengkap", $user->nama_lengkap) }}' required style='width:100%; padding:10px; border:1px solid #e5e7eb; border-radius:8px;'>
                     </div>
-                    <div class="banner-actions">
-                        <a href="{{ route('user.profil.edit') }}" class="btn-banner btn-banner-primary" id="btn-edit-profil">
-                            <span class="material-icons-outlined">edit</span>
-                            Edit Profil
-                        </a>
-                        <button class="btn-banner btn-banner-secondary" id="btn-bagikan-profil">
-                            <span class="material-icons-outlined">share</span>
-                            Bagikan Profil
-                        </button>
+                    
+                    <div style='margin-bottom: 16px;'>
+                        <label style='display:block; margin-bottom:8px; font-weight:600; font-size:13px;'>Email</label>
+                        <input type='email' name='email' value='{{ old("email", $user->email) }}' required style='width:100%; padding:10px; border:1px solid #e5e7eb; border-radius:8px;'>
                     </div>
-                </div>
+                    
+                    <div style='margin-bottom: 16px;'>
+                        <label style='display:block; margin-bottom:8px; font-weight:600; font-size:13px;'>NIM</label>
+                        <input type='text' name='nim' value='{{ old("nim", $user->nim) }}' required style='width:100%; padding:10px; border:1px solid #e5e7eb; border-radius:8px;'>
+                    </div>
+                    
+                    <div style='margin-bottom: 16px;'>
+                        <label style='display:block; margin-bottom:8px; font-weight:600; font-size:13px;'>Angkatan</label>
+                        <input type='text' name='angkatan' value='{{ old("angkatan", $user->angkatan) }}' style='width:100%; padding:10px; border:1px solid #e5e7eb; border-radius:8px;'>
+                    </div>
+                    
+                    <div style='margin-bottom: 16px;'>
+                        <label style='display:block; margin-bottom:8px; font-weight:600; font-size:13px;'>Program Studi</label>
+                        <input type='text' name='program_studi' value='{{ old("program_studi", $user->program_studi) }}' style='width:100%; padding:10px; border:1px solid #e5e7eb; border-radius:8px;'>
+                    </div>
+                    
+                    <div style='margin-bottom: 16px;'>
+                        <label style='display:block; margin-bottom:8px; font-weight:600; font-size:13px;'>Nomor Telepon</label>
+                        <input type='text' name='nomor_telepon' value='{{ old("nomor_telepon", $user->nomor_telepon) }}' style='width:100%; padding:10px; border:1px solid #e5e7eb; border-radius:8px;'>
+                    </div>
+                    
+                    <div style='margin-bottom: 24px;'>
+                        <label style='display:block; margin-bottom:8px; font-weight:600; font-size:13px;'>Password Baru (Opsional)</label>
+                        <input type='password' name='password' placeholder='Kosongkan jika tidak ingin mengubah' style='width:100%; padding:10px; border:1px solid #e5e7eb; border-radius:8px;'>
+                    </div>
+                    
+                    <div style='display:flex; gap:12px;'>
+                        <button type='submit' style='padding:10px 20px; background:#1a5fb4; color:white; border:none; border-radius:8px; font-weight:600; cursor:pointer;'>Simpan Perubahan</button>
+                        <a href='{{ route("user.profil") }}' style='padding:10px 20px; background:#f3f4f6; color:#374151; border:none; border-radius:8px; font-weight:600; text-decoration:none; display:inline-block;'>Batal</a>
+                    </div>
+                </form>
             </div>
-
-            {{-- ===== CONTENT GRID ===== --}}
-            <div class="content-grid">
-
-                {{-- LEFT: Informasi Akademik + Stat Cards --}}
-                <div>
-                    {{-- Informasi Akademik --}}
-                    <div class="card" id="card-akademik">
-                        <div class="card-header">
-                            <div class="card-title">
-                                <span class="material-icons-outlined">school</span>
-                                Informasi Akademik
-                            </div>
-                            <a href="#" class="card-link" id="link-kurikulum">Lihat Detail Kurikulum</a>
-                        </div>
-                        <div class="academic-grid">
-                            <div class="academic-cell">
-                                <div class="academic-label">Nama Lengkap</div>
-                                <div class="academic-value">{{ $user->nama_lengkap ?? '-' }}</div>
-                            </div>
-                            <div class="academic-cell">
-                                <div class="academic-label">NIM</div>
-                                <div class="academic-value">{{ $user->nim ?? '-' }}</div>
-                            </div>
-                            <div class="academic-cell">
-                                <div class="academic-label">Angkatan</div>
-                                <div class="academic-value">{{ $user->angkatan ?? '-' }}</div>
-                            </div>
-                            <div class="academic-cell">
-                                <div class="academic-label">Program Studi</div>
-                                <div class="academic-value">{{ $user->program_studi ?? '-' }}</div>
-                            </div>
-                            <div class="academic-cell">
-                                <div class="academic-label">Semester Aktif</div>
-                                <div class="academic-value">{{ $user->semester_aktif ?? '-' }}</div>
-                            </div>
-                            <div class="academic-cell">
-                                <div class="academic-label">Status Akademik</div>
-                                <div class="academic-value">
-                                    @if(($user->status_akademik ?? '') === 'Aktif')
-                                        <span class="status-dot">{{ $user->status_akademik }}</span>
-                                    @else
-                                        <span class="status-dot inactive">{{ $user->status_akademik ?? '-' }}</span>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- Stat Cards --}}
-                    <div class="stat-grid" id="stat-grid">
-                        <div class="stat-card" id="stat-kp">
-                            <div class="stat-icon-wrap si-blue">
-                                <span class="material-icons-outlined">work_history</span>
-                            </div>
-                            <div class="stat-number">{{ $totalKpMagang }}</div>
-                            <div class="stat-label">Total Pengajuan<br>KP/Magang</div>
-                        </div>
-                        <div class="stat-card" id="stat-ta">
-                            <div class="stat-icon-wrap si-indigo">
-                                <span class="material-icons-outlined">article</span>
-                            </div>
-                            <div class="stat-number">{{ $totalTugasAkhir }}</div>
-                            <div class="stat-label">Total Pengajuan<br>Tugas Akhir</div>
-                        </div>
-                        <div class="stat-card" id="stat-pending">
-                            <div class="stat-icon-wrap si-amber">
-                                <span class="material-icons-outlined">pending_actions</span>
-                            </div>
-                            <div class="stat-number">{{ $pengajuanPending }}</div>
-                            <div class="stat-label">Pengajuan<br>Pending</div>
-                        </div>
-                        <div class="stat-card" id="stat-disetujui">
-                            <div class="stat-icon-wrap si-green">
-                                <span class="material-icons-outlined">check_circle_outline</span>
-                            </div>
-                            <div class="stat-number">{{ $pengajuanDisetujui }}</div>
-                            <div class="stat-label">Pengajuan<br>Disetujui</div>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- RIGHT COLUMN --}}
-                <div class="right-col">
-
-                    {{-- Informasi Kontak --}}
-                    <div class="card" id="card-kontak">
-                        <div class="card-header">
-                            <div class="card-title">
-                                <span class="material-icons-outlined">contact_page</span>
-                                Informasi Kontak
-                            </div>
-                        </div>
-                        <div class="contact-item" id="contact-email">
-                            <div class="contact-icon">
-                                <span class="material-icons-outlined">alternate_email</span>
-                            </div>
-                            <div>
-                                <div class="contact-label">Email Institusi</div>
-                                <div class="contact-value">{{ $user->email ?? '-' }}</div>
-                            </div>
-                        </div>
-                        <div class="contact-item" id="contact-phone">
-                            <div class="contact-icon" style="background:#ede9fe; color:#6d28d9;">
-                                <span class="material-icons-outlined">phone_iphone</span>
-                            </div>
-                            <div>
-                                <div class="contact-label">Nomor Telepon</div>
-                                <div class="contact-value">{{ $user->nomor_telepon ?? '-' }}</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- Keamanan Akun --}}
-                    <div class="card" id="card-keamanan">
-                        <div class="card-header">
-                            <div class="card-title">
-                                <span class="material-icons-outlined">shield</span>
-                                Keamanan Akun
-                            </div>
-                        </div>
-                        <div class="last-login-box">
-                            <span class="material-icons-outlined">schedule</span>
-                            <div class="last-login-text">
-                                Terakhir Login:
-                                {{ $user->last_login_at ? $user->last_login_at->diffForHumans() : '-' }}
-                            </div>
-                        </div>
-                        <a href="{{ route('user.profil.edit') }}" class="btn-ubah-password" id="btn-ubah-password" style="text-decoration:none;">
-                            <span class="material-icons-outlined">lock_reset</span>
-                            Ubah Password
-                        </a>
-                        <div class="security-hint">
-                            Disarankan untuk mengubah password secara berkala setiap 6 bulan.
-                        </div>
-                    </div>
-
-                    {{-- Bantuan --}}
-                    <div class="card-bantuan" id="card-bantuan">
-                        <div class="bantuan-title">Butuh Bantuan?</div>
-                        <div class="bantuan-desc">
-                            Hubungi tim IT Support jika Anda mengalami kendala pada akun akademik Anda.
-                        </div>
-                        <a href="#" class="btn-bantuan" id="btn-hubungi-support">
-                            Hubungi Support
-                            <span class="material-icons-outlined">arrow_forward</span>
-                        </a>
-                    </div>
-
-                </div>{{-- /right-col --}}
-            </div>{{-- /content-grid --}}
-
         </main>
-    </div>{{-- /main --}}
-</div>{{-- /shell --}}
-
-<script>
-    // ===== Bagikan Profil =====
-    document.getElementById('btn-bagikan-profil')?.addEventListener('click', function() {
-        if (navigator.share) {
-            navigator.share({ title: 'Profil SIMAKATA', url: window.location.href });
-        } else {
-            navigator.clipboard?.writeText(window.location.href).then(() => {
-                alert('Link profil berhasil disalin!');
-            }).catch(() => {
-                alert('Tidak dapat menyalin link.');
-            });
-        }
-    });
-</script>
+    </div>
+</div>
 </body>
 </html>

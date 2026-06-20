@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use App\Models\Company;
 use App\Models\FinalProject;
@@ -64,5 +65,46 @@ class ProfileController extends Controller
             'pendingReview',
             'aktivitasTerbaru'
         ));
+    }
+
+    public function edit()
+    {
+        $admin = Auth::user();
+        return view('admin.edit-profile', compact('admin'));
+    }
+
+    public function update(Request $request)
+    {
+        $admin = Auth::user();
+
+        $rules = [
+            'nama_lengkap' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $admin->id,
+            'nim' => 'required|string|max:50|unique:users,nim,' . $admin->id,
+            'password' => 'nullable|min:6',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ];
+
+        $request->validate($rules);
+
+        $admin->nama_lengkap = $request->nama_lengkap;
+        $admin->email = $request->email;
+        $admin->nim = $request->nim;
+
+        if ($request->hasFile('avatar')) {
+            if ($admin->avatar && Storage::disk('public')->exists($admin->avatar)) {
+                Storage::disk('public')->delete($admin->avatar);
+            }
+            $avatarPath = $request->file('avatar')->store('avatars', 'public');
+            $admin->avatar = $avatarPath;
+        }
+
+        if ($request->filled('password')) {
+            $admin->password = \Illuminate\Support\Facades\Hash::make($request->password);
+        }
+
+        $admin->save();
+
+        return redirect()->route('admin.profil')->with('success', 'Profil berhasil diperbarui.');
     }
 }
