@@ -97,26 +97,6 @@
         .nav-item .material-icons-outlined { font-size: 20px; flex-shrink: 0; }
         .nav-item:hover { background: var(--sidebar-hover); color: rgba(255,255,255,0.9); }
         .nav-item.active { background: var(--sidebar-active-bg); color: #fff; font-weight: 600; }
-        .sidebar-new-request { margin: 0 12px 12px; }
-        .btn-new-request {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            width: 100%;
-            padding: 11px 16px;
-            background: var(--blue-primary);
-            color: #fff;
-            font-size: 13px;
-            font-weight: 600;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background 0.18s;
-        }
-        .btn-new-request:hover { background: #1450a0; }
-        .btn-new-request .material-icons-outlined { font-size: 18px; }
         .sidebar-footer {
             padding: 14px 12px 18px;
             border-top: 1px solid rgba(255,255,255,0.06);
@@ -473,12 +453,6 @@
         </nav>
 
         <!-- Sidebar Bottom: Logout -->
-        <div class="sidebar-new-request">
-            <a href="#" class="btn-new-request" id="btn-new-request">
-                <span class="material-icons-outlined">add</span>
-                New Request
-            </a>
-        </div>
         <div class="sidebar-footer">
             <form method="POST" action="{{ route('logout') }}" style="margin:0;">
                 @csrf
