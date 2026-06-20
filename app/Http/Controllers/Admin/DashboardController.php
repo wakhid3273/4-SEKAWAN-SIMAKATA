@@ -8,7 +8,6 @@ use App\Models\Perusahaan;
 use App\Models\FinalProject;
 use App\Models\MahasiswaMagang;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\Pdf; // pastikan sudah install barryvdh/laravel-dompdf
 
 class DashboardController extends Controller
 {
@@ -78,8 +77,8 @@ class DashboardController extends Controller
             'total_disetujui'     => MahasiswaMagang::where('status', 'approved')->count(),
         ];
 
-        // Generate PDF dari view (buat file resources/views/admin/dashboard_pdf.blade.php)
-        $pdf = Pdf::loadView('admin.dashboard_pdf', $data);
+        // Generate PDF menggunakan DomPDF
+        $pdf = app('dompdf.wrapper')->loadView('admin.dashboard_pdf', $data);
 
         // Download file PDF
         return $pdf->download('dashboard_admin.pdf');
