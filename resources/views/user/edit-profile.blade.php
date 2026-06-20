@@ -769,9 +769,17 @@
 
                         <div style='background: white; border-radius: 14px; padding: 30px; box-shadow: 0 1px 4px rgba(0,0,0,0.07);'>
                 <h2 style='margin-bottom: 20px; font-size: 20px;'>Edit Profil</h2>
-                <form action='{{ route("user.profil.update") }}' method='POST'>
+                <form action='{{ route("user.profil.update") }}' method='POST' enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
+                    
+                    <div style='margin-bottom: 16px;'>
+                        <label style='display:block; margin-bottom:8px; font-weight:600; font-size:13px;'>Foto Profil (Opsional)</label>
+                        @if($user->avatar)
+                            <img src="{{ Storage::url($user->avatar) }}" alt="Avatar" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 10px; display: block;">
+                        @endif
+                        <input type="file" name="avatar" accept="image/*" style='width:100%; padding:10px; border:1px solid #e5e7eb; border-radius:8px;'>
+                    </div>
                     
                     <div style='margin-bottom: 16px;'>
                         <label style='display:block; margin-bottom:8px; font-weight:600; font-size:13px;'>Nama Lengkap</label>

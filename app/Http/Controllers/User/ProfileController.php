@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Models\FinalProject;
 
 class ProfileController extends Controller
@@ -47,6 +48,7 @@ class ProfileController extends Controller
             'program_studi' => 'nullable|string|max:100',
             'nomor_telepon' => 'nullable|string|max:20',
             'password' => 'nullable|min:6',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
 
         $request->validate($rules);
@@ -57,6 +59,14 @@ class ProfileController extends Controller
         $user->angkatan = $request->angkatan;
         $user->program_studi = $request->program_studi;
         $user->nomor_telepon = $request->nomor_telepon;
+
+        if ($request->hasFile('avatar')) {
+            if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
+                Storage::disk('public')->delete($user->avatar);
+            }
+            $avatarPath = $request->file('avatar')->store('avatars', 'public');
+            $user->avatar = $avatarPath;
+        }
 
         if ($request->filled('password')) {
             $user->password = \Illuminate\Support\Facades\Hash::make($request->password);

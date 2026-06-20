@@ -58,9 +58,17 @@
 </div>
 
 <div class="card-edit">
-    <form action="{{ route('admin.profil.update') }}" method="POST">
+    <form action="{{ route('admin.profil.update') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
+        
+        <div class="form-group">
+            <label class="form-label">Foto Profil (Opsional)</label>
+            @if($admin->avatar)
+                <img src="{{ Storage::url($admin->avatar) }}" alt="Avatar" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 10px; display: block;">
+            @endif
+            <input type="file" name="avatar" class="form-input" accept="image/*">
+        </div>
         
         <div class="form-group">
             <label class="form-label">Nama Lengkap</label>

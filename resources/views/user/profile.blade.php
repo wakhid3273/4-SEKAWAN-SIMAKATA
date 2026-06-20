@@ -758,7 +758,11 @@
                         <div class="u-role">Mahasiswa</div>
                     </div>
                     <div class="topbar-avatar">
-                        {{ strtoupper(substr($user->nama_lengkap ?? 'M', 0, 1)) }}
+                        @if(Auth::user()->avatar)
+                            <img src="{{ Storage::url(Auth::user()->avatar) }}" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover;">
+                        @else
+                            {{ strtoupper(substr($user->nama_lengkap ?? 'M', 0, 1)) }}
+                        @endif
                     </div>
                 </div>
             </div>
@@ -771,7 +775,11 @@
             <div class="profile-banner" id="profile-banner">
                 {{-- Avatar --}}
                 <div class="banner-avatar">
-                    {{ strtoupper(substr($user->nama_lengkap ?? 'M', 0, 1)) }}
+                        @if($user->avatar)
+                            <img src="{{ Storage::url($user->avatar) }}" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover;">
+                        @else
+                            {{ strtoupper(substr($user->nama_lengkap ?? 'M', 0, 1)) }}
+                        @endif
                 </div>
 
                 {{-- Info + Actions --}}

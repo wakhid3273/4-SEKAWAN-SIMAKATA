@@ -339,8 +339,11 @@
 
     <div class="profile-header-card">
         <div class="profile-avatar-wrapper">
-            <img src="https://ui-avatars.com/api/?name={{ urlencode($admin->nama_lengkap ?? 'Admin') }}&background=0D8ABC&color=fff&size=128"
-                alt="Avatar" class="profile-avatar">
+            @if($admin->avatar)
+                <img src="{{ Storage::url($admin->avatar) }}" alt="Avatar" class="profile-avatar">
+            @else
+                <img src="https://ui-avatars.com/api/?name={{ urlencode($admin->nama_lengkap ?? 'Admin') }}&background=0D8ABC&color=fff&size=128" alt="Avatar" class="profile-avatar">
+            @endif
             <div class="profile-avatar-icon">
                 <span class="material-icons-outlined" style="font-size: 16px;">verified</span>
             </div>
