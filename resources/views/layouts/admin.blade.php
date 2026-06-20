@@ -341,6 +341,10 @@
 
         {{-- Navigation --}}
         <nav class="sidebar-nav">
+            <a href="{{ route('landing') }}" id="nav-home" class="nav-item" title="Ke Landing Page">
+                <span class="material-icons-outlined">home</span>
+                <span>Home</span>
+            </a>
             <a href="{{ route('admin.dashboard') }}" id="nav-dashboard"
                class="nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                 <span class="material-icons-outlined">dashboard</span>

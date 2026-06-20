@@ -802,9 +802,9 @@
                     <a href="{{ route('login.form') }}" class="btn-secondary" id="btn-hero-login">Login</a>
                 @endguest
                 @auth
-                    <a href="{{ route('dashboard') }}" class="btn-primary" id="btn-hero-dashboard">
-                        <span class="material-icons-outlined">dashboard</span>
-                        Ke Dashboard
+                    <a href="#features" class="btn-primary" id="btn-hero-dashboard">
+                        <span class="material-icons-outlined">info</span>
+                        Lihat Fitur Utama Platform
                     </a>
                 @endauth
             </div>
@@ -819,11 +819,11 @@
             {{-- Floating chips --}}
             <div class="hero-float-chip chip-1">
                 <span class="chip-dot chip-green"></span>
-                50+ Perusahaan Aktif
+                {{ $perusahaanCount ?? '50+' }} Perusahaan Aktif
             </div>
             <div class="hero-float-chip chip-2">
                 <span class="chip-dot chip-blue"></span>
-                150+ Judul TA Sukses
+                {{ $mahasiswaKpCount ?? '150+' }} Judul Kerja Praktik
             </div>
         </div>
     </div>
@@ -833,16 +833,16 @@
 <section class="stats-section">
     <div class="stats-inner">
         <div class="stat-item">
-            <div class="stat-number">50+</div>
+            <div class="stat-number">{{ $perusahaanCount ?? '50+' }}</div>
             <div class="stat-label-text">Perusahaan Terdaftar</div>
         </div>
         <div class="stat-item">
-            <div class="stat-number">120+</div>
+            <div class="stat-number">{{ $mahasiswaMagangCount ?? '120+' }}</div>
             <div class="stat-label-text">Mahasiswa Magang</div>
         </div>
         <div class="stat-item">
-            <div class="stat-number">150+</div>
-            <div class="stat-label-text">Judul TA Sukses</div>
+            <div class="stat-number">{{ $mahasiswaKpCount ?? '150+' }}</div>
+            <div class="stat-label-text">Kerja Praktik</div>
         </div>
     </div>
 </section>

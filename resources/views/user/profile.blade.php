@@ -744,6 +744,9 @@
             </div>
 
             <div class="topbar-right">
+                <a href="{{ route('landing') }}" class="topbar-icon-btn" title="Ke Landing Page">
+                    <span class="material-icons-outlined">home</span>
+                </a>
                 <button class="topbar-icon-btn" id="btn-notif" aria-label="Notifikasi">
                     <span class="material-icons-outlined">notifications</span>
                     <span class="notif-dot"></span>
