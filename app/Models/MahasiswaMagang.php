@@ -9,9 +9,16 @@ class MahasiswaMagang extends Model
     protected $table = 'mahasiswa_magang';
     protected $fillable = [
         'nama',
+        'nim',
+        'kegiatan',
+        'status',
+        'alasan_penolakan',
         'angkatan',
         'posisi',
+        'bidang',
         'periode',
+        'cv_file',
+        'transkrip_file',
         'perusahaan_id'
     ];
 

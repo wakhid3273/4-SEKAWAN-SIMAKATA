@@ -39,12 +39,22 @@ Route::middleware('auth')->group(function () {
 
     // Admin Perusahaan Management
     Route::middleware('role:admin')->group(function () {
+        Route::get('/admin/profil', [\App\Http\Controllers\Admin\ProfileController::class, 'index'])->name('admin.profil');
+        Route::get('/admin/verifikasi', [\App\Http\Controllers\Admin\VerifikasiController::class, 'index'])->name('admin.verifikasi.index');
+        Route::get('/admin/verifikasi/kp/{id}', [\App\Http\Controllers\Admin\VerifikasiController::class, 'showKp'])->name('admin.verifikasi.kp.show');
+        Route::post('/admin/verifikasi/kp/{id}/approve', [\App\Http\Controllers\Admin\VerifikasiController::class, 'approveKp'])->name('admin.verifikasi.kp.approve');
+        Route::post('/admin/verifikasi/kp/{id}/reject', [\App\Http\Controllers\Admin\VerifikasiController::class, 'rejectKp'])->name('admin.verifikasi.kp.reject');
+        
         Route::get('/admin/perusahaan', [PerusahaanController::class, 'manage'])->name('admin.perusahaan.index');
         Route::get('/admin/perusahaan/create', [PerusahaanController::class, 'create'])->name('admin.perusahaan.create');
         Route::post('/admin/perusahaan', [PerusahaanController::class, 'store'])->name('admin.perusahaan.store');
         Route::get('/admin/perusahaan/{id}/edit', [PerusahaanController::class, 'edit'])->name('admin.perusahaan.edit');
         Route::put('/admin/perusahaan/{id}', [PerusahaanController::class, 'update'])->name('admin.perusahaan.update');
         Route::delete('/admin/perusahaan/{id}', [PerusahaanController::class, 'destroy'])->name('admin.perusahaan.destroy');
+
+        // Admin Mahasiswa Management
+        Route::get('/admin/mahasiswa/export-pdf', [\App\Http\Controllers\Admin\MahasiswaController::class, 'exportPdf'])->name('admin.mahasiswa.export-pdf');
+        Route::resource('/admin/mahasiswa', \App\Http\Controllers\Admin\MahasiswaController::class)->names('admin.mahasiswa');
     });
 
     // User dashboard

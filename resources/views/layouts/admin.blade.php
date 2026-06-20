@@ -322,13 +322,15 @@
         <div class="sidebar-logo">SIMAKATA</div>
 
         {{-- Admin user info --}}
-        <div class="sidebar-user">
-            <div class="sidebar-user-avatar">A</div>
-            <div class="sidebar-user-info">
-                <div class="name">Admin Panel</div>
-                <div class="role">System Administrator</div>
+        <a href="{{ route('admin.profil') }}" style="text-decoration:none;">
+            <div class="sidebar-user" style="cursor:pointer; {{ request()->routeIs('admin.profil') ? 'background: rgba(255,255,255,0.08);' : '' }}">
+                <div class="sidebar-user-avatar">A</div>
+                <div class="sidebar-user-info">
+                    <div class="name">{{ auth()->user()->nama_lengkap ?? 'Admin Panel' }}</div>
+                    <div class="role">System Administrator</div>
+                </div>
             </div>
-        </div>
+        </a>
 
         {{-- Navigation --}}
         <nav class="sidebar-nav">
@@ -341,11 +343,11 @@
                 <span class="material-icons-outlined">business</span>
                 <span>Kelola Perusahaan</span>
             </a>
-            <a href="#" id="nav-verifikasi" class="nav-item {{ request()->routeIs('admin.verifikasi*') ? 'active' : '' }}">
+            <a href="{{ route('admin.verifikasi.index') }}" id="nav-verifikasi" class="nav-item {{ request()->routeIs('admin.verifikasi*') ? 'active' : '' }}">
                 <span class="material-icons-outlined">verified_user</span>
                 <span>Verifikasi Data</span>
             </a>
-            <a href="#" id="nav-mahasiswa" class="nav-item {{ request()->routeIs('admin.mahasiswa*') ? 'active' : '' }}">
+            <a href="{{ route('admin.mahasiswa.index') }}" id="nav-mahasiswa" class="nav-item {{ request()->routeIs('admin.mahasiswa*') ? 'active' : '' }}">
                 <span class="material-icons-outlined">people</span>
                 <span>Data Mahasiswa</span>
             </a>

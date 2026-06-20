@@ -9,100 +9,465 @@ class PerusahaanSeeder extends Seeder
 {
     public function run(): void
     {
-        $data = [
+        // Data perusahaan/instansi dari DATABASE MAGANG ATAU MBKM.xlsx
+        $dataMagang = [
             [
-                'nama'            => 'TechGlobal Indonesia',
-                'lokasi'          => 'Jakarta Selatan, DKI Jakarta',
-                'jenis_kegiatan'  => 'Magang',
-                'tentang'         => 'TechGlobal Indonesia adalah perusahaan teknologi terkemuka yang berfokus pada transformasi digital dan inovasi perangkat lunak berskala enterprise.',
-                'website'         => 'https://www.techglobal.id',
-                'email'           => 'talent@techglobal.id',
-                'alamat'          => 'SCBD District 8, Senopati, Kebayoran Baru, Jakarta Selatan',
-                'jumlah_mahasiswa'=> 12,
+                'nama'             => 'Badan Strategi Kebijakan Luar Negeri (BSKLN) Kementerian Luar Negeri Republik Indonesia',
+                'jenis_kegiatan'   => 'Magang',
+                'jumlah_mahasiswa' => 1,
             ],
             [
-                'nama'            => 'DataNexus Solutions',
-                'lokasi'          => 'Bandung, Jawa Barat',
-                'jenis_kegiatan'  => 'Kerja Praktik',
-                'tentang'         => 'DataNexus Solutions bergerak di bidang analitik data dan kecerdasan buatan untuk solusi bisnis modern.',
-                'website'         => 'https://www.datanexus.co.id',
-                'email'           => 'hr@datanexus.co.id',
-                'alamat'          => 'Jl. Buah Batu No. 55, Bandung',
-                'jumlah_mahasiswa'=> 45,
+                'nama'             => 'Bakrie Center Foundation',
+                'jenis_kegiatan'   => 'Magang',
+                'jumlah_mahasiswa' => 1,
             ],
             [
-                'nama'            => 'CreativePixels Lab',
-                'lokasi'          => 'Yogyakarta, DIY',
-                'jenis_kegiatan'  => 'Magang',
-                'tentang'         => 'CreativePixels Lab adalah studio desain digital kreatif yang mengerjakan proyek UI/UX dan branding untuk klien domestik dan internasional.',
-                'website'         => 'https://www.creativepixels.id',
-                'email'           => 'intern@creativepixels.id',
-                'alamat'          => 'Jl. Kaliurang KM 7, Sleman, Yogyakarta',
-                'jumlah_mahasiswa'=> 8,
+                'nama'             => 'Balitbang Diklat Kementerian Agama',
+                'jenis_kegiatan'   => 'Magang',
+                'jumlah_mahasiswa' => 1,
             ],
             [
-                'nama'            => 'CyberGuard Security',
-                'lokasi'          => 'Jakarta Pusat, DKI Jakarta',
-                'jenis_kegiatan'  => 'Tugas Akhir',
-                'tentang'         => 'CyberGuard Security adalah perusahaan keamanan siber terdepan yang menyediakan layanan proteksi infrastruktur digital untuk perusahaan besar.',
-                'website'         => 'https://www.cyberguard.id',
-                'email'           => 'recruit@cyberguard.id',
-                'alamat'          => 'Sudirman Park, Lt. 12, Jakarta Pusat',
-                'jumlah_mahasiswa'=> 21,
+                'nama'             => 'Bangkit Academy',
+                'jenis_kegiatan'   => 'Magang',
+                'jumlah_mahasiswa' => 2,
             ],
             [
-                'nama'            => 'StartupHub Nusantara',
-                'lokasi'          => 'Tangerang, Banten',
-                'jenis_kegiatan'  => 'Magang',
-                'tentang'         => 'StartupHub Nusantara adalah ekosistem startup terbesar di kawasan Banten yang mendukung inovasi teknologi lokal.',
-                'website'         => 'https://www.startuphub.id',
-                'email'           => 'intern@startuphub.id',
-                'alamat'          => 'BSD City, Tangerang Selatan, Banten',
-                'jumlah_mahasiswa'=> 5,
+                'nama'             => 'Blibli (PT. Global Digital Niaga)',
+                'jenis_kegiatan'   => 'Magang',
+                'jumlah_mahasiswa' => 1,
             ],
             [
-                'nama'            => 'Artha Fintech Group',
-                'lokasi'          => 'Surabaya, Jawa Timur',
-                'jenis_kegiatan'  => 'Kerja Praktik',
-                'tentang'         => 'Artha Fintech Group adalah perusahaan finansial teknologi yang membangun platform pembayaran dan pinjaman digital untuk UMKM Indonesia.',
-                'website'         => 'https://www.arthafintech.co.id',
-                'email'           => 'career@arthafintech.co.id',
-                'alamat'          => 'Jl. Pemuda No. 27, Surabaya, Jawa Timur',
-                'jumlah_mahasiswa'=> 33,
+                'nama'             => 'CNN Indonesia (PT Trans News Corpora)',
+                'jenis_kegiatan'   => 'Magang',
+                'jumlah_mahasiswa' => 2,
             ],
             [
-                'nama'            => 'CloudMatrix Infra',
-                'lokasi'          => 'Denpasar, Bali',
-                'jenis_kegiatan'  => 'Tugas Akhir',
-                'tentang'         => 'CloudMatrix Infra menyediakan layanan infrastruktur cloud computing dan DevOps untuk perusahaan skala menengah dan enterprise.',
-                'website'         => 'https://www.cloudmatrix.id',
-                'email'           => 'talent@cloudmatrix.id',
-                'alamat'          => 'Jl. Teuku Umar, Denpasar Barat, Bali',
-                'jumlah_mahasiswa'=> 17,
+                'nama'             => 'CV. Brother Indonesia',
+                'jenis_kegiatan'   => 'Magang',
+                'jumlah_mahasiswa' => 1,
             ],
             [
-                'nama'            => 'GreenLogic Systems',
-                'lokasi'          => 'Semarang, Jawa Tengah',
-                'jenis_kegiatan'  => 'Magang',
-                'tentang'         => 'GreenLogic Systems berfokus pada pengembangan sistem IoT dan otomasi industri berbasis teknologi hijau ramah lingkungan.',
-                'website'         => 'https://www.greenlogic.id',
-                'email'           => 'hrd@greenlogic.id',
-                'alamat'          => 'Kawasan Industri Wijayakusuma, Semarang',
-                'jumlah_mahasiswa'=> 9,
+                'nama'             => 'Dinas Desa Panembangan Cilongok Banyumas',
+                'jenis_kegiatan'   => 'Magang',
+                'jumlah_mahasiswa' => 1,
             ],
             [
-                'nama'            => 'MediTech Indonesia',
-                'lokasi'          => 'Bandung, Jawa Barat',
-                'jenis_kegiatan'  => 'Kerja Praktik',
-                'tentang'         => 'MediTech Indonesia mengembangkan solusi teknologi kesehatan digital meliputi rekam medis elektronik dan telemedicine.',
-                'website'         => 'https://www.meditech.id',
-                'email'           => 'intern@meditech.id',
-                'alamat'          => 'Jl. Pasteur No. 77, Bandung',
-                'jumlah_mahasiswa'=> 14,
+                'nama'             => 'Direktorat Jenderal Pendidikan Tinggi, Riset, dan Teknologi, Kementerian Pendidikan, Kebudayaan, Riset, dan Teknologi',
+                'jenis_kegiatan'   => 'Magang',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'Kementerian Keuangan',
+                'jenis_kegiatan'   => 'Magang',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'Kementerian Pemberdayaan Perempuan dan Perlindungan Anak, dan Pelitades',
+                'jenis_kegiatan'   => 'Magang',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'PT Bank CIMB Niaga Tbk',
+                'jenis_kegiatan'   => 'Magang',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'PT Bank Central Asia Tbk',
+                'jenis_kegiatan'   => 'Magang',
+                'jumlah_mahasiswa' => 2,
+            ],
+            [
+                'nama'             => 'PT Dankos Farma',
+                'jenis_kegiatan'   => 'Magang',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'PT Dicoding Academi Indonesia',
+                'jenis_kegiatan'   => 'Magang',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'PT Gama Inovasi Berdikari',
+                'jenis_kegiatan'   => 'Magang',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'PT Global Digital Niaga Tbk',
+                'jenis_kegiatan'   => 'Magang',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'PT Hacktivate Teknologi Indonesia',
+                'jenis_kegiatan'   => 'Magang',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'PT INASTEK (Inamas Sintesis Teknologi)',
+                'jenis_kegiatan'   => 'Magang',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'PT INKA (Industri Kereta Api)',
+                'jenis_kegiatan'   => 'Magang',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'PT Lawang Sewu Teknologi',
+                'jenis_kegiatan'   => 'Magang',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'PT Mitra Integrasi Informatika (Metrodata Academy)',
+                'jenis_kegiatan'   => 'Magang',
+                'jumlah_mahasiswa' => 2,
+            ],
+            [
+                'nama'             => 'PT Pegadaian',
+                'jenis_kegiatan'   => 'Magang',
+                'jumlah_mahasiswa' => 2,
+            ],
+            [
+                'nama'             => 'PT Permodalan Nasional Madani',
+                'jenis_kegiatan'   => 'Magang',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'PT Surya Citra Media',
+                'jenis_kegiatan'   => 'Magang',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'PT Telkom Indonesia (Persero) Tbk',
+                'jenis_kegiatan'   => 'Magang',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'PT Traveloka Indonesia',
+                'jenis_kegiatan'   => 'Magang',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'PT United Tractors Tbk',
+                'jenis_kegiatan'   => 'Magang',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'PT. Cerdas Digital Nusantara (Cakap)',
+                'jenis_kegiatan'   => 'Magang',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'PT. Modular Kuliner Indonesia (Hangry Indonesia)',
+                'jenis_kegiatan'   => 'Magang',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'PT. Telekomunikasi Selular',
+                'jenis_kegiatan'   => 'Magang',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'Sekretariat Direktorat Jenderal Pendidikan Tinggi, Riset, dan Teknologi',
+                'jenis_kegiatan'   => 'Magang',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'Solo Technopark',
+                'jenis_kegiatan'   => 'Magang',
+                'jumlah_mahasiswa' => 1,
             ],
         ];
 
-        foreach ($data as $item) {
+        // Data perusahaan/instansi dari DATABASE KERJA PRAKTIK.xlsx
+        $dataKP = [
+            [
+                'nama'             => 'B-Universe',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'BKPSDM Kota Banjar',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'BPKAD Pemalang',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'BPS Kabupaten Banyumas',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'BPS Kota Pekalongan',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'Bapenda Kota Batam',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 2,
+            ],
+            [
+                'nama'             => 'Birutekno Bandung',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'CV Jenderal Solusi Digital',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 3,
+            ],
+            [
+                'nama'             => 'CV. Has Survey',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'DINAS KOMUNIKASI DAN INFORMATIKA KABUPATEN BANYUMAS',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'Desa Wisata Tambaknegara',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 2,
+            ],
+            [
+                'nama'             => 'Dinas Kebudayaan DKI Jakarta',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'Dinpora',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'Diskominfo Kota Tasikmalaya',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'Diskominfo Pemalang',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'Diskominfotik DKI Jakarta',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'FT UNSOED',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'GDP Labs Yogyakarta',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'KEMENTERIAN KELAUTAN DAN PERIKANAN',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'Kaskar Group',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'Kecamatan Jatinegara Kabupaten Tegal',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'Kemen PPPA Jakarta',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'Kominfo Purbalingga',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 3,
+            ],
+            [
+                'nama'             => 'Kominfo RI',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 3,
+            ],
+            [
+                'nama'             => 'LPPM UNSOED',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'LPPM Unsoed',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'Mal Pelayanan Publik BMS',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 3,
+            ],
+            [
+                'nama'             => 'PLN Icon Plus',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'PLN ULP Wangon',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'PLN UP3 Purwokerto',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'PT Astra Otoparts Tbk Divisi Winteq',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 2,
+            ],
+            [
+                'nama'             => 'PT Bali Internasional Teknologi',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'PT Jamkrindo Purwokerto',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 2,
+            ],
+            [
+                'nama'             => 'PT KAI DAOP V Purwokerto',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 2,
+            ],
+            [
+                'nama'             => 'PT KILANG PERTAMINA INTERNASIONAL RU IV CILACAP',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'PT Lawangsewu Teknologi Cabang Purwokerto',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'PT Mandom Indonesia Tbk',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'PT PLN Indonesia Power UBP Mrica',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'PT PLN Nusantara Power Unit Pembangkitan Muara Tawar',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'PT Pegadaian (Persero) Pusat',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'PT Protergo Siber Sekuriti (Jakarta)',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'PT SUMBER SEGARA PRIMADAYA (PLTU) CILACAP',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'PT Solusi Bangun Indonesia Tbk Cilacap',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'PT Solusi Bangun Indonesia Tbk Pabrik Cilacap',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'PT TIRTA EMPAT SATU BERKAH AGUARIA',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 2,
+            ],
+            [
+                'nama'             => 'PT. Arfin Goweb Indonesia',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 3,
+            ],
+            [
+                'nama'             => 'PT. Data Bumi Indonesia',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'PT. Dirgantara Indonesia (Persero)',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'PT. Kilang Pertamina Internasional Refinery Unit IV Cilacap',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 2,
+            ],
+            [
+                'nama'             => 'PT. Mandom Indonesia Tbk',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'PT. Perna Persada',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 2,
+            ],
+            [
+                'nama'             => 'Perda Purbalingga',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'Perpusda Purbalingga',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 3,
+            ],
+            [
+                'nama'             => 'Perumda Air Minum Tirta Satria Banyumas',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'RSUD Pelabuhanratu',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+            [
+                'nama'             => 'Rumah Sakit Santa Elisabeth Purwokerto',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 2,
+            ],
+            [
+                'nama'             => 'Soedirman Career Center',
+                'jenis_kegiatan'   => 'Kerja Praktik',
+                'jumlah_mahasiswa' => 1,
+            ],
+        ];
+
+        foreach (array_merge($dataMagang, $dataKP) as $item) {
             Perusahaan::create($item);
         }
     }
