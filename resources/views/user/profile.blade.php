@@ -909,12 +909,34 @@
             navigator.share({ title: 'Profil SIMAKATA', url: window.location.href });
         } else {
             navigator.clipboard?.writeText(window.location.href).then(() => {
-                alert('Link profil berhasil disalin!');
+                if (window.toast) {
+                    window.toast.show('Link profil berhasil disalin!', 'success', 3000);
+                } else {
+                    alert('Link profil berhasil disalin!');
+                }
             }).catch(() => {
-                alert('Tidak dapat menyalin link.');
+                if (window.toast) {
+                    window.toast.show('Tidak dapat menyalin link.', 'error', 3000);
+                } else {
+                    alert('Tidak dapat menyalin link.');
+                }
             });
         }
     });
+    
+    // ===== Show Toast on Page Load =====
+    @if(session('success'))
+        if (window.toast) {
+            window.toast.show('{{ session("success") }}', 'success', 4000);
+        }
+    @endif
+    
+    @if(session('error'))
+        if (window.toast) {
+            window.toast.show('{{ session("error") }}', 'error', 4000);
+        }
+    @endif
 </script>
+<script src="{{ asset('js/animations.js') }}"></script>
 </body>
 </html>

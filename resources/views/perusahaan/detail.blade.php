@@ -1024,10 +1024,32 @@
             } else {
                 // Fallback: copy to clipboard
                 navigator.clipboard.writeText(window.location.href).then(() => {
-                    alert('Link berhasil disalin ke clipboard!');
+                    if (window.toast) {
+                        window.toast.show('Link berhasil disalin ke clipboard!', 'success', 3000);
+                    } else {
+                        alert('Link berhasil disalin ke clipboard!');
+                    }
                 });
             }
         }
+    </script>
+    
+    <script src="{{ asset('js/animations.js') }}"></script>
+    <script>
+        // Show toast notification on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            @if(session('success'))
+                if (window.toast) {
+                    window.toast.show('{{ session("success") }}', 'success', 4000);
+                }
+            @endif
+            
+            @if(session('error'))
+                if (window.toast) {
+                    window.toast.show('{{ session("error") }}', 'error', 4000);
+                }
+            @endif
+        });
     </script>
 
 </body>
