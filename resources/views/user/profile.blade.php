@@ -957,16 +957,6 @@
 </div>{{-- /shell --}}
 
 <script>
-    // ===== Edit Profil button (placeholder) =====
-    document.getElementById('btn-edit-profil')?.addEventListener('click', function() {
-        alert('Fitur Edit Profil akan segera tersedia.');
-    });
-
-    // ===== Ubah Password button (placeholder) =====
-    document.getElementById('btn-ubah-password')?.addEventListener('click', function() {
-        alert('Fitur Ubah Password akan segera tersedia.');
-    });
-
     // ===== Bagikan Profil =====
     document.getElementById('btn-bagikan-profil')?.addEventListener('click', function() {
         if (navigator.share) {
