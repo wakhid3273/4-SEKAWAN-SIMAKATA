@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         /* ===== RESET & BASE ===== */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -662,7 +663,7 @@
         @if($perusahaan->count() > 0)
             <div class="companies-grid">
                 @foreach($perusahaan as $p)
-                    <div class="company-card">
+                    <div class="company-card" data-id="{{ $p->id }}">
                         {{-- Company Header --}}
                         <div class="company-header">
                             <div class="company-logo">
@@ -784,7 +785,85 @@
                 navbar.classList.remove('scrolled');
             }
         });
+
+        // ===== REAL-TIME via Laravel Echo + Reverb =====
+        function getBadgeHtml(jenis) {
+            if (!jenis) return '';
+            const map = {
+                'Magang'       : '<span class="badge badge-magang"><span class="material-icons-outlined" style="font-size:14px">work</span> Magang</span>',
+                'Kerja Praktik': '<span class="badge badge-kp"><span class="material-icons-outlined" style="font-size:14px">business_center</span> Kerja Praktik</span>',
+                'Tugas Akhir'  : '<span class="badge badge-ta"><span class="material-icons-outlined" style="font-size:14px">school</span> Tugas Akhir</span>',
+            };
+            return (map[jenis] || '') + '<span class="badge badge-open"><span class="material-icons-outlined" style="font-size:14px">check_circle</span> Terbuka</span>';
+        }
+
+        function buildCard(data) {
+            const initials = data.nama.substring(0, 2).toUpperCase();
+            const desc = data.tentang ? data.tentang.substring(0, 120) + (data.tentang.length > 120 ? '...' : '') : 'Tidak ada deskripsi.';
+            const url = `/perusahaan/${data.id}`;
+            return `
+            <div class="company-card" data-id="${data.id}" style="animation: fadeIn 0.4s ease">
+                <div class="company-header">
+                    <div class="company-logo">${initials}</div>
+                    <div class="company-info">
+                        <h3 class="company-name">${data.nama}</h3>
+                        <div class="company-location">
+                            <span class="material-icons-outlined">location_on</span>
+                            ${data.lokasi || 'Lokasi tidak tersedia'}
+                        </div>
+                    </div>
+                </div>
+                <div class="company-badges">${getBadgeHtml(data.jenis_kegiatan)}</div>
+                <p class="company-description">${desc}</p>
+                <div class="company-stats">
+                    <span class="material-icons-outlined">groups</span>
+                    <strong>${data.jumlah_mahasiswa || 0}</strong> Alumni
+                </div>
+                <div class="company-footer">
+                    <a href="${url}" class="btn-detail">Lihat Detail <span class="material-icons-outlined" style="font-size:18px">arrow_forward</span></a>
+                </div>
+            </div>`;
+        }
+
+        if (window.Echo) {
+            window.Echo.channel('perusahaan')
+                .listen('.perusahaan.created', (data) => {
+                    const grid = document.querySelector('.companies-grid');
+                    if (grid) {
+                        grid.insertAdjacentHTML('afterbegin', buildCard(data));
+                        // Show toast
+                        showToast('✅ Perusahaan baru ditambahkan: ' + data.nama);
+                    }
+                })
+                .listen('.perusahaan.updated', (data) => {
+                    const card = document.querySelector(`.company-card[data-id="${data.id}"]`);
+                    if (card) {
+                        card.outerHTML = buildCard(data);
+                        showToast('🔄 Data perusahaan diperbarui: ' + data.nama);
+                    }
+                })
+                .listen('.perusahaan.deleted', (data) => {
+                    const card = document.querySelector(`.company-card[data-id="${data.id}"]`);
+                    if (card) {
+                        card.style.animation = 'fadeOut 0.3s ease forwards';
+                        setTimeout(() => card.remove(), 300);
+                        showToast('🗑️ Perusahaan dihapus dari daftar.');
+                    }
+                });
+        }
+
+        function showToast(msg) {
+            let t = document.createElement('div');
+            t.style.cssText = 'position:fixed;bottom:24px;right:24px;background:#1a5fb4;color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;box-shadow:0 8px 32px rgba(0,0,0,0.2);z-index:9999;animation:fadeIn 0.3s ease';
+            t.textContent = msg;
+            document.body.appendChild(t);
+            setTimeout(() => { t.style.animation = 'fadeOut 0.3s ease forwards'; setTimeout(() => t.remove(), 300); }, 4000);
+        }
     </script>
 
+    <style>
+        @keyframes fadeIn  { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+        @keyframes fadeOut { from { opacity:1; } to { opacity:0; } }
+    </style>
 </body>
 </html>

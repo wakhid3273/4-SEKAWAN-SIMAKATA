@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Perusahaan;
 use App\Models\MahasiswaMagang;
+use App\Events\PerusahaanCreated;
+use App\Events\PerusahaanUpdated;
+use App\Events\PerusahaanDeleted;
 
 class PerusahaanController extends Controller
 {
@@ -81,7 +84,8 @@ class PerusahaanController extends Controller
             'jumlah_mahasiswa' => 'integer|min:0'
         ]);
 
-        Perusahaan::create($request->all());
+        $perusahaan = Perusahaan::create($request->all());
+        broadcast(new PerusahaanCreated($perusahaan));
 
         return redirect()->route('admin.perusahaan.index')->with('success', 'Perusahaan berhasil ditambahkan.');
     }
@@ -107,6 +111,7 @@ class PerusahaanController extends Controller
 
         $perusahaan = Perusahaan::findOrFail($id);
         $perusahaan->update($request->all());
+        broadcast(new PerusahaanUpdated($perusahaan));
 
         return redirect()->route('admin.perusahaan.index')->with('success', 'Perusahaan berhasil diperbarui.');
     }
@@ -115,6 +120,7 @@ class PerusahaanController extends Controller
     {
         $perusahaan = Perusahaan::findOrFail($id);
         $perusahaan->delete();
+        broadcast(new PerusahaanDeleted($id));
 
         return redirect()->route('admin.perusahaan.index')->with('success', 'Perusahaan berhasil dihapus.');
     }
