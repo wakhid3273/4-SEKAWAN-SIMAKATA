@@ -23,19 +23,31 @@ class DashboardController extends Controller
             ->take(10)
             ->get();
 
-        // Sebaran Tempat KP (dari FinalProject)
-        $sebaranKP = FinalProject::selectRaw('perusahaan, COUNT(*) as total')
-            ->whereNotNull('perusahaan')
-            ->groupBy('perusahaan')
+        // Sebaran Tempat KP (dari MahasiswaMagang)
+        $sebaranKP = MahasiswaMagang::with('perusahaan')
+            ->selectRaw('perusahaan_id, COUNT(*) as total')
+            ->whereNotNull('perusahaan_id')
+            ->where('kegiatan', 'like', '%Kerja Praktik%')
+            ->orWhere('kegiatan', 'KP')
+            ->groupBy('perusahaan_id')
             ->orderByDesc('total')
             ->limit(8)
-            ->pluck('total', 'perusahaan')
+            ->get()
+            ->mapWithKeys(function($item) {
+                $nama = $item->perusahaan->nama ?? 'Lainnya';
+                return [$nama => $item->total];
+            })
             ->toArray();
 
         // Sebaran Tempat Magang (dari MahasiswaMagang + Perusahaan)
         $sebaranMagang = MahasiswaMagang::with('perusahaan')
             ->selectRaw('perusahaan_id, COUNT(*) as total')
             ->whereNotNull('perusahaan_id')
+            ->where(function($q) {
+                $q->where('kegiatan', 'like', '%Magang%')
+                  ->orWhere('kegiatan', 'MBKM')
+                  ->orWhere('kegiatan', 'MSIB');
+            })
             ->groupBy('perusahaan_id')
             ->orderByDesc('total')
             ->limit(8)
