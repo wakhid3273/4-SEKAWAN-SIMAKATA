@@ -177,18 +177,7 @@
     .action-btn.reject:hover { background: #fee2e2; color: #dc2626; }
     .action-btn .material-icons-outlined { font-size: 16px; }
 
-    .pagination-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 16px 20px;
-        background: white;
-        border-top: 1px solid #e5e7eb;
-    }
-    .pagination-info {
-        font-size: 13px;
-        color: #6b7280;
-    }
+    /* Pagination Style removed - using partials.pagination */
     
 </style>
 @endsection
@@ -334,13 +323,8 @@
         </div>
     </div>
     
-    <div class="pagination-container">
-        <div class="pagination-info">
-            Menampilkan {{ $pengajuan->firstItem() ?? 0 }}-{{ $pengajuan->lastItem() ?? 0 }} dari {{ $pengajuan->total() }} pengajuan
-        </div>
-        <div class="pagination-links">
-            {{ $pengajuan->links() }}
-        </div>
+    <div style="padding: 0 20px 20px;">
+        {{ $pengajuan->appends(request()->query())->links('partials.pagination') }}
     </div>
 </div>
 
@@ -499,7 +483,6 @@
                                 <div class="detail-item"><div class="label">Nama Lengkap</div><div class="val">${data.nama}</div></div>
                                 <div class="detail-item"><div class="label">NIM</div><div class="val">${data.nim || '-'}</div></div>
                             </div>
->>>>>>> .merge_file_EpfAfx
                         </div>
                         <div class="detail-section">
                             <div class="detail-section-title">Data Tugas Akhir</div>

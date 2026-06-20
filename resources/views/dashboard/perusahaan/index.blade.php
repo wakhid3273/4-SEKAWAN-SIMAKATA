@@ -36,13 +36,7 @@
     }
     .btn-action-delete:hover { background: #dc2626; color: white; }
 
-    .pagination-wrapper {
-        margin-top: 20px;
-        display: flex;
-        justify-content: center;
-    }
-    .pagination-wrapper nav svg { width: 20px; height: 20px; }
-    .pagination-wrapper .flex.justify-between { display: none; }
+    /* Pagination Style removed - using partials.pagination */
     .alert-success {
         background: #d1fae5; color: #065f46; padding: 12px 16px; border-radius: 8px; margin-bottom: 24px; border: 1px solid #10b981; font-weight: 600; font-size: 13px;
     }
@@ -102,8 +96,9 @@
         </tbody>
     </table>
     
-    <div class="pagination-wrapper">
-        {{ $perusahaan->links() }}
+    @if($perusahaan->hasPages())
+    <div>
+        {{ $perusahaan->appends(request()->query())->links('partials.pagination') }}
     </div>
 </div>
 @endsection
