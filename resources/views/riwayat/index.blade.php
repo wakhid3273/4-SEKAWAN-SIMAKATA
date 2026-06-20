@@ -43,7 +43,7 @@
 
         /* HERO */
         .page-hero {
-            background: linear-gradient(160deg, #065f46 0%, #059669 60%, #10b981 100%);
+            background: linear-gradient(135deg, #0a3d6b 0%, #1a5fb4 100%);
             padding: 48px 40px 36px; text-align: center; color: #fff;
         }
         .page-hero h1 { font-size: 32px; font-weight: 800; margin-bottom: 10px; }
@@ -114,28 +114,7 @@
     </style>
 </head>
 <body>
-<nav class="navbar">
-    <a href="{{ route('landing') }}" class="navbar-logo">SIMAKATA</a>
-    <ul class="navbar-links">
-        <li><a href="{{ route('landing') }}" id="nav-beranda">Beranda</a></li>
-        <li><a href="{{ route('perusahaan.index') }}" id="nav-perusahaan">Perusahaan</a></li>
-        <li><a href="{{ route('judul-ta.index') }}" id="nav-judul">Judul TA</a></li>
-        <li><a href="{{ route('riwayat.index') }}" class="active" id="nav-riwayat">Riwayat</a></li>
-    </ul>
-    <div class="navbar-actions">
-        @guest
-            <a href="{{ route('login.form') }}" class="btn-nav btn-nav-outline" id="btn-nav-login">Login</a>
-            <a href="{{ route('register.form') }}" class="btn-nav btn-nav-fill" id="btn-nav-register">Daftar</a>
-        @endguest
-        @auth
-            <a href="{{ route('dashboard') }}" class="btn-nav btn-nav-fill" id="btn-nav-dashboard">Dashboard</a>
-            <form method="POST" action="{{ route('logout') }}" style="margin:0;">
-                @csrf
-                <button type="submit" class="btn-nav btn-nav-logout" id="btn-nav-logout">Logout</button>
-            </form>
-        @endauth
-    </div>
-</nav>
+@include('components.navbar')
 
 <div class="page-hero">
     <h1>Riwayat Magang & Kerja Praktik</h1>
@@ -222,8 +201,6 @@
     </div>
 </div>
 
-<footer>
-    &copy; {{ date('Y') }} HMIF Informatics SIMAKATA — Informatika Universitas Jenderal Soedirman.
-</footer>
+@include('components.footer')
 </body>
 </html>

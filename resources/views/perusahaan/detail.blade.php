@@ -710,23 +710,7 @@
 <body>
 
     {{-- ===== NAVBAR ===== --}}
-    <nav class="navbar">
-        <a href="{{ route('landing') }}" class="navbar-logo">SIMAKATA</a>
-        <ul class="navbar-links">
-            <li><a href="{{ route('landing') }}">Beranda</a></li>
-            <li><a href="{{ route('perusahaan.index') }}" class="active">Perusahaan</a></li>
-            <li><a href="#judul-ta">Judul TA</a></li>
-            <li><a href="#riwayat">Riwayat</a></li>
-        </ul>
-        <div class="navbar-auth">
-            @auth
-                <a href="{{ route('dashboard') }}" class="btn btn-primary">Dashboard</a>
-            @else
-                <a href="{{ route('login.form') }}" class="btn btn-secondary">Login</a>
-                <a href="{{ route('register.form') }}" class="btn btn-primary">Daftar</a>
-            @endauth
-        </div>
-    </nav>
+    @include('components.navbar')
 
     {{-- ===== HERO BANNER ===== --}}
     <div class="hero-banner">
@@ -998,6 +982,8 @@
             </div>
         </div>
     </div>
+
+    @include('components.footer')
 
     <script>
         // Navbar scroll effect

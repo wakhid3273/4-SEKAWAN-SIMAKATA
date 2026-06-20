@@ -121,28 +121,7 @@
     </style>
 </head>
 <body>
-<nav class="navbar">
-    <a href="{{ route('landing') }}" class="navbar-logo">SIMAKATA</a>
-    <ul class="navbar-links">
-        <li><a href="{{ route('landing') }}" id="nav-beranda">Beranda</a></li>
-        <li><a href="{{ route('perusahaan.index') }}" id="nav-perusahaan">Perusahaan</a></li>
-        <li><a href="{{ route('judul-ta.index') }}" class="active" id="nav-judul">Judul TA</a></li>
-        <li><a href="{{ route('riwayat.index') }}" id="nav-riwayat">Riwayat</a></li>
-    </ul>
-    <div class="navbar-actions">
-        @guest
-            <a href="{{ route('login.form') }}" class="btn-nav btn-nav-outline" id="btn-nav-login">Login</a>
-            <a href="{{ route('register.form') }}" class="btn-nav btn-nav-fill" id="btn-nav-register">Daftar</a>
-        @endguest
-        @auth
-            <a href="{{ route('dashboard') }}" class="btn-nav btn-nav-fill" id="btn-nav-dashboard">Dashboard</a>
-            <form method="POST" action="{{ route('logout') }}" style="margin:0;">
-                @csrf
-                <button type="submit" class="btn-nav btn-nav-logout" id="btn-nav-logout">Logout</button>
-            </form>
-        @endauth
-    </div>
-</nav>
+@include('components.navbar')
 
 <div class="page-hero">
     <h1>Validasi Judul Tugas Akhir</h1>
@@ -221,14 +200,37 @@
         @if($judulTa->hasPages())
         <div class="pagination-wrap">
             <div class="pagination-info">Menampilkan {{ $judulTa->firstItem() ?? 0 }}–{{ $judulTa->lastItem() ?? 0 }} dari {{ $judulTa->total() }} judul</div>
-            <div class="pagination-links">{{ $judulTa->links() }}</div>
+            <div class="pagination-links">
+                {{-- Previous Button --}}
+                @if($judulTa->onFirstPage())
+                    <span class="disabled"><span class="material-icons-outlined" style="font-size: 14px; vertical-align: middle;">chevron_left</span></span>
+                @else
+                    <a href="{{ $judulTa->previousPageUrl() }}"><span class="material-icons-outlined" style="font-size: 14px; vertical-align: middle;">chevron_left</span></a>
+                @endif
+
+                {{-- Page Numbers --}}
+                @foreach($judulTa->getUrlRange(1, $judulTa->lastPage()) as $page => $url)
+                    @if($page == $judulTa->currentPage())
+                        <span aria-current="page">{{ $page }}</span>
+                    @elseif($page == 1 || $page == $judulTa->lastPage() || abs($page - $judulTa->currentPage()) <= 2)
+                        <a href="{{ $url }}">{{ $page }}</a>
+                    @elseif($page == 2 || $page == $judulTa->lastPage() - 1)
+                        <span style="border: none; background: transparent; padding: 6px 4px;">...</span>
+                    @endif
+                @endforeach
+
+                {{-- Next Button --}}
+                @if($judulTa->hasMorePages())
+                    <a href="{{ $judulTa->nextPageUrl() }}"><span class="material-icons-outlined" style="font-size: 14px; vertical-align: middle;">chevron_right</span></a>
+                @else
+                    <span class="disabled"><span class="material-icons-outlined" style="font-size: 14px; vertical-align: middle;">chevron_right</span></span>
+                @endif
+            </div>
         </div>
         @endif
     </div>
 </div>
 
-<footer>
-    &copy; {{ date('Y') }} HMIF Informatics SIMAKATA — Informatika Universitas Jenderal Soedirman.
-</footer>
+@include('components.footer')
 </body>
 </html>
