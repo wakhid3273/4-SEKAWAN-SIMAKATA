@@ -308,6 +308,64 @@
             color: #0369a1;
         }
 
+        /* ===== MODAL CSS ===== */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: none; /* hidden by default */
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 16px;
+        }
+        .modal-container {
+            background: white;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh; /* Prevent cut off on small screens */
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        .modal-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #f3f4f6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header h3 { font-size: 18px; font-weight: 700; color: #111827; margin: 0; }
+        .modal-body {
+            padding: 20px;
+            overflow-y: auto; /* Scrollable if content is too long */
+        }
+        .modal-footer {
+            padding: 16px 20px;
+            border-top: 1px solid #f3f4f6;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+        .form-group { margin-bottom: 16px; text-align: left; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: #374151; }
+        .form-input { width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-family: inherit; font-size: 14px; box-sizing: border-box; }
+        .form-input:focus { outline: none; border-color: #1a5fb4; box-shadow: 0 0 0 3px rgba(26, 95, 180, 0.2); }
+        .btn-close-modal { background: none; border: none; cursor: pointer; color: #6b7280; display: flex; align-items: center; justify-content: center; padding: 4px; border-radius: 4px; }
+        .btn-close-modal:hover { color: #ef4444; background: #fee2e2; }
+        .btn-secondary { background: white; border: 1px solid #d1d5db; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; color: #374151; }
+        .btn-secondary:hover { background: #f3f4f6; }
+        .btn-primary { background: #1a5fb4; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; }
+        .btn-primary:hover { background: #1e40af; }
+        
+        .btn-go-landing {
+            background: white; color: #0d1b2e; border: 1px solid #e5e7eb;
+            padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 13px;
+            display: flex; align-items: center; gap: 8px; cursor: pointer; transition: background 0.2s; text-decoration: none;
+        }
+        .btn-go-landing:hover { background: #f3f4f6; }
+
         @media (max-width: 900px) {
             .content-grid {
                 grid-template-columns: 1fr;
@@ -334,6 +392,12 @@
         <div>
             <h1>Profil Administrator</h1>
             <p class="subtitle">Kelola informasi akun dan pantau aktivitas Anda.</p>
+        </div>
+        <div>
+            <a href="{{ route('landing') }}" class="btn-go-landing">
+                <span class="material-icons-outlined">home</span>
+                Ke Landing Page
+            </a>
         </div>
     </div>
 
@@ -496,4 +560,75 @@
             </div>
         </div>
     </div>
+
+    {{-- Modal Edit Profil Admin --}}
+    <div id="editProfileModal" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>Edit Profil Administrator</h3>
+                <button type="button" class="btn-close-modal" id="closeModalBtn">
+                    <span class="material-icons-outlined">close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="#" method="POST" id="editProfileForm">
+                    @csrf
+                    <!-- method field if needed, but not required for just ui fixes -->
+                    <div class="form-group">
+                        <label>Nama Lengkap</label>
+                        <input type="text" name="nama_lengkap" value="{{ $admin->nama_lengkap ?? 'Admin Utama' }}" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label>Email Institusi</label>
+                        <input type="email" name="email" value="{{ $admin->email ?? 'admin.utama@simakata.ac.id' }}" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label>ID Administrator (NIM)</label>
+                        <input type="text" name="nim" value="{{ $admin->nim ?? 'ADM-2024-001' }}" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label>Password Baru (Opsional)</label>
+                        <input type="password" name="password" placeholder="Biarkan kosong jika tidak ingin mengubah" class="form-input">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" id="cancelModalBtn">Batal</button>
+                <button type="submit" form="editProfileForm" class="btn-primary">Simpan Perubahan</button>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const modal = document.getElementById('editProfileModal');
+        const openBtns = document.querySelectorAll('.btn-edit-profile');
+        const closeBtn = document.getElementById('closeModalBtn');
+        const cancelBtn = document.getElementById('cancelModalBtn');
+
+        // Allow multiple buttons to open modal if needed
+        openBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden'; // prevent bg scroll
+            });
+        });
+
+        const closeModal = () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+        };
+
+        if(closeBtn) closeBtn.addEventListener('click', closeModal);
+        if(cancelBtn) cancelBtn.addEventListener('click', closeModal);
+
+        // Click outside to close
+        modal.addEventListener('click', (e) => {
+            if(e.target === modal) closeModal();
+        });
+    });
+</script>
 @endsection
