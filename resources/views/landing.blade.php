@@ -350,7 +350,7 @@
             max-width: 1200px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 0;
         }
         .stat-item {
@@ -363,6 +363,7 @@
         .stat-item:nth-child(1) { animation-delay: 0.05s; }
         .stat-item:nth-child(2) { animation-delay: 0.12s; }
         .stat-item:nth-child(3) { animation-delay: 0.19s; }
+        .stat-item:nth-child(4) { animation-delay: 0.26s; }
 
         @keyframes fade-up {
             from { opacity:0; transform: translateY(20px); }
@@ -748,7 +749,7 @@
             .hero-float-chip.chip-2 { top: 5%; right: -2%; }
 
             .stats-section { padding: 36px 24px; }
-            .stats-inner { grid-template-columns: 1fr; gap: 24px; }
+            .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 24px; }
             .stat-item { border-right: none; border-bottom: 1px solid var(--border); padding: 16px; }
             .stat-item:last-child { border-bottom: none; }
 
@@ -851,9 +852,9 @@
                     <a href="{{ route('login.form') }}" class="btn-secondary" id="btn-hero-login">Login</a>
                 @endauth
                 @auth
-                    <a href="{{ route('user.dashboard') }}" class="btn-primary" id="btn-hero-dashboard">
-                        <span class="material-icons-outlined">dashboard</span>
-                        Ke Dashboard
+                    <a href="#features" class="btn-primary" id="btn-hero-dashboard">
+                        <span class="material-icons-outlined">apps</span>
+                        Lihat Fitur Utama Platform
                     </a>
                 @endauth
             </div>
@@ -868,11 +869,11 @@
             {{-- Floating chips --}}
             <div class="hero-float-chip chip-1">
                 <span class="chip-dot chip-green"></span>
-                50+ Perusahaan Aktif
+                {{ $perusahaanCount ?? 0 }}+ Daftar Perusahaan
             </div>
             <div class="hero-float-chip chip-2">
                 <span class="chip-dot chip-blue"></span>
-                150+ Judul TA Sukses
+                {{ $mahasiswaKpCount ?? 0 }}+ Judul Kerja Praktik
             </div>
         </div>
     </div>
@@ -882,16 +883,20 @@
 <section class="stats-section">
     <div class="stats-inner">
         <div class="stat-item">
-            <div class="stat-number">50+</div>
-            <div class="stat-label-text">Perusahaan Terdaftar</div>
+            <div class="stat-number">{{ $mahasiswaKpCount ?? 0 }}+</div>
+            <div class="stat-label-text">Mahasiswa KP</div>
         </div>
         <div class="stat-item">
-            <div class="stat-number">120+</div>
+            <div class="stat-number">{{ $mahasiswaMagangCount ?? 0 }}+</div>
             <div class="stat-label-text">Mahasiswa Magang</div>
         </div>
         <div class="stat-item">
-            <div class="stat-number">150+</div>
-            <div class="stat-label-text">Judul TA Sukses</div>
+            <div class="stat-number">{{ $perusahaanCount ?? 0 }}+</div>
+            <div class="stat-label-text">Perusahaan Terdaftar</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">{{ $mahasiswaKpCount ?? 0 }}+</div>
+            <div class="stat-label-text">Kerja Praktik</div>
         </div>
     </div>
 </section>
