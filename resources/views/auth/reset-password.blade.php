@@ -1,6 +1,6 @@
 @extends('layouts.auth')
 
-@section('title', 'Login - SIMAKATA')
+@section('title', 'Reset Password - SIMAKATA')
 
 @section('content')
 <div class="auth-card">
@@ -14,28 +14,24 @@
         </p>
     </div>
 
-    {{-- RIGHT: Login Form --}}
+    {{-- RIGHT: Reset Form --}}
     <div class="auth-form-panel">
-        <h1>Selamat Datang</h1>
-        <p class="subtitle">Silakan masuk menggunakan akun mahasiswa Anda untuk melanjutkan.</p>
-
-        {{-- Success Message --}}
-        @if(session('success'))
-            <div class="alert alert-success">
-                <span class="material-icons-outlined" style="font-size:18px;">check_circle</span>
-                {{ session('success') }}
-            </div>
-        @endif
+        <h1>Reset Kata Sandi</h1>
+        <p class="subtitle">Masukkan email Anda dan kata sandi baru untuk mengatur ulang akses Anda.</p>
 
         {{-- Error Message --}}
-        @if(session('error'))
+        @if($errors->any())
             <div class="alert alert-danger">
                 <span class="material-icons-outlined" style="font-size:18px;">error</span>
-                {{ session('error') }}
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
         @endif
 
-        <form method="POST" action="{{ route('login') }}" id="login-form">
+        <form method="POST" action="{{ route('password.reset') }}" id="reset-form">
             @csrf
 
             {{-- Email --}}
@@ -51,57 +47,49 @@
                         value="{{ old('email') }}"
                         required
                         autofocus
-                        autocomplete="username"
                     >
                 </div>
-                @error('email')
-                    <p class="error-text">
-                        <span class="material-icons-outlined" style="font-size:14px;">warning</span>
-                        {{ $message }}
-                    </p>
-                @enderror
             </div>
 
-            {{-- Password --}}
+            {{-- New Password --}}
             <div class="form-group">
-                <label class="form-label" for="password">
-                    Kata Sandi
-                    <a href="{{ route('password.request') }}">Lupa Sandi?</a>
-                </label>
+                <label class="form-label" for="password">Kata Sandi Baru</label>
                 <div class="input-wrapper">
                     <span class="material-icons-outlined input-icon">lock_outline</span>
                     <input
                         type="password"
                         id="password"
                         name="password"
-                        placeholder="••••••••"
+                        placeholder="Minimal 6 karakter"
                         required
-                        autocomplete="current-password"
                     >
-                    <button type="button" class="toggle-password" onclick="togglePassword('password', this)" aria-label="Toggle password visibility">
+                    <button type="button" class="toggle-password" onclick="togglePassword('password', this)">
                         <span class="material-icons-outlined">visibility</span>
                     </button>
                 </div>
-                @error('password')
-                    <p class="error-text">
-                        <span class="material-icons-outlined" style="font-size:14px;">warning</span>
-                        {{ $message }}
-                    </p>
-                @enderror
             </div>
 
-            {{-- Remember Me --}}
-            <div class="remember-row">
-                <input type="checkbox" id="remember" name="remember" {{ old('remember') ? 'checked' : '' }}>
-                <label for="remember">Ingat saya di perangkat ini</label>
+            {{-- Confirm Password --}}
+            <div class="form-group">
+                <label class="form-label" for="password_confirmation">Konfirmasi Kata Sandi Baru</label>
+                <div class="input-wrapper">
+                    <span class="material-icons-outlined input-icon">lock_outline</span>
+                    <input
+                        type="password"
+                        id="password_confirmation"
+                        name="password_confirmation"
+                        placeholder="Ulangi kata sandi baru"
+                        required
+                    >
+                </div>
             </div>
 
             {{-- Submit --}}
-            <button type="submit" class="btn-submit" id="btn-login">Masuk Ke Sistem</button>
+            <button type="submit" class="btn-submit" id="btn-reset">Reset Kata Sandi</button>
         </form>
 
         <p class="auth-switch">
-            Belum memiliki akun? <a href="{{ route('register') }}">Daftar Akun</a>
+            Ingat kata sandi Anda? <a href="{{ route('login') }}">Masuk</a>
         </p>
 
         <div class="auth-help">

@@ -15,7 +15,6 @@ class MahasiswaMagang extends Model
         'alasan_penolakan',
         'angkatan',
         'posisi',
-        'bidang',
         'periode',
         'cv_file',
         'transkrip_file',

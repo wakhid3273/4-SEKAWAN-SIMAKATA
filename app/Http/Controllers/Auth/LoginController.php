@@ -15,10 +15,16 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->validate([
-            'nim' => ['required'],
+        $request->validate([
+            'email' => ['required', 'email', function ($attribute, $value, $fail) {
+                if (!str_ends_with($value, '@mhs.unsoed.ac.id')) {
+                    $fail('Gunakan email @mhs.unsoed.ac.id untuk login.');
+                }
+            }],
             'password' => ['required'],
         ]);
+
+        $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
@@ -38,8 +44,8 @@ class LoginController extends Controller
         }
 
         return back()->withErrors([
-            'nim' => 'NIM atau password salah.',
-        ])->onlyInput('nim');
+            'email' => 'Email atau password salah.',
+        ])->onlyInput('email');
     }
 
     public function logout(Request $request)

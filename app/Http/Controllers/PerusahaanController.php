@@ -10,7 +10,7 @@ class PerusahaanController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Perusahaan::query();
+        $query = Perusahaan::orderBy('nama', 'asc');
 
         // Search by nama or keyword
         if ($request->filled('q')) {
@@ -59,7 +59,7 @@ class PerusahaanController extends Controller
 
     public function manage()
     {
-        $perusahaan = Perusahaan::all();
+        $perusahaan = Perusahaan::orderBy('nama', 'asc')->get();
         return view('dashboard.perusahaan.index', compact('perusahaan'));
     }
 

@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\Company;
+use App\Models\Perusahaan;
 use App\Models\FinalProject;
+use App\Models\MahasiswaMagang;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf; // pastikan sudah install barryvdh/laravel-dompdf
 
@@ -13,12 +14,11 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $totalPerusahaan    = Company::count();
-        $totalUserAktif     = User::count();
-        $menungguVerifikasi = FinalProject::where('status', 'pending')->count();
+        $totalPerusahaan    = Perusahaan::count();
+        $totalUserAktif     = User::where('role', 'user')->count();
+        $menungguVerifikasi = MahasiswaMagang::where('status', 'pending')->count();
 
-        $pendingMahasiswa = FinalProject::with('student')
-            ->where('status', 'pending')
+        $pendingMahasiswa = MahasiswaMagang::where('status', 'pending')
             ->orderBy('created_at', 'desc')
             ->take(10)
             ->get();
@@ -44,15 +44,12 @@ class DashboardController extends Controller
 
     public function export()
     {
-        // Ambil data dashboard
+        // Ambil data untuk laporan
         $data = [
-            'total_perusahaan'    => Company::count(),
-            'total_user_aktif'    => User::count(),
-            'menunggu_verifikasi' => FinalProject::where('status', 'pending')->count(),
-            'pending_mahasiswa'   => FinalProject::with('student')
-                                        ->where('status', 'pending')
-                                        ->orderBy('created_at', 'desc')
-                                        ->get(),
+            'total_perusahaan'    => Perusahaan::count(),
+            'total_mahasiswa'     => User::where('role', 'user')->count(),
+            'total_pending'       => MahasiswaMagang::where('status', 'pending')->count(),
+            'total_disetujui'     => MahasiswaMagang::where('status', 'approved')->count(),
         ];
 
         // Generate PDF dari view (buat file resources/views/admin/dashboard_pdf.blade.php)

@@ -489,7 +489,6 @@
                             <div class="detail-item"><div class="label">Jenis Kegiatan</div><div class="val"><span class="material-icons-outlined" style="font-size:14px; vertical-align:middle;">work_outline</span> ${data.jenis_kegiatan || '-'}</div></div>
                             <div class="detail-item"><div class="label">Perusahaan</div><div class="val"><span class="material-icons-outlined" style="font-size:14px; vertical-align:middle;">domain</span> ${data.perusahaan}</div></div>
                             <div class="detail-item"><div class="label">Posisi</div><div class="val">${data.posisi || '-'}</div></div>
-                            <div class="detail-item"><div class="label">Bidang</div><div class="val">${data.bidang || '-'}</div></div>
                             <div class="detail-item" style="grid-column: 1 / -1;"><div class="label">Periode Kegiatan</div><div class="val"><span class="material-icons-outlined" style="font-size:14px; vertical-align:middle;">calendar_today</span> ${data.periode || '-'}</div></div>
                         </div>
                     </div>

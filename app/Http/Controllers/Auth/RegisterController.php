@@ -20,18 +20,25 @@ class RegisterController extends Controller
     {
         // Validasi input
         $request->validate([
-            'nim' => 'required|unique:users,nim',
+            'email' => ['required', 'email', 'unique:users,email', function ($attribute, $value, $fail) {
+                if (!str_ends_with($value, '@mhs.unsoed.ac.id')) {
+                    $fail('Email harus menggunakan domain @mhs.unsoed.ac.id');
+                }
+            }],
             'password' => 'required|min:6|confirmed',
         ]);
 
-        // Simpan ke database
+        // Extract NIM from email (before @)
+        $nim = strtoupper(explode('@', $request->email)[0]);
+
         User::create([
-            'nim' => $request->nim,
+            'nim' => $nim,
+            'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => 'user', // default role untuk yang register
         ]);
 
         // Redirect ke login setelah berhasil
-        return redirect('/login')->with('success', 'Registrasi berhasil, silakan login.');
+        return redirect()->route('login.form')->with('success', 'Registrasi berhasil, silakan login.');
     }
 }
