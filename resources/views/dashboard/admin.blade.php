@@ -491,13 +491,13 @@
 
 {{-- ===== MIDDLE ROW: Chart + System Health ===== --}}
 <div class="mid-row">
-    {{-- Activity Trends Chart --}}
+    {{-- Bar Chart Sebaran Otomatis --}}
     <div class="card chart-card">
         <div class="chart-header">
-            <h2>Activity Trends</h2>
-            <div class="chart-filter">
-                Last 7 Days
-                <span class="material-icons-outlined">expand_more</span>
+            <h2>Statistik Sebaran</h2>
+            <div class="chart-filter" id="autoplayToggle">
+                <span class="material-icons-outlined" id="autoplayIcon">pause</span>
+                Autoplay
             </div>
         </div>
 
@@ -505,21 +505,16 @@
             $maxVal = max(array_values($activityTrends));
         @endphp
 
-        <div class="bar-chart-area" role="img" aria-label="Activity Trends Bar Chart">
-            @foreach($activityTrends as $day => $value)
+        <div class="bar-chart-area" role="img" aria-label="Statistik Sebaran Bar Chart" id="autoBarChart">
+            @foreach(['Data 1', 'Data 2', 'Data 3', 'Data 4', 'Data 5', 'Data 6', 'Data 7'] as $label)
                 @php
-                    $pct = $maxVal > 0 ? round(($value / $maxVal) * 100) : 10;
-                    $isToday = $day === 'SUN';
+                    $pct = rand(10, 100);
                 @endphp
                 <div class="bar-group">
                     <div class="bar-wrap">
-                        <div
-                            class="bar {{ $isToday ? 'active' : '' }}"
-                            style="height: {{ $pct }}%"
-                            data-value="{{ $value }} aktivitas"
-                        ></div>
+                        <div class="bar" style="height: {{ $pct }}%" data-value="{{ $pct }} entitas"></div>
                     </div>
-                    <span class="bar-label {{ $isToday ? 'active-label' : '' }}">{{ $day }}</span>
+                    <span class="bar-label">{{ $label }}</span>
                 </div>
             @endforeach
         </div>
@@ -642,5 +637,53 @@
             });
         });
     }
+</script>
+@endsection
+
+@section('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Autoplay Bar Chart
+        const bars = document.querySelectorAll('#autoBarChart .bar');
+        const autoplayToggle = document.getElementById('autoplayToggle');
+        const autoplayIcon = document.getElementById('autoplayIcon');
+        let intervalId = null;
+        let isPlaying = true;
+
+        const updateBars = () => {
+            bars.forEach(bar => {
+                const randomPct = Math.floor(Math.random() * 90) + 10;
+                bar.style.height = `${randomPct}%`;
+                bar.setAttribute('data-value', `${randomPct} entitas`);
+            });
+        };
+
+        const startAutoplay = () => {
+            if (!intervalId) {
+                intervalId = setInterval(updateBars, 2000);
+                autoplayIcon.textContent = 'pause';
+                isPlaying = true;
+            }
+        };
+
+        const stopAutoplay = () => {
+            if (intervalId) {
+                clearInterval(intervalId);
+                intervalId = null;
+                autoplayIcon.textContent = 'play_arrow';
+                isPlaying = false;
+            }
+        };
+
+        autoplayToggle.addEventListener('click', () => {
+            if (isPlaying) {
+                stopAutoplay();
+            } else {
+                startAutoplay();
+            }
+        });
+
+        startAutoplay();
+    });
 </script>
 @endsection
