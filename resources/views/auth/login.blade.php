@@ -10,7 +10,7 @@
         <img src="{{ asset('images/simakata-illustration.png') }}" alt="SIMAKATA Illustration" class="brand-illustration">
         <h2 class="brand-title">SIMAKATA</h2>
         <p class="brand-subtitle">
-            Sistem Informasi Mahasiswa Kerja Praktek dan Tugas Akhir. Terintegrasi, modern, dan efisien.
+            Sistem Informasi Mahasiswa Kerja Praktik, Magang, dan Tugas Akhir. Terintegrasi, modern, dan efisien.
         </p>
     </div>
 
@@ -90,11 +90,7 @@
                 @enderror
             </div>
 
-            {{-- Remember Me --}}
-            <div class="remember-row">
-                <input type="checkbox" id="remember" name="remember" {{ old('remember') ? 'checked' : '' }}>
-                <label for="remember">Ingat saya di perangkat ini</label>
-            </div>
+
 
             {{-- Submit --}}
             <button type="submit" class="btn-submit" id="btn-login">Masuk Ke Sistem</button>
@@ -105,9 +101,9 @@
         </p>
 
         <div class="auth-help">
-            <a href="#">
-                <span class="material-icons-outlined">help_outline</span>
-                Bantuan
+            <a href="https://wa.me/6281234567890" target="_blank">
+                <span class="material-icons-outlined">chat</span>
+                Pusat Bantuan
             </a>
             <a href="#">
                 <span class="material-icons-outlined">menu_book</span>
