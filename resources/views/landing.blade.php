@@ -773,59 +773,7 @@
 </head>
 <body>
 
-{{-- ===== NAVBAR ===== --}}
-<header class="navbar" id="mainNavbar">
-    <a href="{{ route('landing') }}" class="navbar-logo">SIMAKATA</a>
-
-    <ul class="navbar-links">
-        <li><a href="{{ route('landing') }}" class="active" id="nav-beranda">Beranda</a></li>
-        <li><a href="{{ route('perusahaan.index') }}" id="nav-perusahaan">Perusahaan</a></li>
-        <li><a href="{{ route('judul-ta.index') }}" id="nav-judul">Judul TA</a></li>
-        <li><a href="{{ route('riwayat.index') }}" id="nav-riwayat">Riwayat</a></li>
-    </ul>
-
-    <div class="navbar-actions">
-        @guest
-            <a href="{{ route('login.form') }}" class="btn-nav-login" id="btn-navbar-login">Login</a>
-            <a href="{{ route('register.form') }}" class="btn-nav-register" id="btn-navbar-register">Daftar</a>
-        @endguest
-        @auth
-            <div style="display: flex; gap: 10px;">
-                <a href="{{ route('dashboard') }}" class="btn-nav-register" style="background:#1a5fb4; color:#fff; padding:8px 20px; border-radius:8px; font-size:13px; font-weight:600; text-decoration:none;">Dashboard</a>
-                <form method="POST" action="{{ route('logout') }}" style="margin:0;">
-                    @csrf
-                    <button type="submit" class="btn-nav-logout" id="btn-navbar-logout">Logout</button>
-                </form>
-            </div>
-        @endauth
-    </div>
-
-    {{-- Mobile hamburger --}}
-    <div class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
-        <span></span><span></span><span></span>
-    </div>
-</header>
-
-{{-- Mobile nav overlay --}}
-<nav class="mobile-nav" id="mobileNav">
-    <button class="mobile-close" id="mobileClose" aria-label="Close menu">
-        <span class="material-icons-outlined">close</span>
-    </button>
-    <a href="{{ route('landing') }}">Beranda</a>
-    <a href="{{ route('perusahaan.index') }}">Perusahaan</a>
-    <a href="{{ route('judul-ta.index') }}">Judul TA</a>
-    <a href="{{ route('riwayat.index') }}">Riwayat</a>
-    @guest
-        <a href="{{ route('login.form') }}" id="btn-mobile-login">Login</a>
-        <a href="{{ route('register.form') }}" id="btn-mobile-register" style="color:var(--blue-main)">Daftar</a>
-    @endguest
-    @auth
-        <form method="POST" action="{{ route('logout') }}" style="margin:0;">
-            @csrf
-            <button type="submit" id="btn-mobile-logout">Logout</button>
-        </form>
-    @endauth
-</nav>
+@include('components.navbar')
 
 {{-- ===== HERO SECTION ===== --}}
 <section class="hero" id="beranda">
@@ -974,46 +922,6 @@
     </div>
 </section>
 
-{{-- ===== FOOTER ===== --}}
-<footer class="site-footer">
-    <div class="footer-grid">
-        {{-- Brand col --}}
-        <div>
-            <div class="footer-brand-name">SIMAKATA</div>
-            <p class="footer-brand-desc">Sistem informasi terpadu untuk mendukung perjalanan akademik mahasiswa Informatika dalam mengejar masa depan profesional.</p>
-            <p class="footer-copy-small">&copy; {{ date('Y') }} HMIF Informatics SIMAKATA. All rights reserved.</p>
-        </div>
-
-        {{-- Quick Links --}}
-        <div class="footer-col">
-            <h4>Quick Links</h4>
-            <a href="#">Contact Us</a>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-        </div>
-
-        {{-- Follow Us --}}
-        <div class="footer-col">
-            <h4>Follow Us</h4>
-            <div class="footer-social-icons">
-                <a href="#" class="social-icon" title="Instagram" id="social-instagram">
-                    <span class="material-icons-outlined">photo_camera</span>
-                </a>
-                <a href="#" class="social-icon" title="Settings / Admin" id="social-admin">
-                    <span class="material-icons-outlined">settings</span>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <div class="footer-bottom">
-        <p>&copy; {{ date('Y') }} HMIF Informatics SIMAKATA. Managed by Informatics Department.</p>
-        <div class="footer-bottom-links">
-            <a href="#">Privacy</a>
-            <a href="#">Terms</a>
-            <a href="#">Help</a>
-        </div>
-    </div>
 </footer>
 
 <script>

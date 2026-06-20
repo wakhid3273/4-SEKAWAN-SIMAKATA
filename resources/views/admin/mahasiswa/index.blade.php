@@ -284,19 +284,6 @@
                        placeholder="Cari NIM, nama, email..."
                        id="search-input" autocomplete="off">
             </div>
-            <select name="angkatan" id="filter-angkatan" onchange="this.form.submit()">
-                <option value="">Semua Angkatan</option>
-                @foreach($angkatanList as $ak)
-                    <option value="{{ $ak }}" {{ request('angkatan') == $ak ? 'selected' : '' }}>{{ $ak }}</option>
-                @endforeach
-            </select>
-            <select name="status" id="filter-status" onchange="this.form.submit()">
-                <option value="">Semua Status</option>
-                <option value="Aktif"               {{ request('status') == 'Aktif'               ? 'selected' : '' }}>Aktif</option>
-                <option value="Cuti"                {{ request('status') == 'Cuti'                ? 'selected' : '' }}>Cuti</option>
-                <option value="Lulus"               {{ request('status') == 'Lulus'               ? 'selected' : '' }}>Lulus</option>
-                <option value="Mengundurkan Diri"   {{ request('status') == 'Mengundurkan Diri'   ? 'selected' : '' }}>Mengundurkan Diri</option>
-            </select>
             <button type="submit" class="btn-primary" style="padding:9px 14px;" title="Cari">
                 <span class="material-icons-outlined" style="font-size:18px;">search</span>
             </button>
@@ -313,7 +300,7 @@
                 <th>Semester</th>
                 <th>Kontak</th>
                 <th>Status</th>
-                <th>Aksi</th>
+                <th style="text-align: right;">Aksi</th>
             </tr>
         </thead>
         <tbody>
@@ -363,7 +350,7 @@
                         @endif
                     </td>
                     <td>
-                        <div class="action-group">
+                        <div class="action-group" style="justify-content: flex-end;">
                             <a href="{{ route('admin.mahasiswa.edit', $mhs) }}"
                                class="btn-icon" title="Edit" id="btn-edit-mhs-{{ $mhs->id }}">
                                 <span class="material-icons-outlined">edit</span>

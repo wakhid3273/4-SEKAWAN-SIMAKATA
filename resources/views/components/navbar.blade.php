@@ -1,0 +1,241 @@
+﻿<style>
+    /* Navbar specific styles */
+    .navbar {
+        position: sticky;
+        top: 0;
+        z-index: 999;
+        background: rgba(255,255,255,0.92);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-bottom: 1px solid rgba(226,232,240,0.6);
+        padding: 0 40px;
+        height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transition: box-shadow 0.3s;
+    }
+    .navbar.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
+
+    .navbar-logo {
+        font-size: 18px;
+        font-weight: 800;
+        color: var(--blue-main, #1a5fb4);
+        letter-spacing: 1.5px;
+        text-decoration: none;
+    }
+
+    .navbar-links {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    .navbar-links a {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--text-mid, #334155);
+        transition: color 0.2s;
+        position: relative;
+        padding-bottom: 2px;
+        text-decoration: none;
+    }
+    .navbar-links a::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--blue-main, #1a5fb4);
+        border-radius: 99px;
+        transition: width 0.25s;
+    }
+    .navbar-links a:hover { color: var(--blue-main, #1a5fb4); }
+    .navbar-links a:hover::after { width: 100%; }
+    .navbar-links a.active { color: var(--blue-main, #1a5fb4); font-weight: 600; }
+    .navbar-links a.active::after { width: 100%; }
+
+    .navbar-actions { display: flex; align-items: center; gap: 12px; }
+
+    .btn-nav-login {
+        padding: 8px 20px;
+        border-radius: var(--radius-sm, 8px);
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--blue-main, #1a5fb4);
+        border: 1.5px solid var(--blue-main, #1a5fb4);
+        background: transparent;
+        font-family: inherit;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .btn-nav-login:hover { background: var(--blue-pale, #eff6ff); }
+
+    .btn-nav-register {
+        padding: 8px 20px;
+        border-radius: var(--radius-sm, 8px);
+        font-size: 13px;
+        font-weight: 600;
+        color: #ffffff;
+        background: var(--blue-main, #1a5fb4);
+        border: 1.5px solid var(--blue-main, #1a5fb4);
+        font-family: inherit;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .btn-nav-register:hover { background: var(--blue-dark, #0a3d6b); border-color: var(--blue-dark, #0a3d6b); }
+
+    .btn-nav-logout {
+        padding: 8px 20px;
+        border-radius: var(--radius-sm, 8px);
+        font-size: 13px;
+        font-weight: 600;
+        color: #dc2626;
+        border: 1.5px solid #fca5a5;
+        background: #fff5f5;
+        font-family: inherit;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .btn-nav-logout:hover { background: #fee2e2; }
+
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        padding: 4px;
+    }
+    .hamburger span {
+        display: block;
+        width: 22px;
+        height: 2px;
+        background: var(--text-mid, #334155);
+        border-radius: 99px;
+        transition: all 0.3s;
+    }
+
+    .mobile-nav {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 998;
+        background: rgba(255,255,255,0.98);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 28px;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a, .mobile-nav button {
+        font-size: 20px;
+        font-weight: 600;
+        color: var(--text-dark, #0f172a);
+        font-family: inherit;
+        background: none;
+        border: none;
+        cursor: pointer;
+        transition: color 0.2s;
+        text-decoration: none;
+    }
+    .mobile-nav a:hover, .mobile-nav button:hover { color: var(--blue-main, #1a5fb4); }
+    .mobile-close {
+        position: absolute;
+        top: 20px; right: 24px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--text-gray, #64748b);
+    }
+    .mobile-close .material-icons-outlined { font-size: 28px; }
+
+    @media (max-width: 900px) {
+        .navbar { padding: 0 24px; }
+        .navbar-links, .navbar-actions { display: none; }
+        .hamburger { display: flex; }
+    }
+</style>
+
+<header class="navbar" id="mainNavbar">
+    <a href="{{ route('landing') }}" class="navbar-logo">SIMAKATA</a>
+
+    <ul class="navbar-links">
+        <li><a href="{{ route('landing') }}" class="{{ request()->routeIs('landing') ? 'active' : '' }}" id="nav-beranda">Beranda</a></li>
+        <li><a href="{{ route('perusahaan.index') }}" class="{{ request()->routeIs('perusahaan.*') ? 'active' : '' }}" id="nav-perusahaan">Perusahaan</a></li>
+        <li><a href="{{ route('judul-ta.index') }}" class="{{ request()->routeIs('judul-ta.*') ? 'active' : '' }}" id="nav-judul">Judul TA</a></li>
+        <li><a href="{{ route('riwayat.index') }}" class="{{ request()->routeIs('riwayat.*') ? 'active' : '' }}" id="nav-riwayat">Riwayat</a></li>
+    </ul>
+
+    <div class="navbar-actions">
+        @guest
+            <a href="{{ route('login.form') }}" class="btn-nav-login" id="btn-navbar-login">Login</a>
+            <a href="{{ route('register.form') }}" class="btn-nav-register" id="btn-navbar-register">Daftar</a>
+        @endguest
+        @auth
+            <div style="display: flex; gap: 10px;">
+                <a href="{{ route('dashboard') }}" class="btn-nav-register" style="background:#1a5fb4; color:#fff; padding:8px 20px; border-radius:8px; font-size:13px; font-weight:600; text-decoration:none;">Dashboard</a>
+                <form method="POST" action="{{ route('logout') }}" style="margin:0;">
+                    @csrf
+                    <button type="submit" class="btn-nav-logout" id="btn-navbar-logout">Logout</button>
+                </form>
+            </div>
+        @endauth
+    </div>
+
+    {{-- Mobile hamburger --}}
+    <div class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+    </div>
+</header>
+
+{{-- Mobile nav overlay --}}
+<nav class="mobile-nav" id="mobileNav">
+    <button class="mobile-close" id="mobileClose" aria-label="Close menu">
+        <span class="material-icons-outlined">close</span>
+    </button>
+    <a href="{{ route('landing') }}">Beranda</a>
+    <a href="{{ route('perusahaan.index') }}">Perusahaan</a>
+    <a href="{{ route('judul-ta.index') }}">Judul TA</a>
+    <a href="{{ route('riwayat.index') }}">Riwayat</a>
+    @guest
+        <a href="{{ route('login.form') }}" id="btn-mobile-login">Login</a>
+        <a href="{{ route('register.form') }}" id="btn-mobile-register" style="color:var(--blue-main)">Daftar</a>
+    @endguest
+    @auth
+        <form method="POST" action="{{ route('logout') }}" style="margin:0;">
+            @csrf
+            <button type="submit" id="btn-mobile-logout" style="background:none; border:none; color:var(--text-dark); font-size:20px; font-weight:600; cursor:pointer;">Logout</button>
+        </form>
+    @endauth
+</nav>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const navbar = document.querySelector('.navbar');
+    if(navbar) {
+        window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 10); });
+    }
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const mobileNav    = document.getElementById('mobileNav');
+    const mobileClose  = document.getElementById('mobileClose');
+    if(hamburgerBtn && mobileNav) {
+        hamburgerBtn.addEventListener('click', () => { mobileNav.classList.add('open'); document.body.style.overflow = 'hidden'; });
+        function closeMobileNav() { mobileNav.classList.remove('open'); document.body.style.overflow = ''; }
+        if(mobileClose) mobileClose.addEventListener('click', closeMobileNav);
+        mobileNav.querySelectorAll('a').forEach(link => { link.addEventListener('click', closeMobileNav); });
+    }
+});
+</script>
