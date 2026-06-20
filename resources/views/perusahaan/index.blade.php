@@ -646,15 +646,15 @@
         @if($perusahaan->count() > 0)
             <div class="companies-grid">
                 @foreach($perusahaan as $p)
-                    <div class="company-card" data-id="{{ $p->id }}">
+                    <div class="company-card" data-perusahaan-id="{{ $p->id }}" data-id="{{ $p->id }}">
                         {{-- Company Header --}}
                         <div class="company-header">
                             <div class="company-logo">
                                 {{ strtoupper(substr($p->nama, 0, 2)) }}
                             </div>
                             <div class="company-info">
-                                <h3 class="company-name">{{ $p->nama }}</h3>
-                                <div class="company-location">
+                                <h3 class="company-name perusahaan-nama">{{ $p->nama }}</h3>
+                                <div class="company-location perusahaan-lokasi">
                                     <span class="material-icons-outlined">location_on</span>
                                     {{ $p->lokasi ?? 'Lokasi tidak tersedia' }}
                                 </div>
@@ -665,17 +665,17 @@
                         <div class="company-badges">
                             @if($p->jenis_kegiatan)
                                 @if($p->jenis_kegiatan == 'Magang')
-                                    <span class="badge badge-magang">
+                                    <span class="badge badge-magang perusahaan-jenis">
                                         <span class="material-icons-outlined" style="font-size: 14px;">work</span>
                                         Magang
                                     </span>
                                 @elseif($p->jenis_kegiatan == 'Kerja Praktik')
-                                    <span class="badge badge-kp">
+                                    <span class="badge badge-kp perusahaan-jenis">
                                         <span class="material-icons-outlined" style="font-size: 14px;">business_center</span>
                                         Kerja Praktik
                                     </span>
                                 @elseif($p->jenis_kegiatan == 'Tugas Akhir')
-                                    <span class="badge badge-ta">
+                                    <span class="badge badge-ta perusahaan-jenis">
                                         <span class="material-icons-outlined" style="font-size: 14px;">school</span>
                                         Tugas Akhir
                                     </span>
@@ -689,14 +689,14 @@
                         </div>
 
                         {{-- Description --}}
-                        <p class="company-description">
+                        <p class="company-description perusahaan-tentang">
                             {{ Str::limit($p->tentang ?? 'Tidak ada deskripsi.', 120) }}
                         </p>
 
                         {{-- Stats --}}
                         <div class="company-stats">
                             <span class="material-icons-outlined">groups</span>
-                            <strong>{{ $p->magang_count ?? $p->jumlah_mahasiswa }}</strong> Alumni
+                            <strong class="perusahaan-jumlah">{{ $p->magang_count ?? $p->jumlah_mahasiswa }}</strong> Alumni
                         </div>
 
                         {{-- Footer Button --}}

@@ -109,8 +109,17 @@
         /* PAGINATION */
         .pagination-wrap { padding: 16px 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
         .pagination-info { font-size: 12px; color: var(--text-gray); }
+        .pagination-links { display: flex; gap: 6px; }
+        .pagination-links a, .pagination-links span {
+            padding: 6px 12px; border-radius: 7px; font-size: 13px; font-weight: 500;
+            border: 1px solid var(--border); color: var(--text-mid); background: #fff; transition: all 0.15s;
+        }
+        .pagination-links a:hover { border-color: var(--blue-main); color: var(--blue-main); }
+        .pagination-links span[aria-current="page"] { background: var(--blue-main); color: #fff; border-color: var(--blue-main); }
+        .pagination-links .disabled { opacity: 0.5; cursor: not-allowed; }
 
-        footer { text-align: center; padding: 24px; font-size: 12px; color: #94a3b8; border-top: 1px solid var(--border); margin-top: 40px; }
+        .pagination-wrap svg { width: 20px; height: 20px; vertical-align: middle; }
+        .pagination-wrap nav div:first-child { display: none; } /* Hide the mobile "Showing X to Y" part of default tailwind pagination if redundant */
     </style>
 </head>
 <body>
@@ -195,7 +204,32 @@
         @if($riwayat->hasPages())
         <div class="pagination-wrap">
             <div class="pagination-info">Menampilkan {{ $riwayat->firstItem() ?? 0 }}–{{ $riwayat->lastItem() ?? 0 }} dari {{ $riwayat->total() }} data</div>
-            <div>{{ $riwayat->links() }}</div>
+            <div class="pagination-links">
+                {{-- Previous Button --}}
+                @if($riwayat->onFirstPage())
+                    <span class="disabled"><span class="material-icons-outlined" style="font-size: 14px; vertical-align: middle;">chevron_left</span></span>
+                @else
+                    <a href="{{ $riwayat->previousPageUrl() }}"><span class="material-icons-outlined" style="font-size: 14px; vertical-align: middle;">chevron_left</span></a>
+                @endif
+
+                {{-- Page Numbers --}}
+                @foreach($riwayat->getUrlRange(1, $riwayat->lastPage()) as $page => $url)
+                    @if($page == $riwayat->currentPage())
+                        <span aria-current="page">{{ $page }}</span>
+                    @elseif($page == 1 || $page == $riwayat->lastPage() || abs($page - $riwayat->currentPage()) <= 2)
+                        <a href="{{ $url }}">{{ $page }}</a>
+                    @elseif($page == 2 || $page == $riwayat->lastPage() - 1)
+                        <span style="border: none; background: transparent; padding: 6px 4px;">...</span>
+                    @endif
+                @endforeach
+
+                {{-- Next Button --}}
+                @if($riwayat->hasMorePages())
+                    <a href="{{ $riwayat->nextPageUrl() }}"><span class="material-icons-outlined" style="font-size: 14px; vertical-align: middle;">chevron_right</span></a>
+                @else
+                    <span class="disabled"><span class="material-icons-outlined" style="font-size: 14px; vertical-align: middle;">chevron_right</span></span>
+                @endif
+            </div>
         </div>
         @endif
     </div>

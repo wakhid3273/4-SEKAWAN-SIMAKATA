@@ -1,0 +1,90 @@
+╔═══════════════════════════════════════════════════════════════════╗
+║              SIMAKATA - QUICK START GUIDE                         ║
+║        Sistem Informasi Manajemen Data Kegiatan Mahasiswa         ║
+╚═══════════════════════════════════════════════════════════════════╝
+
+📝 PILIH MODE OPERASI:
+
+┌─────────────────────────────────────────────────────────────────┐
+│ MODE 1: TANPA REAL-TIME (Quick & Simple)                       │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  1. Buka Command Prompt / Terminal                             │
+│  2. Jalankan: php artisan serve                                │
+│  3. Akses: http://127.0.0.1:8000                               │
+│                                                                 │
+│  ✓ Aplikasi berfungsi 100% normal                              │
+│  ✓ Tidak akan error                                            │
+│  ✗ Tidak ada auto-update (harus refresh manual)                │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│ MODE 2: DENGAN REAL-TIME (Full Features) ⭐ RECOMMENDED         │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  CARA MUDAH (1 Command):                                        │
+│  ────────────────────────                                       │
+│  1. Jalankan: npm start                                         │
+│     (otomatis jalankan 3 server sekaligus)                      │
+│                                                                 │
+│  CARA MANUAL (3 Terminal):                                      │
+│  ──────────────────────────                                     │
+│  Terminal 1: php artisan serve                                  │
+│  Terminal 2: php artisan reverb:start                           │
+│  Terminal 3: npm run dev (opsional)                             │
+│                                                                 │
+│  ATAU double-click: START-REVERB.bat                            │
+│                                                                 │
+│  ✓ Real-time updates tanpa refresh                              │
+│  ✓ Multi-device sync                                            │
+│  ✓ Toast notifications                                          │
+│  ✓ Live status updates                                          │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+🔍 CEK STATUS SERVER:
+
+  Jalankan: php check-reverb.php
+  
+  ✓ Connected    = Real-time AKTIF
+  ✗ Disconnected = Real-time NONAKTIF (aplikasi tetap jalan normal)
+
+🌐 AKSES APLIKASI:
+
+  Website : http://127.0.0.1:8000
+  Reverb  : ws://localhost:8080
+
+🔐 DEFAULT LOGIN:
+
+  Admin:
+    Email    : admin@example.com
+    Password : password123
+
+  User:
+    NIM      : 1234567890
+    Password : password123
+
+📚 DOKUMENTASI LENGKAP:
+
+  ► CARA-MENJALANKAN.md  - Panduan lengkap & troubleshooting
+  ► REALTIME-GUIDE.md    - Dokumentasi fitur real-time
+  ► README.md            - Overview project
+
+🆘 TROUBLESHOOTING:
+
+  Error "404 Not found" saat update data?
+  → Jalankan: php artisan reverb:start
+
+  Real-time tidak bekerja?
+  → Cek: php check-reverb.php
+
+  Masih error?
+  → Baca: CARA-MENJALANKAN.md
+
+═══════════════════════════════════════════════════════════════════
+
+💡 TIP: Untuk demo/testing cukup gunakan MODE 1 (php artisan serve)
+        Untuk lihat fitur real-time, gunakan MODE 2 (npm start)
+
+═══════════════════════════════════════════════════════════════════

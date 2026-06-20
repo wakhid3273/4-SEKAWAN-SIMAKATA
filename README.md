@@ -1,59 +1,277 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# SIMAKATA - Sistem Informasi Manajemen Data Kegiatan Mahasiswa
 
+## 📝 Deskripsi
+SIMAKATA adalah sistem informasi untuk mengelola data kegiatan mahasiswa Informatika, termasuk Kerja Praktik (KP), Magang/MBKM, dan Tugas Akhir (TA).
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## ✨ Fitur Utama
 
-## About Laravel
+### 🔐 Multi-Role Access
+- **Admin**: Kelola perusahaan, verifikasi pengajuan, kelola data mahasiswa
+- **Mahasiswa**: Ajukan KP/Magang, lihat riwayat, kelola profil
+- **Tamu**: Lihat database perusahaan dan informasi publik
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### 🚀 Real-time Synchronization (NEW!)
+- ✅ Data ter-update otomatis tanpa refresh halaman
+- ✅ Multi-device & multi-user sync
+- ✅ Toast notifications untuk setiap perubahan
+- ✅ Live status updates untuk verifikasi pengajuan
+- ✅ Sinkronisasi data perusahaan real-time
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**[📖 Baca Panduan Real-time Lengkap](REALTIME-GUIDE.md)**
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 📊 Fitur Lainnya
+- Dashboard interaktif dengan statistik
+- Database perusahaan mitra
+- Sistem verifikasi pengajuan
+- Export PDF laporan
+- Filter & pencarian data
+- Profil mahasiswa & admin
 
-## Learning Laravel
+## 🛠️ Tech Stack
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Backend
+- **Framework**: Laravel 13
+- **Database**: SQLite
+- **Broadcasting**: Laravel Reverb (WebSocket)
+- **PDF Generator**: DomPDF
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Frontend
+- **CSS Framework**: Tailwind CSS 4
+- **JavaScript**: Vanilla JS + Laravel Echo
+- **Real-time**: Pusher JS + WebSocket
+- **Build Tool**: Vite 8
+- **Icons**: Material Icons
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+### Development
+- **Package Manager**: Composer + NPM
+- **PHP Version**: ^8.3
+- **Node Version**: Latest LTS
 
-## Agentic Development
+## 📦 Instalasi
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
+### 1. Clone Repository
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone https://github.com/wakhid3273/4-SEKAWAN-SIMAKATA.git
+cd 4-SEKAWAN-SIMAKATA
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+### 2. Install Dependencies
+```bash
+# Install PHP dependencies
+composer install
 
-## Contributing
+# Install JavaScript dependencies
+npm install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 3. Setup Environment
+```bash
+# Copy .env.example ke .env
+copy .env.example .env
 
-## Code of Conduct
+# Generate application key
+php artisan key:generate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 4. Setup Database
+```bash
+# Jalankan migrations
+php artisan migrate
 
-## Security Vulnerabilities
+# Seed database dengan data dummy (opsional)
+php artisan db:seed
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 5. Build Assets
+```bash
+npm run build
+```
 
-## License
+## 🚀 Menjalankan Aplikasi
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Opsi 1: Real-time Mode (Recommended)
+
+Jalankan **semua server sekaligus** dengan 1 command:
+
+```bash
+npm start
+```
+
+Atau double-click file `start-realtime.bat` di Windows.
+
+Ini akan menjalankan:
+- Laravel Server (Port 8000)
+- Vite Dev Server (Hot reload)
+- Laravel Reverb Server (Port 8080)
+
+### Opsi 2: Development Tanpa Real-time
+
+```bash
+# Terminal 1: Laravel Server
+php artisan serve
+
+# Terminal 2: Vite Dev Server
+npm run dev
+```
+
+### Opsi 3: Production Build
+
+```bash
+# Build assets untuk production
+npm run build
+
+# Jalankan server
+php artisan serve
+```
+
+## 🌐 Akses Aplikasi
+
+- **Website**: http://127.0.0.1:8000
+- **Real-time WebSocket**: ws://localhost:8080
+
+### Default Login
+
+**Admin:**
+- Email: `admin@example.com`
+- Password: `password123`
+
+**User:**
+- NIM: `1234567890`
+- Password: `password123`
+
+## 📚 Dokumentasi
+
+- [Panduan Real-time Synchronization](REALTIME-GUIDE.md)
+- [API Documentation](#) *(coming soon)*
+- [Database Schema](#) *(coming soon)*
+
+## 🔧 Development Commands
+
+```bash
+# Clear all cache
+php artisan config:clear
+php artisan cache:clear
+php artisan view:clear
+
+# Run migrations
+php artisan migrate
+
+# Seed database
+php artisan db:seed
+
+# Run specific seeder
+php artisan db:seed --class=PerusahaanSeeder
+
+# Build assets
+npm run build
+
+# Watch for changes
+npm run dev
+
+# Start Reverb server (Real-time)
+php artisan reverb:start
+
+# Run all servers at once
+npm start
+```
+
+## 📁 Struktur Project
+
+```
+SIMAKATA/
+├── app/
+│   ├── Events/                 # Real-time events
+│   ├── Http/
+│   │   ├── Controllers/        # Controllers
+│   │   └── Middleware/         # Middleware
+│   └── Models/                 # Eloquent models
+├── database/
+│   ├── migrations/             # Database migrations
+│   └── seeders/                # Database seeders
+├── public/
+│   └── build/                  # Compiled assets
+├── resources/
+│   ├── css/                    # Tailwind CSS
+│   ├── js/                     # JavaScript
+│   │   ├── app.js             # Main JS entry
+│   │   ├── echo.js            # Echo config
+│   │   └── realtime.js        # Real-time handlers
+│   └── views/                  # Blade templates
+├── routes/
+│   └── web.php                # Web routes
+├── .env                        # Environment config
+├── composer.json               # PHP dependencies
+├── package.json                # JavaScript dependencies
+├── start-realtime.bat         # Quick start script
+├── REALTIME-GUIDE.md          # Real-time documentation
+└── README.md                   # This file
+```
+
+## 🧪 Testing
+
+```bash
+# Run all tests
+php artisan test
+
+# Run specific test
+php artisan test --filter=PerusahaanTest
+```
+
+## 🐛 Troubleshooting
+
+### Real-time Tidak Bekerja
+
+1. Pastikan Reverb server berjalan:
+   ```bash
+   php artisan reverb:start
+   ```
+
+2. Cek console browser (F12) untuk error
+
+3. Lihat [REALTIME-GUIDE.md](REALTIME-GUIDE.md#troubleshooting)
+
+### Error Database
+
+```bash
+# Reset database
+php artisan migrate:fresh --seed
+```
+
+### Assets Tidak Ter-load
+
+```bash
+# Rebuild assets
+npm run build
+
+# Clear cache
+php artisan view:clear
+```
+
+## 🤝 Contributing
+
+1. Fork repository
+2. Create feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to branch (`git push origin feature/AmazingFeature`)
+5. Open Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 👥 Team
+
+**4 SEKAWAN**
+- Developer 1
+- Developer 2
+- Developer 3
+- Developer 4
+
+## 📞 Contact
+
+- **Repository**: https://github.com/wakhid3273/4-SEKAWAN-SIMAKATA
+- **Issues**: https://github.com/wakhid3273/4-SEKAWAN-SIMAKATA/issues
+
+---
+
+**Built with ❤️ using Laravel 13 + Real-time WebSocket**

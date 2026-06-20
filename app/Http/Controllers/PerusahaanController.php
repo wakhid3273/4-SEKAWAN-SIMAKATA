@@ -85,7 +85,13 @@ class PerusahaanController extends Controller
         ]);
 
         $perusahaan = Perusahaan::create($request->all());
-        broadcast(new PerusahaanCreated($perusahaan));
+        
+        // Broadcast event (graceful failure jika Reverb tidak running)
+        try {
+            broadcast(new PerusahaanCreated($perusahaan));
+        } catch (\Exception $e) {
+            \Log::warning('Broadcasting failed: ' . $e->getMessage());
+        }
 
         return redirect()->route('admin.perusahaan.index')->with('success', 'Perusahaan berhasil ditambahkan.');
     }
@@ -111,7 +117,13 @@ class PerusahaanController extends Controller
 
         $perusahaan = Perusahaan::findOrFail($id);
         $perusahaan->update($request->all());
-        broadcast(new PerusahaanUpdated($perusahaan));
+        
+        // Broadcast event (graceful failure jika Reverb tidak running)
+        try {
+            broadcast(new PerusahaanUpdated($perusahaan));
+        } catch (\Exception $e) {
+            \Log::warning('Broadcasting failed: ' . $e->getMessage());
+        }
 
         return redirect()->route('admin.perusahaan.index')->with('success', 'Perusahaan berhasil diperbarui.');
     }
@@ -120,7 +132,13 @@ class PerusahaanController extends Controller
     {
         $perusahaan = Perusahaan::findOrFail($id);
         $perusahaan->delete();
-        broadcast(new PerusahaanDeleted($id));
+        
+        // Broadcast event (graceful failure jika Reverb tidak running)
+        try {
+            broadcast(new PerusahaanDeleted($id));
+        } catch (\Exception $e) {
+            \Log::warning('Broadcasting failed: ' . $e->getMessage());
+        }
 
         return redirect()->route('admin.perusahaan.index')->with('success', 'Perusahaan berhasil dihapus.');
     }
