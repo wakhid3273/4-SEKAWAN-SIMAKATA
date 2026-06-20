@@ -93,6 +93,14 @@ Route::middleware('auth')->group(function () {
         ->middleware('role:user')
         ->name('user.profil.update');
 
+    // User Input KP/Magang
+    Route::get('/user/input-kp-magang', [\App\Http\Controllers\User\KpMagangController::class, 'create'])
+        ->middleware('role:user')
+        ->name('user.kp-magang.create');
+    Route::post('/user/input-kp-magang', [\App\Http\Controllers\User\KpMagangController::class, 'store'])
+        ->middleware('role:user')
+        ->name('user.kp-magang.store');
+
     // Default dashboard redirect sesuai role
     Route::get('/dashboard', function () {
         $role = trim(auth()->user()->role);

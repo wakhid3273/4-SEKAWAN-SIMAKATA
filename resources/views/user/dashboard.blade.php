@@ -435,7 +435,7 @@
                 <span>Dashboard</span>
             </a>
 
-            <a href="{{ route('perusahaan.index') }}" id="nav-kp" class="nav-item">
+            <a href="{{ route('user.kp-magang.create') }}" id="nav-kp" class="nav-item">
                 <span class="material-icons-outlined">work_outline</span>
                 <span>Input KP/Magang</span>
             </a>
@@ -638,7 +638,7 @@
                                 </div>
                                 <div class="qa-arrow"><span class="material-icons-outlined">chevron_right</span></div>
                             </a>
-                            <a href="{{ route('perusahaan.index') }}" class="quick-action" id="qa-input-kp">
+                            <a href="{{ route('user.kp-magang.create') }}" class="quick-action" id="qa-input-kp">
                                 <div class="qa-icon qa-blue">
                                     <span class="material-icons-outlined">work_outline</span>
                                 </div>
