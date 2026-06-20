@@ -744,9 +744,6 @@
             </div>
 
             <div class="topbar-right">
-                <a href="{{ route('landing') }}" class="topbar-icon-btn" title="Ke Beranda" id="btn-home" style="text-decoration: none; display: flex; align-items: center; justify-content: center; color: var(--text-gray);">
-                    <span class="material-icons-outlined">home</span>
-                </a>
                 <button class="topbar-icon-btn" id="btn-notif" aria-label="Notifikasi">
                     <span class="material-icons-outlined">notifications</span>
                     <span class="notif-dot"></span>
@@ -761,7 +758,11 @@
                         <div class="u-role">Mahasiswa</div>
                     </div>
                     <div class="topbar-avatar">
-                        {{ strtoupper(substr($user->nama_lengkap ?? 'M', 0, 1)) }}
+                        @if(Auth::user()->avatar)
+                            <img src="{{ Storage::url(Auth::user()->avatar) }}" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover;">
+                        @else
+                            {{ strtoupper(substr($user->nama_lengkap ?? 'M', 0, 1)) }}
+                        @endif
                     </div>
                 </div>
             </div>
@@ -774,7 +775,11 @@
             <div class="profile-banner" id="profile-banner">
                 {{-- Avatar --}}
                 <div class="banner-avatar">
-                    {{ strtoupper(substr($user->nama_lengkap ?? 'M', 0, 1)) }}
+                        @if($user->avatar)
+                            <img src="{{ Storage::url($user->avatar) }}" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover;">
+                        @else
+                            {{ strtoupper(substr($user->nama_lengkap ?? 'M', 0, 1)) }}
+                        @endif
                 </div>
 
                 {{-- Info + Actions --}}
@@ -792,10 +797,10 @@
                         NIM: {{ $user->nim ?? '-' }}
                     </div>
                     <div class="banner-actions">
-                        <button class="btn-banner btn-banner-primary" id="btn-edit-profil">
+                        <a href="{{ route('user.profil.edit') }}" class="btn-banner btn-banner-primary" id="btn-edit-profil">
                             <span class="material-icons-outlined">edit</span>
                             Edit Profil
-                        </button>
+                        </a>
                         <button class="btn-banner btn-banner-secondary" id="btn-bagikan-profil">
                             <span class="material-icons-outlined">share</span>
                             Bagikan Profil
@@ -931,10 +936,10 @@
                                 {{ $user->last_login_at ? $user->last_login_at->diffForHumans() : '-' }}
                             </div>
                         </div>
-                        <button class="btn-ubah-password" id="btn-ubah-password">
+                        <a href="{{ route('user.profil.edit') }}" class="btn-ubah-password" id="btn-ubah-password" style="text-decoration:none;">
                             <span class="material-icons-outlined">lock_reset</span>
                             Ubah Password
-                        </button>
+                        </a>
                         <div class="security-hint">
                             Disarankan untuk mengubah password secara berkala setiap 6 bulan.
                         </div>
@@ -960,16 +965,6 @@
 </div>{{-- /shell --}}
 
 <script>
-    // ===== Edit Profil button (placeholder) =====
-    document.getElementById('btn-edit-profil')?.addEventListener('click', function() {
-        alert('Fitur Edit Profil akan segera tersedia.');
-    });
-
-    // ===== Ubah Password button (placeholder) =====
-    document.getElementById('btn-ubah-password')?.addEventListener('click', function() {
-        alert('Fitur Ubah Password akan segera tersedia.');
-    });
-
     // ===== Bagikan Profil =====
     document.getElementById('btn-bagikan-profil')?.addEventListener('click', function() {
         if (navigator.share) {
