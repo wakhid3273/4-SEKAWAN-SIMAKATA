@@ -14,12 +14,21 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
         
+        // Data Tugas Akhir (from FinalProject table)
         $totalTugasAkhir = FinalProject::where('user_id', $user->id)->count();
-        $pengajuanPending = FinalProject::where('user_id', $user->id)->where('status', 'pending')->count();
-        $pengajuanDisetujui = FinalProject::where('user_id', $user->id)->where('status', 'approved')->count();
         
-        // Dummy data for KP/Magang as there's no table linking user to magang application yet
-        $totalKpMagang = 3; 
+        // Data KP/Magang (from MahasiswaMagang table if exists, otherwise 0)
+        $totalKpMagang = \App\Models\MahasiswaMagang::where('user_id', $user->id)->count();
+        
+        // Total Pengajuan = Tugas Akhir + KP/Magang
+        $totalPengajuan = $totalTugasAkhir + $totalKpMagang;
+        
+        // Pending & Approved dari kedua tabel
+        $pengajuanPending = FinalProject::where('user_id', $user->id)->where('status', 'pending')->count() 
+                          + \App\Models\MahasiswaMagang::where('user_id', $user->id)->where('status', 'pending')->count();
+        
+        $pengajuanDisetujui = FinalProject::where('user_id', $user->id)->where('status', 'approved')->count()
+                            + \App\Models\MahasiswaMagang::where('user_id', $user->id)->where('status', 'approved')->count();
 
         return view('user.profile', compact(
             'user',
