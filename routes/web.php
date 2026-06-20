@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\PerusahaanController;
@@ -21,6 +22,9 @@ Route::post('/login', [LoginController::class, 'login'])->name('login');
 
 Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register.form');
 Route::post('/register', [RegisterController::class, 'register'])->name('register');
+
+Route::get('/reset-password', [ResetPasswordController::class, 'showResetForm'])->name('password.request');
+Route::post('/reset-password', [ResetPasswordController::class, 'reset'])->name('password.reset');
 
 // Logout pakai POST
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
