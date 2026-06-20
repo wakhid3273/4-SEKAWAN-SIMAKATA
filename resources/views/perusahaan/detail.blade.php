@@ -120,82 +120,133 @@
             transform: translateY(-1px);
         }
 
-        .btn-back {
+        .btn-secondary {
             background: var(--white);
             color: var(--blue-main);
             border: 2px solid var(--blue-main);
         }
-        .btn-back:hover {
+        .btn-secondary:hover {
             background: var(--blue-pale);
+        }
+
+        /* ===== HERO BANNER ===== */
+        .hero-banner {
+            height: 280px;
+            background: linear-gradient(135deg, #0a3d6b 0%, #1a5fb4 50%, #2563eb 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255,255,255,0.1) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .hero-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.03) 10px, rgba(255,255,255,0.03) 20px);
+            opacity: 0.5;
         }
 
         /* ===== CONTAINER ===== */
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 48px 40px;
+            padding: 0 40px;
         }
 
-        /* ===== HEADER SECTION ===== */
-        .detail-header {
+        /* ===== COMPANY HEADER ===== */
+        .company-header {
+            position: relative;
+            margin-top: -100px;
+            margin-bottom: 32px;
+        }
+
+        .company-card {
             background: var(--white);
             border-radius: var(--radius-lg);
             padding: 32px;
-            box-shadow: var(--shadow-sm);
-            margin-bottom: 24px;
+            box-shadow: var(--shadow-lg);
             border: 1px solid var(--border);
         }
 
-        .header-top {
+        .company-top {
             display: flex;
-            align-items: flex-start;
             gap: 24px;
+            align-items: flex-start;
             margin-bottom: 24px;
         }
 
-        .company-logo-large {
+        .company-logo {
             width: 96px;
             height: 96px;
             border-radius: var(--radius-md);
+            background: var(--blue-pale);
+            color: var(--blue-main);
             display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--blue-pale);
-            color: var(--blue-main);
             font-size: 36px;
             font-weight: 700;
             flex-shrink: 0;
+            box-shadow: var(--shadow-sm);
         }
 
-        .header-info {
+        .company-info {
             flex: 1;
         }
 
-        .header-info h1 {
+        .company-name {
             font-size: 32px;
             font-weight: 800;
             color: var(--text-dark);
-            margin-bottom: 12px;
+            margin-bottom: 8px;
+            line-height: 1.2;
         }
 
-        .header-meta {
+        .company-meta {
             display: flex;
             flex-wrap: wrap;
-            gap: 24px;
+            gap: 20px;
             align-items: center;
+            margin-bottom: 16px;
         }
 
         .meta-item {
             display: flex;
             align-items: center;
-            gap: 8px;
-            color: var(--text-gray);
+            gap: 6px;
             font-size: 15px;
+            color: var(--text-gray);
         }
 
         .meta-item .material-icons-outlined {
             font-size: 20px;
             color: var(--blue-main);
+        }
+
+        .company-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .badge {
@@ -228,16 +279,56 @@
             color: var(--green);
         }
 
+        .company-actions {
+            display: flex;
+            gap: 12px;
+            margin-left: auto;
+        }
+
+        .btn-share {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-sm);
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-gray);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-share:hover {
+            background: var(--white);
+            border-color: var(--blue-main);
+            color: var(--blue-main);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-action {
+            padding: 12px 28px;
+        }
+
+        /* ===== MAIN CONTENT LAYOUT ===== */
+        .content-layout {
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: 32px;
+            margin-bottom: 48px;
+        }
+
         /* ===== TABS ===== */
         .tabs {
             display: flex;
             gap: 8px;
             border-bottom: 2px solid var(--border);
-            margin-bottom: 24px;
+            margin-bottom: 32px;
         }
 
         .tab-btn {
-            padding: 12px 24px;
+            padding: 14px 24px;
             background: transparent;
             border: none;
             font-size: 15px;
@@ -246,6 +337,9 @@
             cursor: pointer;
             position: relative;
             transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .tab-btn.active {
@@ -269,9 +363,15 @@
 
         .tab-content.active {
             display: block;
+            animation: fadeIn 0.3s ease;
         }
 
-        /* ===== CONTENT CARDS ===== */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== CONTENT CARD ===== */
         .content-card {
             background: var(--white);
             border-radius: var(--radius-md);
@@ -280,31 +380,30 @@
             border: 1px solid var(--border);
         }
 
-        .content-card h2 {
+        .section-title {
             font-size: 20px;
             font-weight: 700;
             color: var(--text-dark);
-            margin-bottom: 16px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
-        .content-card h2 .material-icons-outlined {
+        .section-title .material-icons-outlined {
             color: var(--blue-main);
+            font-size: 24px;
         }
 
-        .content-card p {
+        .section-text {
             color: var(--text-mid);
             line-height: 1.8;
-            margin-bottom: 16px;
+            margin-bottom: 24px;
         }
 
         .info-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
-            margin-top: 20px;
         }
 
         .info-item {
@@ -312,94 +411,231 @@
             gap: 12px;
         }
 
-        .info-item .material-icons-outlined {
-            color: var(--blue-main);
-            font-size: 24px;
+        .info-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            background: var(--blue-pale);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
         }
 
-        .info-item-content {
+        .info-icon .material-icons-outlined {
+            color: var(--blue-main);
+            font-size: 20px;
+        }
+
+        .info-content {
             flex: 1;
         }
 
-        .info-item-label {
-            font-size: 13px;
+        .info-label {
+            font-size: 12px;
             font-weight: 600;
             color: var(--text-gray);
             text-transform: uppercase;
+            letter-spacing: 0.5px;
             margin-bottom: 4px;
         }
 
-        .info-item-value {
+        .info-value {
             font-size: 15px;
             color: var(--text-dark);
             font-weight: 500;
+            word-break: break-word;
         }
 
-        .info-item-value a {
+        .info-value a {
             color: var(--blue-main);
             text-decoration: underline;
         }
 
-        /* ===== ALUMNI LIST ===== */
-        .alumni-list {
-            display: grid;
-            gap: 16px;
+        .info-value a:hover {
+            color: var(--blue-dark);
         }
 
-        .alumni-item {
+        /* ===== RIWAYAT MAGANG TABLE ===== */
+        .magang-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .magang-table thead {
             background: var(--bg-page);
-            padding: 20px;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border);
+        }
+
+        .magang-table th {
+            padding: 14px 16px;
+            text-align: left;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-mid);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .magang-table td {
+            padding: 16px;
+            font-size: 14px;
+            color: var(--text-mid);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .magang-table tbody tr {
             transition: all 0.2s;
         }
 
-        .alumni-item:hover {
-            box-shadow: var(--shadow-sm);
-            border-color: var(--blue-light);
+        .magang-table tbody tr:hover {
+            background: var(--blue-pale);
         }
 
-        .alumni-name {
-            font-size: 16px;
-            font-weight: 700;
+        .magang-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .student-name {
+            font-weight: 600;
             color: var(--text-dark);
-            margin-bottom: 8px;
-        }
-
-        .alumni-info {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
-            font-size: 14px;
-            color: var(--text-gray);
-        }
-
-        .alumni-info span {
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 8px;
         }
 
-        .alumni-info .material-icons-outlined {
-            font-size: 16px;
+        .student-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--blue-pale);
+            color: var(--blue-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            flex-shrink: 0;
         }
 
+        /* ===== SIDEBAR ===== */
+        .sidebar {}
+
+        .sidebar-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            margin-bottom: 24px;
+        }
+
+        .sidebar-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-title .material-icons-outlined {
+            color: var(--blue-main);
+        }
+
+        .cta-card {
+            background: linear-gradient(135deg, var(--blue-main) 0%, var(--blue-mid) 100%);
+            color: var(--white);
+            text-align: center;
+        }
+
+        .cta-card .sidebar-title {
+            color: var(--white);
+        }
+
+        .cta-card .sidebar-title .material-icons-outlined {
+            color: var(--white);
+        }
+
+        .cta-text {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            opacity: 0.95;
+        }
+
+        .btn-cta {
+            width: 100%;
+            background: var(--white);
+            color: var(--blue-main);
+            justify-content: center;
+        }
+
+        .btn-cta:hover {
+            background: var(--blue-pale);
+            transform: translateY(-2px);
+        }
+
+        /* ===== EMPTY STATE ===== */
         .empty-state {
             text-align: center;
-            padding: 48px 20px;
+            padding: 60px 20px;
         }
 
         .empty-state .material-icons-outlined {
-            font-size: 64px;
+            font-size: 72px;
             color: var(--text-light);
             margin-bottom: 16px;
         }
 
+        .empty-state h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-mid);
+            margin-bottom: 8px;
+        }
+
         .empty-state p {
+            font-size: 14px;
             color: var(--text-gray);
         }
 
+        /* ===== BACK BUTTON ===== */
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: var(--white);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text-mid);
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .back-button:hover {
+            border-color: var(--blue-main);
+            color: var(--blue-main);
+            transform: translateX(-4px);
+        }
+
         /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .content-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                order: -1;
+            }
+        }
+
         @media (max-width: 768px) {
             .navbar {
                 padding: 0 20px;
@@ -410,38 +646,63 @@
             }
 
             .container {
-                padding: 32px 20px;
+                padding: 0 20px;
             }
 
-            .detail-header {
-                padding: 24px;
+            .hero-banner {
+                height: 200px;
             }
 
-            .header-top {
+            .company-header {
+                margin-top: -60px;
+            }
+
+            .company-card {
+                padding: 20px;
+            }
+
+            .company-top {
                 flex-direction: column;
                 align-items: center;
                 text-align: center;
             }
 
-            .header-info h1 {
+            .company-logo {
+                width: 80px;
+                height: 80px;
+                font-size: 28px;
+            }
+
+            .company-name {
                 font-size: 24px;
             }
 
-            .header-meta {
+            .company-meta {
                 justify-content: center;
             }
 
-            .tabs {
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
+            .company-actions {
+                margin-left: 0;
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .btn-action {
+                width: 100%;
+                justify-content: center;
             }
 
             .content-card {
-                padding: 24px;
+                padding: 20px;
             }
 
-            .info-grid {
-                grid-template-columns: 1fr;
+            .magang-table {
+                font-size: 13px;
+            }
+
+            .magang-table th,
+            .magang-table td {
+                padding: 12px 8px;
             }
         }
     </style>
@@ -461,167 +722,279 @@
             @auth
                 <a href="{{ route('dashboard') }}" class="btn btn-primary">Dashboard</a>
             @else
-                <a href="{{ route('login.form') }}" class="btn btn-back">Login</a>
+                <a href="{{ route('login.form') }}" class="btn btn-secondary">Login</a>
                 <a href="{{ route('register.form') }}" class="btn btn-primary">Daftar</a>
             @endauth
         </div>
     </nav>
 
+    {{-- ===== HERO BANNER ===== --}}
+    <div class="hero-banner">
+        <div class="hero-pattern"></div>
+    </div>
+
     {{-- ===== MAIN CONTENT ===== --}}
     <div class="container">
         {{-- Back Button --}}
-        <div style="margin-bottom: 24px;">
-            <a href="{{ route('perusahaan.index') }}" class="btn btn-back">
-                <span class="material-icons-outlined" style="font-size: 18px;">arrow_back</span>
-                Kembali ke Database
-            </a>
-        </div>
+        <a href="{{ route('perusahaan.index') }}" class="back-button">
+            <span class="material-icons-outlined" style="font-size: 20px;">arrow_back</span>
+            Kembali ke Database Perusahaan
+        </a>
 
-        {{-- Header Section --}}
-        <div class="detail-header">
-            <div class="header-top">
-                <div class="company-logo-large">
-                    {{ strtoupper(substr($perusahaan->nama, 0, 2)) }}
-                </div>
-                <div class="header-info">
-                    <h1>{{ $perusahaan->nama }}</h1>
-                    <div class="header-meta">
-                        <div class="meta-item">
-                            <span class="material-icons-outlined">location_on</span>
-                            {{ $perusahaan->lokasi ?? 'Lokasi tidak tersedia' }}
+        {{-- Company Header Card --}}
+        <div class="company-header">
+            <div class="company-card">
+                <div class="company-top">
+                    <div class="company-logo">
+                        {{ strtoupper(substr($perusahaan->nama, 0, 2)) }}
+                    </div>
+                    <div class="company-info">
+                        <h1 class="company-name">{{ $perusahaan->nama }}</h1>
+                        <div class="company-meta">
+                            <div class="meta-item">
+                                <span class="material-icons-outlined">category</span>
+                                Software Development & Cloud Computing
+                            </div>
+                            <div class="meta-item">
+                                <span class="material-icons-outlined">location_on</span>
+                                {{ $perusahaan->lokasi ?? 'Lokasi tidak tersedia' }}
+                            </div>
+                            <div class="meta-item">
+                                <span class="material-icons-outlined">groups</span>
+                                <strong>{{ $riwayatMagang->count() > 0 ? $riwayatMagang->count() : $perusahaan->jumlah_mahasiswa }}</strong> Alumni
+                            </div>
                         </div>
-                        <div class="meta-item">
-                            <span class="material-icons-outlined">groups</span>
-                            <strong>{{ $perusahaan->jumlah_alumni }}</strong> Alumni
-                        </div>
-                        @if($perusahaan->jenis_kegiatan)
-                            @if($perusahaan->jenis_kegiatan == 'Magang')
-                                <span class="badge badge-magang">
-                                    <span class="material-icons-outlined" style="font-size: 16px;">work</span>
-                                    Magang
-                                </span>
-                            @elseif($perusahaan->jenis_kegiatan == 'Kerja Praktik')
-                                <span class="badge badge-kp">
-                                    <span class="material-icons-outlined" style="font-size: 16px;">business_center</span>
-                                    Kerja Praktik
-                                </span>
-                            @elseif($perusahaan->jenis_kegiatan == 'Tugas Akhir')
-                                <span class="badge badge-ta">
-                                    <span class="material-icons-outlined" style="font-size: 16px;">school</span>
-                                    Tugas Akhir
-                                </span>
+                        <div class="company-badges">
+                            @if($perusahaan->jenis_kegiatan)
+                                @if($perusahaan->jenis_kegiatan == 'Magang')
+                                    <span class="badge badge-magang">
+                                        <span class="material-icons-outlined" style="font-size: 16px;">work</span>
+                                        Terbuka untuk Magang
+                                    </span>
+                                @elseif($perusahaan->jenis_kegiatan == 'Kerja Praktik')
+                                    <span class="badge badge-kp">
+                                        <span class="material-icons-outlined" style="font-size: 16px;">business_center</span>
+                                        Terbuka untuk Kerja Praktik
+                                    </span>
+                                @elseif($perusahaan->jenis_kegiatan == 'Tugas Akhir')
+                                    <span class="badge badge-ta">
+                                        <span class="material-icons-outlined" style="font-size: 16px;">school</span>
+                                        Terbuka untuk Tugas Akhir
+                                    </span>
+                                @endif
                             @endif
+                            <span class="badge badge-open">
+                                <span class="material-icons-outlined" style="font-size: 16px;">check_circle</span>
+                                500+ Karyawan
+                            </span>
+                        </div>
+                    </div>
+                    <div class="company-actions">
+                        <button class="btn-share" onclick="shareCompany()" title="Bagikan">
+                            <span class="material-icons-outlined" style="font-size: 20px;">share</span>
+                        </button>
+                        <a href="{{ route('perusahaan.index') }}" class="btn btn-primary btn-action">
+                            <span class="material-icons-outlined" style="font-size: 18px;">send</span>
+                            Ajukan KP/Magang
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Content Layout --}}
+        <div class="content-layout">
+            {{-- Main Content --}}
+            <div class="main-content">
+                {{-- Tabs --}}
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchTab('info')">
+                        <span class="material-icons-outlined" style="font-size: 20px;">info</span>
+                        Informasi Perusahaan
+                    </button>
+                    <button class="tab-btn" onclick="switchTab('riwayat')">
+                        <span class="material-icons-outlined" style="font-size: 20px;">history_edu</span>
+                        Riwayat Magang
+                    </button>
+                </div>
+
+                {{-- Tab Content: Informasi Perusahaan --}}
+                <div id="tab-info" class="tab-content active">
+                    <div class="content-card">
+                        <h2 class="section-title">
+                            <span class="material-icons-outlined">business</span>
+                            Tentang Perusahaan
+                        </h2>
+                        <p class="section-text">
+                            {{ $perusahaan->tentang ?? 'Tidak ada deskripsi perusahaan yang tersedia.' }}
+                        </p>
+
+                        @if($perusahaan->website || $perusahaan->email || $perusahaan->alamat)
+                            <h2 class="section-title" style="margin-top: 32px;">
+                                <span class="material-icons-outlined">contact_mail</span>
+                                Informasi Kontak
+                            </h2>
+                            <div class="info-grid">
+                                @if($perusahaan->website)
+                                    <div class="info-item">
+                                        <div class="info-icon">
+                                            <span class="material-icons-outlined">language</span>
+                                        </div>
+                                        <div class="info-content">
+                                            <div class="info-label">Website</div>
+                                            <div class="info-value">
+                                                <a href="{{ $perusahaan->website }}" target="_blank" rel="noopener noreferrer">
+                                                    {{ $perusahaan->website }}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+
+                                @if($perusahaan->email)
+                                    <div class="info-item">
+                                        <div class="info-icon">
+                                            <span class="material-icons-outlined">email</span>
+                                        </div>
+                                        <div class="info-content">
+                                            <div class="info-label">Email</div>
+                                            <div class="info-value">
+                                                <a href="mailto:{{ $perusahaan->email }}">{{ $perusahaan->email }}</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+
+                                @if($perusahaan->alamat)
+                                    <div class="info-item">
+                                        <div class="info-icon">
+                                            <span class="material-icons-outlined">place</span>
+                                        </div>
+                                        <div class="info-content">
+                                            <div class="info-label">Alamat Lengkap</div>
+                                            <div class="info-value">{{ $perusahaan->alamat }}</div>
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
                         @endif
-                        <span class="badge badge-open">
-                            <span class="material-icons-outlined" style="font-size: 16px;">check_circle</span>
-                            Terbuka
-                        </span>
+                    </div>
+                </div>
+
+                {{-- Tab Content: Riwayat Magang --}}
+                <div id="tab-riwayat" class="tab-content">
+                    <div class="content-card">
+                        <h2 class="section-title">
+                            <span class="material-icons-outlined">history_edu</span>
+                            Riwayat Magang Mahasiswa
+                        </h2>
+
+                        @if($riwayatMagang->count() > 0)
+                            <table class="magang-table">
+                                <thead>
+                                    <tr>
+                                        <th>Nama Mahasiswa</th>
+                                        <th>Angkatan</th>
+                                        <th>Posisi</th>
+                                        <th>Periode</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($riwayatMagang as $mhs)
+                                        <tr>
+                                            <td>
+                                                <div class="student-name">
+                                                    <div class="student-avatar">
+                                                        {{ strtoupper(substr($mhs->nama, 0, 1)) }}
+                                                    </div>
+                                                    {{ $mhs->nama }}
+                                                </div>
+                                            </td>
+                                            <td>{{ $mhs->angkatan ?? '-' }}</td>
+                                            <td>{{ $mhs->posisi ?? 'Tidak tersedia' }}</td>
+                                            <td>{{ $mhs->periode ?? 'Tidak tersedia' }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @else
+                            <div class="empty-state">
+                                <span class="material-icons-outlined">group_off</span>
+                                <h3>Belum Ada Riwayat Magang</h3>
+                                <p>Belum ada mahasiswa yang tercatat melakukan magang di perusahaan ini.</p>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
-        </div>
 
-        {{-- Tabs --}}
-        <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('info')">
-                <span class="material-icons-outlined" style="font-size: 18px; vertical-align: middle;">info</span>
-                Informasi Perusahaan
-            </button>
-            <button class="tab-btn" onclick="switchTab('alumni')">
-                <span class="material-icons-outlined" style="font-size: 18px; vertical-align: middle;">history_edu</span>
-                Riwayat Magang
-            </button>
-        </div>
-
-        {{-- Tab Content: Info --}}
-        <div id="tab-info" class="tab-content active">
-            <div class="content-card">
-                <h2>
-                    <span class="material-icons-outlined">business</span>
-                    Tentang Perusahaan
-                </h2>
-                <p>{{ $perusahaan->tentang ?? 'Tidak ada deskripsi tersedia.' }}</p>
-
-                <h2 style="margin-top: 32px;">
-                    <span class="material-icons-outlined">contact_mail</span>
-                    Kontak & Lokasi
-                </h2>
-                <div class="info-grid">
-                    @if($perusahaan->website)
-                        <div class="info-item">
-                            <span class="material-icons-outlined">language</span>
-                            <div class="info-item-content">
-                                <div class="info-item-label">Website</div>
-                                <div class="info-item-value">
-                                    <a href="{{ $perusahaan->website }}" target="_blank" rel="noopener">
-                                        {{ $perusahaan->website }}
-                                    </a>
+            {{-- Sidebar --}}
+            <div class="sidebar">
+                {{-- Kontak & Lokasi Card --}}
+                <div class="sidebar-card">
+                    <h3 class="sidebar-title">
+                        <span class="material-icons-outlined">contact_mail</span>
+                        Kontak & Lokasi
+                    </h3>
+                    <div class="info-grid">
+                        @if($perusahaan->website)
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <span class="material-icons-outlined">language</span>
+                                </div>
+                                <div class="info-content">
+                                    <div class="info-label">Website</div>
+                                    <div class="info-value">
+                                        <a href="{{ $perusahaan->website }}" target="_blank" rel="noopener">
+                                            {{ parse_url($perusahaan->website, PHP_URL_HOST) ?? $perusahaan->website }}
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endif
+                        @endif
 
-                    @if($perusahaan->email)
-                        <div class="info-item">
-                            <span class="material-icons-outlined">email</span>
-                            <div class="info-item-content">
-                                <div class="info-item-label">Email</div>
-                                <div class="info-item-value">
-                                    <a href="mailto:{{ $perusahaan->email }}">{{ $perusahaan->email }}</a>
+                        @if($perusahaan->email)
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <span class="material-icons-outlined">email</span>
+                                </div>
+                                <div class="info-content">
+                                    <div class="info-label">Email</div>
+                                    <div class="info-value">
+                                        <a href="mailto:{{ $perusahaan->email }}">{{ $perusahaan->email }}</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endif
+                        @endif
 
-                    @if($perusahaan->alamat)
-                        <div class="info-item">
-                            <span class="material-icons-outlined">place</span>
-                            <div class="info-item-content">
-                                <div class="info-item-label">Alamat</div>
-                                <div class="info-item-value">{{ $perusahaan->alamat }}</div>
+                        @if($perusahaan->alamat)
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <span class="material-icons-outlined">place</span>
+                                </div>
+                                <div class="info-content">
+                                    <div class="info-label">Alamat</div>
+                                    <div class="info-value">{{ $perusahaan->alamat }}</div>
+                                </div>
                             </div>
-                        </div>
-                    @endif
+                        @endif
+                    </div>
                 </div>
-            </div>
-        </div>
 
-        {{-- Tab Content: Alumni --}}
-        <div id="tab-alumni" class="tab-content">
-            <div class="content-card">
-                <h2>
-                    <span class="material-icons-outlined">history_edu</span>
-                    Riwayat Mahasiswa Magang
-                </h2>
-
-                @if($riwayatMagang->count() > 0)
-                    <div class="alumni-list">
-                        @foreach($riwayatMagang as $mhs)
-                            <div class="alumni-item">
-                                <div class="alumni-name">{{ $mhs->nama }}</div>
-                                <div class="alumni-info">
-                                    <span>
-                                        <span class="material-icons-outlined">school</span>
-                                        Angkatan {{ $mhs->angkatan ?? '-' }}
-                                    </span>
-                                    <span>
-                                        <span class="material-icons-outlined">work</span>
-                                        {{ $mhs->posisi ?? 'Posisi tidak tersedia' }}
-                                    </span>
-                                    <span>
-                                        <span class="material-icons-outlined">calendar_today</span>
-                                        {{ $mhs->periode ?? 'Periode tidak tersedia' }}
-                                    </span>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                @else
-                    <div class="empty-state">
-                        <span class="material-icons-outlined">group_off</span>
-                        <p>Belum ada riwayat mahasiswa magang di perusahaan ini.</p>
-                    </div>
-                @endif
+                {{-- CTA Card --}}
+                <div class="sidebar-card cta-card">
+                    <h3 class="sidebar-title">
+                        <span class="material-icons-outlined">rocket_launch</span>
+                        Ingin Bergabung?
+                    </h3>
+                    <p class="cta-text">
+                        Kami membuka kesempatan magang untuk posisi Frontend, Backend, dan Data Science selama summer.
+                    </p>
+                    <a href="{{ route('perusahaan.index') }}" class="btn btn-cta">
+                        <span class="material-icons-outlined" style="font-size: 18px;">send</span>
+                        Lihat Lowongan
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -650,6 +1023,22 @@
             // Show selected tab
             document.getElementById('tab-' + tabName).classList.add('active');
             event.currentTarget.classList.add('active');
+        }
+
+        // Share function
+        function shareCompany() {
+            if (navigator.share) {
+                navigator.share({
+                    title: '{{ $perusahaan->nama }} - SIMAKATA',
+                    text: 'Lihat profil {{ $perusahaan->nama }} di SIMAKATA',
+                    url: window.location.href
+                }).catch(err => console.log('Error sharing:', err));
+            } else {
+                // Fallback: copy to clipboard
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    alert('Link berhasil disalin ke clipboard!');
+                });
+            }
         }
     </script>
 
