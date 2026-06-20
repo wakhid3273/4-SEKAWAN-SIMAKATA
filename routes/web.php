@@ -8,6 +8,8 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\PerusahaanController;
+use App\Http\Controllers\JudulTaController;
+use App\Http\Controllers\RiwayatController;
 
 // Landing Page
 Route::get('/', [LandingController::class, 'index'])->name('landing');
@@ -15,6 +17,12 @@ Route::get('/', [LandingController::class, 'index'])->name('landing');
 // Database Perusahaan (Public)
 Route::get('/perusahaan', [PerusahaanController::class, 'index'])->name('perusahaan.index');
 Route::get('/perusahaan/{id}', [PerusahaanController::class, 'show'])->name('perusahaan.detail');
+
+// Judul TA (Public)
+Route::get('/judul-ta', [JudulTaController::class, 'index'])->name('judul-ta.index');
+
+// Riwayat Magang (Public)
+Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');
 
 // Auth Routes
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login.form');

@@ -10,20 +10,23 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        // 4 admin default
+        // 4 admin default sesuai permintaan
         $admins = [
-            ['nim' => 'H1D024003', 'password' => 'wakhid'],
-            ['nim' => 'H1D024004', 'password' => 'astria'],
-            ['nim' => 'H1D024041', 'password' => 'novia'],
-            ['nim' => 'H1D024043', 'password' => 'naila'],
+            ['nim' => 'wakhid', 'email' => 'wakhid@mhs.unsoed.ac.id', 'password' => 'wakhid3'],
+            ['nim' => 'astria', 'email' => 'astria@mhs.unsoed.ac.id', 'password' => 'astria4'],
+            ['nim' => 'novia', 'email' => 'novia@mhs.unsoed.ac.id', 'password' => 'novia41'],
+            ['nim' => 'naila', 'email' => 'naila@mhs.unsoed.ac.id', 'password' => 'naila43'],
         ];
 
         foreach ($admins as $admin) {
-            User::create([
-                'nim' => $admin['nim'],
-                'password' => Hash::make($admin['password']),
-                'role' => 'admin',
-            ]);
+            User::updateOrCreate(
+                ['email' => $admin['email']],
+                [
+                    'nim' => $admin['nim'],
+                    'password' => Hash::make($admin['password']),
+                    'role' => 'admin',
+                ]
+            );
         }
     }
 }

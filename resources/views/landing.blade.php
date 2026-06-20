@@ -780,8 +780,8 @@
     <ul class="navbar-links">
         <li><a href="{{ route('landing') }}" class="active" id="nav-beranda">Beranda</a></li>
         <li><a href="{{ route('perusahaan.index') }}" id="nav-perusahaan">Perusahaan</a></li>
-        <li><a href="#features" id="nav-judul">Judul TA</a></li>
-        <li><a href="#features" id="nav-riwayat">Riwayat</a></li>
+        <li><a href="{{ route('judul-ta.index') }}" id="nav-judul">Judul TA</a></li>
+        <li><a href="{{ route('riwayat.index') }}" id="nav-riwayat">Riwayat</a></li>
     </ul>
 
     <div class="navbar-actions">
@@ -812,9 +812,9 @@
         <span class="material-icons-outlined">close</span>
     </button>
     <a href="{{ route('landing') }}">Beranda</a>
-    <a href="#features">Perusahaan</a>
-    <a href="#features">Judul TA</a>
-    <a href="#features">Riwayat</a>
+    <a href="{{ route('perusahaan.index') }}">Perusahaan</a>
+    <a href="{{ route('judul-ta.index') }}">Judul TA</a>
+    <a href="{{ route('riwayat.index') }}">Riwayat</a>
     @guest
         <a href="{{ route('login.form') }}" id="btn-mobile-login">Login</a>
         <a href="{{ route('register.form') }}" id="btn-mobile-register" style="color:var(--blue-main)">Daftar</a>
@@ -909,7 +909,7 @@
 
     <div class="features-grid">
         {{-- Feature 1: Database Perusahaan --}}
-        <div class="feature-card has-bg-right">
+        <a href="{{ route('perusahaan.index') }}" class="feature-card has-bg-right" id="feature-database-perusahaan" style="display:block; text-decoration:none; color:inherit; cursor:pointer; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.10)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
             <div class="feature-icon fi-blue">
                 <span class="material-icons-outlined">corporate_fare</span>
             </div>
@@ -917,10 +917,10 @@
                 <h3>Database Perusahaan</h3>
                 <p>Akses ribuan profil perusahaan teknologi ternama yang siap menerima mahasiswa magang dan kerja praktik dengan skema kerja sama yang jelas.</p>
             </div>
-        </div>
+        </a>
 
         {{-- Feature 2: Validasi Judul TA --}}
-        <div class="feature-card has-bg-right">
+        <a href="{{ route('judul-ta.index') }}" class="feature-card has-bg-right" id="feature-validasi-ta" style="display:block; text-decoration:none; color:inherit; cursor:pointer; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.10)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
             <div class="feature-icon fi-amber">
                 <span class="material-icons-outlined">verified_user</span>
             </div>
@@ -928,10 +928,10 @@
                 <h3>Validasi Judul TA</h3>
                 <p>Proses pengajuan dan verifikasi judul Tugas Akhir yang lebih cepat, transparan, dan terdokumentasi.</p>
             </div>
-        </div>
+        </a>
 
         {{-- Feature 3: Rekomendasi Magang --}}
-        <div class="feature-card has-bg-right">
+        <a href="{{ route('perusahaan.index') }}" class="feature-card has-bg-right" id="feature-rekomendasi-magang" style="display:block; text-decoration:none; color:inherit; cursor:pointer; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.10)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
             <div class="feature-icon fi-teal">
                 <span class="material-icons-outlined">recommend</span>
             </div>
@@ -939,10 +939,10 @@
                 <h3>Rekomendasi Magang</h3>
                 <p>Dapatkan saran tempat magang terbaik berdasarkan minat, nilai, dan kompetensi spesifik Anda di bidang informatika.</p>
             </div>
-        </div>
+        </a>
 
         {{-- Feature 4: Riwayat Magang --}}
-        <div class="feature-card has-bg-right">
+        <a href="{{ route('riwayat.index') }}" class="feature-card has-bg-right" id="feature-riwayat-magang" style="display:block; text-decoration:none; color:inherit; cursor:pointer; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.10)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
             <div class="feature-icon fi-purple">
                 <span class="material-icons-outlined">history</span>
             </div>
@@ -950,7 +950,7 @@
                 <h3>Riwayat Magang</h3>
                 <p>Pantau progress kerja praktik Anda secara real-time dan simpan catatan lengkap riwayat akademik profesional Anda di satu tempat.</p>
             </div>
-        </div>
+        </a>
     </div>
 </section>
 
