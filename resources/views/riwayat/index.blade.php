@@ -50,7 +50,7 @@
         .page-hero p { font-size: 15px; color: rgba(255,255,255,0.85); max-width: 520px; margin: 0 auto; }
 
         /* CONTENT */
-        .content-wrap { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
+        .content-wrap { max-width: 1400px; margin: 0 auto; padding: 32px 24px; }
 
         /* FILTER BAR */
         .filter-bar {
