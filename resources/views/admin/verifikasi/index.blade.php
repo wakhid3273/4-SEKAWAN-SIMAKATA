@@ -270,7 +270,6 @@
                         @if($tab === 'kp_magang')
                             <th>KEGIATAN</th>
                             <th>PERUSAHAAN</th>
-                            <th>POSISI</th>
                             <th>PERIODE</th>
                         @else
                             <th>JUDUL TA</th>
@@ -292,7 +291,6 @@
                             @if($tab === 'kp_magang')
                                 <td>{{ $item->kegiatan ?? 'Kerja Praktek' }}</td>
                                 <td>{{ $item->perusahaan->nama ?? 'N/A' }}</td>
-                                <td>{{ $item->posisi ?? 'N/A' }}</td>
                                 <td>{{ $item->periode ?? 'N/A' }}</td>
                                 <td>{{ $item->created_at ? $item->created_at->format('d M Y') : 'N/A' }}</td>
                                 <td>
@@ -459,49 +457,63 @@
     }
 
     async function openDetailModal(id, tab) {
-        if (tab !== 'kp_magang') {
-            alert('Fitur detail Tugas Akhir sedang dalam pengembangan backend.');
-            return;
-        }
-        
         openModal('detailModal');
         document.getElementById('detailModalBody').innerHTML = '<div style="text-align:center; padding: 20px;">Memuat data...</div>';
         document.getElementById('detailModalFooter').style.display = 'none';
 
         try {
-            const res = await fetch(`/admin/verifikasi/kp/${id}`);
+            const endpoint = tab === 'kp_magang' ? `/admin/verifikasi/kp/${id}` : `/admin/verifikasi/ta/${id}`;
+            const res = await fetch(endpoint);
             const json = await res.json();
             
             if (json.success) {
                 const data = json.data;
-                document.getElementById('detailModalBody').innerHTML = `
-                    <div class="detail-section">
-                        <div class="detail-section-title">Data Mahasiswa</div>
-                        <div class="detail-grid">
-                            <div class="detail-item"><div class="label">Nama Lengkap</div><div class="val">${data.nama}</div></div>
-                            <div class="detail-item"><div class="label">NIM</div><div class="val">${data.nim || '-'}</div></div>
-                            <div class="detail-item"><div class="label">Angkatan</div><div class="val">${data.angkatan || '-'}</div></div>
-                        </div>
-                    </div>
-                    <div class="detail-section">
-                        <div class="detail-section-title">Data Kegiatan</div>
-                        <div class="detail-grid">
-                            <div class="detail-item"><div class="label">Jenis Kegiatan</div><div class="val"><span class="material-icons-outlined" style="font-size:14px; vertical-align:middle;">work_outline</span> ${data.jenis_kegiatan || '-'}</div></div>
-                            <div class="detail-item"><div class="label">Perusahaan</div><div class="val"><span class="material-icons-outlined" style="font-size:14px; vertical-align:middle;">domain</span> ${data.perusahaan}</div></div>
-                            <div class="detail-item"><div class="label">Posisi</div><div class="val">${data.posisi || '-'}</div></div>
-                            <div class="detail-item" style="grid-column: 1 / -1;"><div class="label">Periode Kegiatan</div><div class="val"><span class="material-icons-outlined" style="font-size:14px; vertical-align:middle;">calendar_today</span> ${data.periode || '-'}</div></div>
-                        </div>
-                    </div>
-                    <div class="detail-section">
-                        <div class="detail-section-title">Dokumen Pendukung</div>
-                        <div style="display:flex; gap:12px; flex-wrap:wrap;">
-                            ${data.cv_file ? `<a href="#" class="doc-btn" style="color:#dc2626;"><span class="material-icons-outlined">picture_as_pdf</span> ${data.cv_file} <span class="material-icons-outlined" style="font-size:16px; margin-left:auto;">download</span></a>` : '<span style="font-size:12px; color:#6b7280;">Tidak ada CV</span>'}
-                            ${data.transkrip_file ? `<a href="#" class="doc-btn" style="color:#1a5fb4;"><span class="material-icons-outlined">description</span> ${data.transkrip_file} <span class="material-icons-outlined" style="font-size:16px; margin-left:auto;">download</span></a>` : '<span style="font-size:12px; color:#6b7280;">Tidak ada Transkrip</span>'}
-                        </div>
-                    </div>
-                `;
+                let bodyHtml = '';
 
-                if (data.status === 'Pending Review') {
+                if (tab === 'kp_magang') {
+                    document.querySelector('.modal-header h2').innerHTML = '<span class="material-icons-outlined" style="color:#1a5fb4;">description</span> Detail Pengajuan KP/Magang';
+                    bodyHtml = `
+                        <div class="detail-section">
+                            <div class="detail-section-title">Data Mahasiswa</div>
+                            <div class="detail-grid">
+                                <div class="detail-item"><div class="label">Nama Lengkap</div><div class="val">${data.nama}</div></div>
+                                <div class="detail-item"><div class="label">NIM</div><div class="val">${data.nim || '-'}</div></div>
+                                <div class="detail-item"><div class="label">Angkatan</div><div class="val">${data.angkatan || '-'}</div></div>
+                            </div>
+                        </div>
+                        <div class="detail-section">
+                            <div class="detail-section-title">Data Kegiatan</div>
+                            <div class="detail-grid">
+                                <div class="detail-item"><div class="label">Jenis Kegiatan</div><div class="val"><span class="material-icons-outlined" style="font-size:14px; vertical-align:middle;">work_outline</span> ${data.jenis_kegiatan || '-'}</div></div>
+                                <div class="detail-item"><div class="label">Perusahaan</div><div class="val"><span class="material-icons-outlined" style="font-size:14px; vertical-align:middle;">domain</span> ${data.perusahaan}</div></div>
+                                <div class="detail-item" style="grid-column: 1 / -1;"><div class="label">Periode Kegiatan</div><div class="val"><span class="material-icons-outlined" style="font-size:14px; vertical-align:middle;">calendar_today</span> ${data.periode || '-'}</div></div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    document.querySelector('.modal-header h2').innerHTML = '<span class="material-icons-outlined" style="color:#1a5fb4;">school</span> Detail Pengajuan Tugas Akhir';
+                    bodyHtml = `
+                        <div class="detail-section">
+                            <div class="detail-section-title">Data Mahasiswa</div>
+                            <div class="detail-grid">
+                                <div class="detail-item"><div class="label">Nama Lengkap</div><div class="val">${data.nama}</div></div>
+                                <div class="detail-item"><div class="label">NIM</div><div class="val">${data.nim || '-'}</div></div>
+                            </div>
+>>>>>>> .merge_file_EpfAfx
+                        </div>
+                        <div class="detail-section">
+                            <div class="detail-section-title">Data Tugas Akhir</div>
+                            <div class="detail-grid" style="grid-template-columns: 1fr;">
+                                <div class="detail-item"><div class="label">Judul Tugas Akhir</div><div class="val" style="font-weight: 700; color: #1a5fb4;">${data.title}</div></div>
+                                <div class="detail-item"><div class="label">Abstrak</div><div class="val" style="text-align: justify;">${data.abstract || '-'}</div></div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                document.getElementById('detailModalBody').innerHTML = bodyHtml;
+
+                if (data.status === 'Pending Review' || data.status === 'pending') {
                     document.getElementById('detailModalFooter').style.display = 'flex';
                     document.getElementById('detailModalFooter').innerHTML = `
                         <button class="btn-danger" style="background:white; color:#dc2626; border:1px solid #fca5a5;" onclick="closeModal('detailModal'); openRejectModal(${id}, '${tab}')"><span class="material-icons-outlined" style="font-size:16px;">close</span> Tolak</button>
@@ -522,11 +534,11 @@
     }
 
     async function approvePengajuan(id, tab) {
-        if (tab !== 'kp_magang') { alert('Hanya untuk KP/Magang saat ini.'); return; }
         if (!confirm('Apakah Anda yakin menyetujui pengajuan ini?')) return;
 
         try {
-            const res = await fetch(`/admin/verifikasi/kp/${id}/approve`, {
+            const endpoint = tab === 'kp_magang' ? `/admin/verifikasi/kp/${id}/approve` : `/admin/verifikasi/ta/${id}/approve`;
+            const res = await fetch(endpoint, {
                 method: 'POST',
                 headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}', 'Accept': 'application/json' }
             });
@@ -543,7 +555,6 @@
     }
 
     function openRejectModal(id, tab) {
-        if (tab !== 'kp_magang') { alert('Hanya untuk KP/Magang saat ini.'); return; }
         document.getElementById('rejectId').value = id;
         document.getElementById('rejectTab').value = tab;
         document.getElementById('alasan_penolakan').value = '';
@@ -557,7 +568,8 @@
         const alasan = document.getElementById('alasan_penolakan').value;
 
         try {
-            const res = await fetch(`/admin/verifikasi/kp/${id}/reject`, {
+            const endpoint = tab === 'kp_magang' ? `/admin/verifikasi/kp/${id}/reject` : `/admin/verifikasi/ta/${id}/reject`;
+            const res = await fetch(endpoint, {
                 method: 'POST',
                 headers: { 
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',

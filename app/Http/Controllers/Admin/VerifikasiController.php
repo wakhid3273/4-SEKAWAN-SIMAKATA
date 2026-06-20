@@ -89,7 +89,7 @@ class VerifikasiController extends Controller
                 'angkatan' => $pengajuan->angkatan,
                 'jenis_kegiatan' => $pengajuan->kegiatan,
                 'perusahaan' => $pengajuan->perusahaan->nama ?? '-',
-                'posisi' => $pengajuan->posisi,
+
                 'periode' => $pengajuan->periode,
                 'cv_file' => $pengajuan->cv_file,
                 'transkrip_file' => $pengajuan->transkrip_file,
@@ -128,6 +128,54 @@ class VerifikasiController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Pengajuan berhasil ditolak.'
+        ]);
+    }
+
+    public function showTa($id)
+    {
+        $pengajuan = FinalProject::with('student')->findOrFail($id);
+        
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'nama' => $pengajuan->student->nama_lengkap ?? 'N/A',
+                'nim' => $pengajuan->student->nim ?? 'N/A',
+                'title' => $pengajuan->title,
+                'abstract' => $pengajuan->abstract,
+                'status' => $pengajuan->status,
+            ]
+        ]);
+    }
+
+    public function approveTa($id)
+    {
+        $pengajuan = FinalProject::findOrFail($id);
+        $pengajuan->update([
+            'status' => 'approved',
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Pengajuan Tugas Akhir berhasil disetujui.'
+        ]);
+    }
+
+    public function rejectTa(Request $request, $id)
+    {
+        $request->validate([
+            'alasan_penolakan' => 'required|string'
+        ]);
+
+        $pengajuan = FinalProject::findOrFail($id);
+        $pengajuan->update([
+            'status' => 'rejected',
+            // asumsikan tabel final_projects tidak punya alasan penolakan,
+            // atau jika punya tambahkan: 'alasan_penolakan' => $request->alasan_penolakan,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Pengajuan Tugas Akhir berhasil ditolak.'
         ]);
     }
 }

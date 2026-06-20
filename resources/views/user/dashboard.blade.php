@@ -501,6 +501,9 @@
             </div>
             
             <div class="topbar-right">
+                <a href="{{ route('landing') }}" class="topbar-icon-btn" title="Ke Beranda" id="btn-home" style="text-decoration: none; display: flex; align-items: center; justify-content: center; color: var(--text-gray);">
+                    <span class="material-icons-outlined">home</span>
+                </a>
                 <button class="topbar-icon-btn" id="btn-notif" aria-label="Notifikasi">
                     <span class="material-icons-outlined">notifications</span>
                     <span class="notif-dot"></span>
