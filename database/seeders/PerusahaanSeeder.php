@@ -467,7 +467,15 @@ class PerusahaanSeeder extends Seeder
             ],
         ];
 
+        $faker = \Faker\Factory::create('id_ID');
+
         foreach (array_merge($dataMagang, $dataKP) as $item) {
+            $item['tentang'] = $faker->paragraph(3);
+            $item['lokasi'] = $faker->city();
+            $item['website'] = 'https://' . $faker->domainName();
+            $item['email'] = $faker->companyEmail();
+            $item['alamat'] = $faker->address();
+            
             Perusahaan::create($item);
         }
     }
