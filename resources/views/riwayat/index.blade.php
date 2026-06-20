@@ -110,7 +110,8 @@
         .pagination-wrap { padding: 16px 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
         .pagination-info { font-size: 12px; color: var(--text-gray); }
 
-        footer { text-align: center; padding: 24px; font-size: 12px; color: #94a3b8; border-top: 1px solid var(--border); margin-top: 40px; }
+        .pagination-wrap svg { width: 20px; height: 20px; vertical-align: middle; }
+        .pagination-wrap nav div:first-child { display: none; } /* Hide the mobile "Showing X to Y" part of default tailwind pagination if redundant */
     </style>
 </head>
 <body>
