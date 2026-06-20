@@ -797,5 +797,29 @@
         </main>
     </div>
 </div>
+
+<script src="{{ asset('js/animations.js') }}"></script>
+<script>
+    // Show toast notification on page load if session has success/error message
+    document.addEventListener('DOMContentLoaded', () => {
+        @if(session('success'))
+            if (window.toast) {
+                window.toast.show('{{ session("success") }}', 'success', 4000);
+            }
+        @endif
+        
+        @if(session('error'))
+            if (window.toast) {
+                window.toast.show('{{ session("error") }}', 'error', 4000);
+            }
+        @endif
+        
+        @if($errors->any())
+            if (window.toast) {
+                window.toast.show('{{ $errors->first() }}', 'error', 4000);
+            }
+        @endif
+    });
+</script>
 </body>
 </html>
