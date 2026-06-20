@@ -101,6 +101,11 @@ Route::middleware('auth')->group(function () {
         ->middleware('role:user')
         ->name('user.kp-magang.store');
 
+    // User Riwayat Aktivitas (spesifik untuk user yang login)
+    Route::get('/user/riwayat-aktivitas', [\App\Http\Controllers\User\RiwayatAktivitasController::class, 'index'])
+        ->middleware('role:user')
+        ->name('user.riwayat-aktivitas');
+
     // Default dashboard redirect sesuai role
     Route::get('/dashboard', function () {
         $role = trim(auth()->user()->role);

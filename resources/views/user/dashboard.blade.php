@@ -324,6 +324,29 @@
         .activity-content h4 { font-size: 13px; font-weight: 700; color: var(--text-1); margin-bottom: 3px; }
         .activity-content p { font-size: 12px; color: var(--text-2); line-height: 1.6; }
         .activity-time { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-3); margin-top: 5px; display: block; }
+        /* Status Badge */
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 6px;
+        }
+        .badge-pending { background: #fef3c7; color: #d97706; }
+        .badge-approved { background: #d1fae5; color: #059669; }
+        .badge-rejected { background: #fee2e2; color: #dc2626; }
+        .badge-menunggu { background: #e0e7ff; color: #4f46e5; }
+        /* Empty state */
+        .empty-state {
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--text-3);
+        }
+        .empty-state .material-icons-outlined { font-size: 48px; opacity: 0.3; margin-bottom: 12px; }
+        .empty-state p { font-size: 13px; color: var(--text-2); }
         /* ===== RIGHT PANEL ===== */
         .right-col { display: flex; flex-direction: column; gap: 16px; }
         /* Quick actions */
@@ -442,7 +465,7 @@
                 <span>Input Tugas Akhir</span>
             </a>
 
-            <a href="{{ route('riwayat.index') }}" id="nav-riwayat" class="nav-item">
+            <a href="{{ route('user.riwayat-aktivitas') }}" id="nav-riwayat" class="nav-item">
                 <span class="material-icons-outlined">history</span>
                 <span>Riwayat Aktivitas</span>
             </a>
@@ -569,34 +592,69 @@
                                 <span class="material-icons-outlined">timeline</span>
                                 Riwayat Aktivitas
                             </div>
-                            <a href="{{ route('riwayat.index') }}" class="card-link" id="link-lihat-semua">Lihat Semua</a>
+                            <a href="{{ route('user.riwayat-aktivitas') }}" class="card-link" id="link-lihat-semua">Lihat Semua</a>
                         </div>
                         <div>
-                            @foreach($riwayat_aktivitas as $i => $aktivitas)
+                            @forelse($riwayat_aktivitas as $i => $aktivitas)
                                 <div class="activity-item" id="activity-item-{{ $i }}">
                                     @php
-                                        $judul_lower = strtolower($aktivitas['judul']);
+                                        // Tentukan icon dan warna berdasarkan status
+                                        $iconClass = 'ad-slate';
+                                        $icon = 'info';
+                                        
+                                        if (isset($aktivitas['status'])) {
+                                            if ($aktivitas['status'] === 'Disetujui' || $aktivitas['status'] === 'approved') {
+                                                $iconClass = 'ad-blue';
+                                                $icon = 'check_circle_outline';
+                                            } elseif ($aktivitas['status'] === 'Pending Review' || $aktivitas['status'] === 'pending') {
+                                                $iconClass = 'ad-amber';
+                                                $icon = 'pending_actions';
+                                            } elseif ($aktivitas['status'] === 'Ditolak' || $aktivitas['status'] === 'rejected') {
+                                                $iconClass = 'ad-slate';
+                                                $icon = 'cancel';
+                                            }
+                                        }
+                                        
+                                        // Gunakan icon dari data jika ada
+                                        if (isset($aktivitas['icon'])) {
+                                            $icon = $aktivitas['icon'];
+                                        }
                                     @endphp
-                                    @if(str_contains($judul_lower, 'setuju') || str_contains($judul_lower, 'disetujui'))
-                                        <div class="activity-dot ad-blue">
-                                            <span class="material-icons-outlined">check_circle_outline</span>
-                                        </div>
-                                    @elseif(str_contains($judul_lower, 'verifikasi') || str_contains($judul_lower, 'ditolak'))
-                                        <div class="activity-dot ad-amber">
-                                            <span class="material-icons-outlined">pending_actions</span>
-                                        </div>
-                                    @else
-                                        <div class="activity-dot ad-slate">
-                                            <span class="material-icons-outlined">upload_file</span>
-                                        </div>
-                                    @endif
+                                    <div class="activity-dot {{ $iconClass }}">
+                                        <span class="material-icons-outlined">{{ $icon }}</span>
+                                    </div>
                                     <div class="activity-content">
                                         <h4>{{ $aktivitas['judul'] }}</h4>
                                         <p>{{ $aktivitas['deskripsi'] }}</p>
+                                        
+                                        @if(isset($aktivitas['status']))
+                                            @php
+                                                $badgeClass = 'badge-menunggu';
+                                                $badgeText = $aktivitas['status'];
+                                                
+                                                if ($aktivitas['status'] === 'Disetujui' || $aktivitas['status'] === 'approved') {
+                                                    $badgeClass = 'badge-approved';
+                                                    $badgeText = 'Disetujui';
+                                                } elseif ($aktivitas['status'] === 'Pending Review' || $aktivitas['status'] === 'pending') {
+                                                    $badgeClass = 'badge-pending';
+                                                    $badgeText = 'Menunggu Verifikasi';
+                                                } elseif ($aktivitas['status'] === 'Ditolak' || $aktivitas['status'] === 'rejected') {
+                                                    $badgeClass = 'badge-rejected';
+                                                    $badgeText = 'Ditolak';
+                                                }
+                                            @endphp
+                                            <span class="status-badge {{ $badgeClass }}">{{ $badgeText }}</span>
+                                        @endif
+                                        
                                         <span class="activity-time">{{ $aktivitas['waktu'] }}</span>
                                     </div>
                                 </div>
-                            @endforeach
+                            @empty
+                                <div class="empty-state">
+                                    <span class="material-icons-outlined">inbox</span>
+                                    <p>Belum ada aktivitas tercatat</p>
+                                </div>
+                            @endforelse
                         </div>
                     </div>
                 </div>{{-- /left --}}
@@ -645,7 +703,7 @@
                                 </div>
                                 <div class="qa-arrow"><span class="material-icons-outlined">chevron_right</span></div>
                             </a>
-                            <a href="{{ route('riwayat.index') }}" class="quick-action" id="qa-riwayat">
+                            <a href="{{ route('user.riwayat-aktivitas') }}" class="quick-action" id="qa-riwayat">
                                 <div class="qa-icon qa-amber">
                                     <span class="material-icons-outlined">history</span>
                                 </div>

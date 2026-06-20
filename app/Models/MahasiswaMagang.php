@@ -8,6 +8,7 @@ class MahasiswaMagang extends Model
 {
     protected $table = 'mahasiswa_magang';
     protected $fillable = [
+        'user_id',
         'nama',
         'nim',
         'kegiatan',
@@ -18,8 +19,14 @@ class MahasiswaMagang extends Model
         'periode',
         'cv_file',
         'transkrip_file',
+        'portofolio_file',
         'perusahaan_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function perusahaan()
     {
