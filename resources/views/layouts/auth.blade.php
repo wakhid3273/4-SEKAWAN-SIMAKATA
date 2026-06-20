@@ -282,6 +282,12 @@
             color: #2563eb;
         }
 
+        /* Hide native edge/IE eye icon */
+        .input-wrapper input::-ms-reveal,
+        .input-wrapper input::-ms-clear {
+            display: none;
+        }
+
         .toggle-password {
             position: absolute;
             right: 14px;
