@@ -118,29 +118,6 @@
             font-weight: 600;
         }
 
-        .sidebar-new-request {
-            margin: 0 12px;
-        }
-        .btn-new-request {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            width: 100%;
-            padding: 11px 16px;
-            background: var(--blue-primary);
-            color: #fff;
-            font-size: 13px;
-            font-weight: 600;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background 0.18s;
-        }
-        .btn-new-request:hover { background: #1450a0; }
-        .btn-new-request .material-icons-outlined { font-size: 18px; }
-
         .sidebar-footer {
             padding: 14px 12px 18px;
             border-top: 1px solid rgba(255,255,255,0.06);
@@ -464,6 +441,11 @@
         }
         .academic-cell:nth-child(even) { border-right: none; }
         .academic-cell:nth-last-child(-n+2) { border-bottom: none; }
+        .academic-cell:last-child { 
+            grid-column: 1 / -1; 
+            border-right: none;
+            border-bottom: none;
+        }
         .academic-label {
             font-size: 10px;
             font-weight: 700;
@@ -477,20 +459,6 @@
             font-weight: 600;
             color: var(--text-1);
         }
-        .status-dot {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .status-dot::before {
-            content: '';
-            display: inline-block;
-            width: 8px; height: 8px;
-            border-radius: 50%;
-            background: #10b981;
-            flex-shrink: 0;
-        }
-        .status-dot.inactive::before { background: #ef4444; }
 
         /* ===== STAT CARDS ===== */
         .stat-grid {
@@ -526,12 +494,14 @@
             font-weight: 800;
             color: var(--text-1);
             line-height: 1;
+            text-align: center;
         }
         .stat-label {
             font-size: 11px;
             font-weight: 500;
             color: var(--text-2);
             line-height: 1.4;
+            text-align: center;
         }
 
         /* ===== RIGHT COLUMN CARDS ===== */
@@ -607,51 +577,6 @@
             line-height: 1.6;
         }
 
-        /* Bantuan card */
-        .card-bantuan {
-            background: linear-gradient(135deg, #1a5fb4 0%, #0a3d6b 100%);
-            border-radius: var(--radius);
-            padding: 22px 20px;
-            color: #fff;
-            position: relative;
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
-        }
-        .card-bantuan::after {
-            content: '';
-            position: absolute;
-            bottom: -40px; right: -30px;
-            width: 130px; height: 130px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.06);
-        }
-        .bantuan-title {
-            font-size: 15px;
-            font-weight: 700;
-            margin-bottom: 7px;
-            position: relative; z-index: 1;
-        }
-        .bantuan-desc {
-            font-size: 12px;
-            color: rgba(255,255,255,0.75);
-            line-height: 1.6;
-            margin-bottom: 16px;
-            position: relative; z-index: 1;
-        }
-        .btn-bantuan {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--amber);
-            text-decoration: none;
-            transition: color 0.15s;
-            position: relative; z-index: 1;
-        }
-        .btn-bantuan:hover { color: #fff; }
-        .btn-bantuan .material-icons-outlined { font-size: 16px; }
-
         /* ===== RESPONSIVE ===== */
         @media (max-width: 1100px) {
             .content-grid { grid-template-columns: 1fr; }
@@ -701,10 +626,6 @@
                 <span class="material-icons-outlined">description</span>
                 <span>Input Tugas Akhir</span>
             </a>
-            <a href="#" id="nav-rekomendasi" class="nav-item">
-                <span class="material-icons-outlined">location_on</span>
-                <span>Rekomendasi Lokasi</span>
-            </a>
             <a href="#" id="nav-riwayat" class="nav-item">
                 <span class="material-icons-outlined">history</span>
                 <span>Riwayat Aktivitas</span>
@@ -714,13 +635,6 @@
                 <span>Profil</span>
             </a>
         </nav>
-
-        <div class="sidebar-new-request" style="margin-bottom: 12px;">
-            <a href="#" class="btn-new-request" id="btn-new-request">
-                <span class="material-icons-outlined">add</span>
-                New Request
-            </a>
-        </div>
 
         <div class="sidebar-footer">
             <form method="POST" action="{{ route('logout') }}" style="margin: 0;">
@@ -744,16 +658,6 @@
             </div>
 
             <div class="topbar-right">
-                <a href="{{ route('landing') }}" class="topbar-icon-btn" title="Ke Landing Page">
-                    <span class="material-icons-outlined">home</span>
-                </a>
-                <button class="topbar-icon-btn" id="btn-notif" aria-label="Notifikasi">
-                    <span class="material-icons-outlined">notifications</span>
-                    <span class="notif-dot"></span>
-                </button>
-                <button class="topbar-icon-btn" id="btn-help" aria-label="Bantuan">
-                    <span class="material-icons-outlined">help_outline</span>
-                </button>
                 <div class="topbar-divider"></div>
                 <div class="topbar-user" id="topbar-user">
                     <div class="topbar-user-info">
@@ -789,11 +693,6 @@
                 <div class="banner-info">
                     <div class="banner-name-row">
                         <div class="banner-name">{{ $user->nama_lengkap ?? 'Nama Belum Diatur' }}</div>
-                        @if(($user->status_akademik ?? '') === 'Aktif')
-                            <span class="badge-status">Aktif Akademik</span>
-                        @else
-                            <span class="badge-status inactive">{{ $user->status_akademik ?? 'Tidak Aktif' }}</span>
-                        @endif
                     </div>
                     <div class="banner-nim">
                         <span class="material-icons-outlined">badge</span>
@@ -824,7 +723,6 @@
                                 <span class="material-icons-outlined">school</span>
                                 Informasi Akademik
                             </div>
-                            <a href="#" class="card-link" id="link-kurikulum">Lihat Detail Kurikulum</a>
                         </div>
                         <div class="academic-grid">
                             <div class="academic-cell">
@@ -846,16 +744,6 @@
                             <div class="academic-cell">
                                 <div class="academic-label">Semester Aktif</div>
                                 <div class="academic-value">{{ $user->semester_aktif ?? '-' }}</div>
-                            </div>
-                            <div class="academic-cell">
-                                <div class="academic-label">Status Akademik</div>
-                                <div class="academic-value">
-                                    @if(($user->status_akademik ?? '') === 'Aktif')
-                                        <span class="status-dot">{{ $user->status_akademik }}</span>
-                                    @else
-                                        <span class="status-dot inactive">{{ $user->status_akademik ?? '-' }}</span>
-                                    @endif
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -948,22 +836,28 @@
                         </div>
                     </div>
 
-                    {{-- Bantuan --}}
-                    <div class="card-bantuan" id="card-bantuan">
-                        <div class="bantuan-title">Butuh Bantuan?</div>
-                        <div class="bantuan-desc">
-                            Hubungi tim IT Support jika Anda mengalami kendala pada akun akademik Anda.
-                        </div>
-                        <a href="#" class="btn-bantuan" id="btn-hubungi-support">
-                            Hubungi Support
-                            <span class="material-icons-outlined">arrow_forward</span>
-                        </a>
-                    </div>
-
                 </div>{{-- /right-col --}}
             </div>{{-- /content-grid --}}
 
         </main>
+
+        {{-- Footer --}}
+        <footer class="admin-page-footer" style="background: #f8fafc; border-top: 1px solid var(--border); padding: 32px 32px 20px; margin-top: 12px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
+                <div>
+                    <div style="font-size: 16px; font-weight: 800; color: var(--blue-primary); letter-spacing: 1px; margin-bottom: 6px;">SIMAKATA</div>
+                    <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.6; margin: 0;">Managed by 4 Sekawan</p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <a href="https://wa.me/6281234567890" target="_blank" style="width: 36px; height: 36px; border-radius: 50%; background: #ffffff; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--text-secondary); transition: all 0.2s; text-decoration: none;" title="Hubungi Admin via WhatsApp">
+                        <span class="material-icons-outlined" style="font-size: 18px;">chat</span>
+                    </a>
+                </div>
+            </div>
+            <div style="padding-top: 16px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 20px;">
+                &copy; 2026 4 Sekawan
+            </div>
+        </footer>
     </div>{{-- /main --}}
 </div>{{-- /shell --}}
 
