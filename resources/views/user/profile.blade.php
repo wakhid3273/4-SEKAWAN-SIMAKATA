@@ -12,6 +12,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <!-- Animations CSS -->
+    <link rel="stylesheet" href="{{ asset('css/animations.css') }}">
 
     <style>
         /* ===== RESET & BASE ===== */
@@ -536,6 +538,31 @@
             color: var(--text-1);
             word-break: break-all;
         }
+        
+        /* Copy Button Mini */
+        .btn-copy-mini {
+            background: var(--blue-light);
+            border: 1px solid rgba(26, 95, 180, 0.2);
+            color: var(--blue-primary);
+            border-radius: 6px;
+            padding: 4px 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.7;
+            flex-shrink: 0;
+        }
+        .btn-copy-mini:hover {
+            opacity: 1;
+            background: var(--blue-primary);
+            color: #fff;
+            transform: scale(1.05);
+        }
+        .btn-copy-mini:active {
+            transform: scale(0.95);
+        }
 
         /* Security card */
         .last-login-box {
@@ -731,7 +758,14 @@
                             </div>
                             <div class="academic-cell">
                                 <div class="academic-label">NIM</div>
-                                <div class="academic-value">{{ $user->nim ?? '-' }}</div>
+                                <div class="academic-value" style="display: flex; align-items: center; gap: 8px;">
+                                    <span>{{ $user->nim ?? '-' }}</span>
+                                    @if($user->nim)
+                                    <button class="btn-copy-mini" data-copy="{{ $user->nim }}" title="Copy NIM">
+                                        <span class="material-icons-outlined" style="font-size: 14px;">content_copy</span>
+                                    </button>
+                                    @endif
+                                </div>
                             </div>
                             <div class="academic-cell">
                                 <div class="academic-label">Angkatan</div>
@@ -796,9 +830,16 @@
                             <div class="contact-icon">
                                 <span class="material-icons-outlined">alternate_email</span>
                             </div>
-                            <div>
+                            <div style="flex: 1;">
                                 <div class="contact-label">Email Institusi</div>
-                                <div class="contact-value">{{ $user->email ?? '-' }}</div>
+                                <div class="contact-value" style="display: flex; align-items: center; gap: 8px; justify-content: space-between;">
+                                    <span>{{ $user->email ?? '-' }}</span>
+                                    @if($user->email)
+                                    <button class="btn-copy-mini" data-copy="{{ $user->email }}" title="Copy Email">
+                                        <span class="material-icons-outlined" style="font-size: 14px;">content_copy</span>
+                                    </button>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                         <div class="contact-item" id="contact-phone">
@@ -868,12 +909,34 @@
             navigator.share({ title: 'Profil SIMAKATA', url: window.location.href });
         } else {
             navigator.clipboard?.writeText(window.location.href).then(() => {
-                alert('Link profil berhasil disalin!');
+                if (window.toast) {
+                    window.toast.show('Link profil berhasil disalin!', 'success', 3000);
+                } else {
+                    alert('Link profil berhasil disalin!');
+                }
             }).catch(() => {
-                alert('Tidak dapat menyalin link.');
+                if (window.toast) {
+                    window.toast.show('Tidak dapat menyalin link.', 'error', 3000);
+                } else {
+                    alert('Tidak dapat menyalin link.');
+                }
             });
         }
     });
+    
+    // ===== Show Toast on Page Load =====
+    @if(session('success'))
+        if (window.toast) {
+            window.toast.show('{{ session("success") }}', 'success', 4000);
+        }
+    @endif
+    
+    @if(session('error'))
+        if (window.toast) {
+            window.toast.show('{{ session("error") }}', 'error', 4000);
+        }
+    @endif
 </script>
+<script src="{{ asset('js/animations.js') }}"></script>
 </body>
 </html>

@@ -468,10 +468,10 @@
 {{-- ===== STATS CARDS ===== --}}
 <div class="stats-grid">
     {{-- Total Perusahaan --}}
-    <div class="card stat-card">
+    <div class="card stat-card" data-tilt>
         <div class="stat-info">
             <div class="stat-label">Total Companies</div>
-            <div class="stat-value">{{ $totalPerusahaan }}</div>
+            <div class="stat-value" data-count="{{ $totalPerusahaan }}" data-duration="2000">0</div>
             <span class="stat-badge green">
                 <span class="material-icons-outlined">trending_up</span>
                 +12% this month
@@ -483,10 +483,10 @@
     </div>
 
     {{-- Total Students --}}
-    <div class="card stat-card">
+    <div class="card stat-card" data-tilt>
         <div class="stat-info">
             <div class="stat-label">Total Students</div>
-            <div class="stat-value">{{ $totalUserAktif }}</div>
+            <div class="stat-value" data-count="{{ $totalUserAktif }}" data-duration="2200">0</div>
             <span class="stat-badge blue">
                 <span class="material-icons-outlined">trending_up</span>
                 +5.2% this year
@@ -498,10 +498,10 @@
     </div>
 
     {{-- Pending Verifications --}}
-    <div class="card stat-card">
+    <div class="card stat-card" data-tilt>
         <div class="stat-info">
             <div class="stat-label">Pending Verifications</div>
-            <div class="stat-value" style="color: #dc2626;">{{ $menungguVerifikasi }}</div>
+            <div class="stat-value" style="color: #dc2626;" data-count="{{ $menungguVerifikasi }}" data-duration="2400">0</div>
             <span class="stat-badge red">
                 <span class="material-icons-outlined">schedule</span>
                 Needs immediate attention
@@ -516,7 +516,7 @@
 {{-- ===== MIDDLE ROW: Charts ===== --}}
 <div class="mid-row">
     {{-- Sebaran Bar Charts (auto-slide) --}}
-    <div class="card chart-card">
+    <div class="card chart-card" data-animate>
         <div class="chart-header">
             <h2 id="chart-title">Sebaran Tempat Kerja Praktik</h2>
         </div>
@@ -565,7 +565,7 @@
 </div>
 
 {{-- ===== PENDING VERIFICATIONS TABLE ===== --}}
-<div class="card table-card">
+<div class="card table-card" data-animate>
     <div class="table-card-header">
         <h2>Pending Verifications</h2>
         <div class="header-right">

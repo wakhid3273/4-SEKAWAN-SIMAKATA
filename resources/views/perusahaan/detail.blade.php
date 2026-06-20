@@ -8,6 +8,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <!-- Animations CSS -->
+    <link rel="stylesheet" href="{{ asset('css/animations.css') }}">
     <style>
         /* ===== RESET & BASE ===== */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -1022,10 +1024,32 @@
             } else {
                 // Fallback: copy to clipboard
                 navigator.clipboard.writeText(window.location.href).then(() => {
-                    alert('Link berhasil disalin ke clipboard!');
+                    if (window.toast) {
+                        window.toast.show('Link berhasil disalin ke clipboard!', 'success', 3000);
+                    } else {
+                        alert('Link berhasil disalin ke clipboard!');
+                    }
                 });
             }
         }
+    </script>
+    
+    <script src="{{ asset('js/animations.js') }}"></script>
+    <script>
+        // Show toast notification on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            @if(session('success'))
+                if (window.toast) {
+                    window.toast.show('{{ session("success") }}', 'success', 4000);
+                }
+            @endif
+            
+            @if(session('error'))
+                if (window.toast) {
+                    window.toast.show('{{ session("error") }}', 'error', 4000);
+                }
+            @endif
+        });
     </script>
 
 </body>

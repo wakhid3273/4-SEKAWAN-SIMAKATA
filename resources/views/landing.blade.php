@@ -9,6 +9,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <!-- Animations CSS -->
+    <link rel="stylesheet" href="{{ asset('css/animations.css') }}">
+    <script src="{{ asset('js/animations.js') }}" defer></script>
     <style>
         /* ===== RESET & BASE ===== */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -833,15 +836,15 @@
 <section class="stats-section">
     <div class="stats-inner">
         <div class="stat-item">
-            <div class="stat-number">{{ $perusahaanCount ?? '50+' }}</div>
+            <div class="stat-number" data-count="{{ $perusahaanCount ?? 50 }}" data-duration="2000">0</div>
             <div class="stat-label-text">Perusahaan Terdaftar</div>
         </div>
         <div class="stat-item">
-            <div class="stat-number">{{ $mahasiswaMagangCount ?? '120+' }}</div>
+            <div class="stat-number" data-count="{{ $mahasiswaMagangCount ?? 120 }}" data-duration="2200">0</div>
             <div class="stat-label-text">Mahasiswa Magang</div>
         </div>
         <div class="stat-item">
-            <div class="stat-number">{{ $mahasiswaKpCount ?? '150+' }}</div>
+            <div class="stat-number" data-count="{{ $mahasiswaKpCount ?? 150 }}" data-duration="2400">0</div>
             <div class="stat-label-text">Kerja Praktik</div>
         </div>
     </div>
@@ -857,7 +860,7 @@
 
     <div class="features-grid">
         {{-- Feature 1: Database Perusahaan --}}
-        <a href="{{ route('perusahaan.index') }}" class="feature-card has-bg-right" id="feature-database-perusahaan" style="display:block; text-decoration:none; color:inherit; cursor:pointer; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.10)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
+        <a href="{{ route('perusahaan.index') }}" class="feature-card has-bg-right" data-animate id="feature-database-perusahaan" style="display:block; text-decoration:none; color:inherit; cursor:pointer; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.10)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
             <div class="feature-icon fi-blue">
                 <span class="material-icons-outlined">corporate_fare</span>
             </div>
@@ -868,7 +871,7 @@
         </a>
 
         {{-- Feature 2: Validasi Judul TA --}}
-        <a href="{{ route('judul-ta.index') }}" class="feature-card has-bg-right" id="feature-validasi-ta" style="display:block; text-decoration:none; color:inherit; cursor:pointer; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.10)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
+        <a href="{{ route('judul-ta.index') }}" class="feature-card has-bg-right" data-animate id="feature-validasi-ta" style="display:block; text-decoration:none; color:inherit; cursor:pointer; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.10)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
             <div class="feature-icon fi-amber">
                 <span class="material-icons-outlined">verified_user</span>
             </div>

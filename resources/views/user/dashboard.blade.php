@@ -12,6 +12,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <!-- Animations CSS -->
+    <link rel="stylesheet" href="{{ asset('css/animations.css') }}">
+    <script src="{{ asset('js/animations.js') }}" defer></script>
 
     <style>
                 /* ===== RESET ===== */
@@ -539,7 +542,7 @@
                 <div style="display: flex; flex-direction: column; gap: 16px;">
 
                 {{-- Status Verifikasi --}}
-                    <div class="status-card" id="card-status-ta">
+                    <div class="status-card" id="card-status-ta" data-animate>
                         @if($status_verifikasi === 'pending')
                             <div class="status-icon-wrap si-amber">
                                 <span class="material-icons-outlined">pending_actions</span>
@@ -586,7 +589,7 @@
                     </div>
 
                     {{-- Riwayat Aktivitas --}}
-                    <div class="card" id="card-aktivitas">
+                    <div class="card" id="card-aktivitas" data-animate>
                         <div class="card-header">
                             <div class="card-title">
                                 <span class="material-icons-outlined">timeline</span>
@@ -662,7 +665,7 @@
                 {{-- RIGHT COLUMN --}}
                 <div class="right-col">
                     {{-- Profile Mini --}}
-                    <div class="card" id="card-profile-mini">
+                    <div class="card" id="card-profile-mini" data-animate>
                         <div class="profile-mini">
                             <div class="profile-mini-avatar">
                                 {{ strtoupper(substr($user->nama_lengkap ?? 'M', 0, 1)) }}
@@ -675,7 +678,7 @@
                         </div>
                     </div>
                     {{-- Aksi Cepat --}}
-                    <div class="card" id="card-aksi-cepat">
+                    <div class="card" id="card-aksi-cepat" data-animate>
                         <div class="card-header">
                             <div class="card-title">
                                 <span class="material-icons-outlined">bolt</span>

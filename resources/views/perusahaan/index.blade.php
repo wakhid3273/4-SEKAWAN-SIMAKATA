@@ -8,6 +8,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <!-- Animations CSS -->
+    <link rel="stylesheet" href="{{ asset('css/animations.css') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         /* ===== RESET & BASE ===== */
@@ -836,14 +838,24 @@
                     }
                 });
         }
-
-        function showToast(msg) {
-            let t = document.createElement('div');
-            t.style.cssText = 'position:fixed;bottom:24px;right:24px;background:#1a5fb4;color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:600;box-shadow:0 8px 32px rgba(0,0,0,0.2);z-index:9999;animation:fadeIn 0.3s ease';
-            t.textContent = msg;
-            document.body.appendChild(t);
-            setTimeout(() => { t.style.animation = 'fadeOut 0.3s ease forwards'; setTimeout(() => t.remove(), 300); }, 4000);
-        }
+    </script>
+    
+    <script src="{{ asset('js/animations.js') }}"></script>
+    <script>
+        // Show toast notification on page load using animations.js toast
+        document.addEventListener('DOMContentLoaded', () => {
+            @if(session('success'))
+                if (window.toast) {
+                    window.toast.show('{{ session("success") }}', 'success', 4000);
+                }
+            @endif
+            
+            @if(session('error'))
+                if (window.toast) {
+                    window.toast.show('{{ session("error") }}', 'error', 4000);
+                }
+            @endif
+        });
     </script>
 
     <style>
