@@ -52,6 +52,9 @@ Route::middleware('auth')->group(function () {
     // Admin Perusahaan Management
     Route::middleware('role:admin')->group(function () {
         Route::get('/admin/profil', [\App\Http\Controllers\Admin\ProfileController::class, 'index'])->name('admin.profil');
+        Route::get('/admin/profil/edit', [\App\Http\Controllers\Admin\ProfileController::class, 'edit'])->name('admin.profil.edit');
+        Route::put('/admin/profil', [\App\Http\Controllers\Admin\ProfileController::class, 'update'])->name('admin.profil.update');
+        
         Route::get('/admin/verifikasi', [\App\Http\Controllers\Admin\VerifikasiController::class, 'index'])->name('admin.verifikasi.index');
         Route::get('/admin/verifikasi/kp/{id}', [\App\Http\Controllers\Admin\VerifikasiController::class, 'showKp'])->name('admin.verifikasi.kp.show');
         Route::post('/admin/verifikasi/kp/{id}/approve', [\App\Http\Controllers\Admin\VerifikasiController::class, 'approveKp'])->name('admin.verifikasi.kp.approve');
@@ -78,6 +81,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/profil', [\App\Http\Controllers\User\ProfileController::class, 'index'])
         ->middleware('role:user')
         ->name('user.profil');
+    Route::get('/user/profil/edit', [\App\Http\Controllers\User\ProfileController::class, 'edit'])
+        ->middleware('role:user')
+        ->name('user.profil.edit');
+    Route::put('/user/profil', [\App\Http\Controllers\User\ProfileController::class, 'update'])
+        ->middleware('role:user')
+        ->name('user.profil.update');
 
     // Default dashboard redirect sesuai role
     Route::get('/dashboard', function () {
