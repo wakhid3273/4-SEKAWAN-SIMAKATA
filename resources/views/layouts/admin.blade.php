@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/animations.css') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="{{ asset('js/animations.js') }}" defer></script>
     <style>
         /* ===== RESET ===== */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }

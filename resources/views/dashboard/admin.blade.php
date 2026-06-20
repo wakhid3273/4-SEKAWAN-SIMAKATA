@@ -471,7 +471,7 @@
     <div class="card stat-card">
         <div class="stat-info">
             <div class="stat-label">Total Companies</div>
-            <div class="stat-value">{{ $totalPerusahaan }}</div>
+            <div class="stat-value" data-count="{{ $totalPerusahaan }}" data-duration="2000">0</div>
             <span class="stat-badge green">
                 <span class="material-icons-outlined">trending_up</span>
                 +12% this month
@@ -486,7 +486,7 @@
     <div class="card stat-card">
         <div class="stat-info">
             <div class="stat-label">Total Students</div>
-            <div class="stat-value">{{ $totalUserAktif }}</div>
+            <div class="stat-value" data-count="{{ $totalUserAktif }}" data-duration="2200">0</div>
             <span class="stat-badge blue">
                 <span class="material-icons-outlined">trending_up</span>
                 +5.2% this year
@@ -501,7 +501,7 @@
     <div class="card stat-card">
         <div class="stat-info">
             <div class="stat-label">Pending Verifications</div>
-            <div class="stat-value" style="color: #dc2626;">{{ $menungguVerifikasi }}</div>
+            <div class="stat-value" style="color: #dc2626;" data-count="{{ $menungguVerifikasi }}" data-duration="2400">0</div>
             <span class="stat-badge red">
                 <span class="material-icons-outlined">schedule</span>
                 Needs immediate attention

@@ -14,6 +14,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
     <!-- Animations CSS -->
     <link rel="stylesheet" href="{{ asset('css/animations.css') }}">
+    <script src="{{ asset('js/animations.js') }}" defer></script>
 
     <style>
                 /* ===== RESET ===== */
