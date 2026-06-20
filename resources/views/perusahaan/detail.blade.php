@@ -314,7 +314,7 @@
         /* ===== MAIN CONTENT LAYOUT ===== */
         .content-layout {
             display: grid;
-            grid-template-columns: 1fr 300px; /* Adjusted proporsi layout */
+            grid-template-columns: 1fr 360px;
             gap: 32px;
             margin-bottom: 48px;
         }
@@ -710,23 +710,7 @@
 <body>
 
     {{-- ===== NAVBAR ===== --}}
-    <nav class="navbar">
-        <a href="{{ route('landing') }}" class="navbar-logo">SIMAKATA</a>
-        <ul class="navbar-links">
-            <li><a href="{{ route('landing') }}">Beranda</a></li>
-            <li><a href="{{ route('perusahaan.index') }}" class="active">Perusahaan</a></li>
-            <li><a href="#judul-ta">Judul TA</a></li>
-            <li><a href="#riwayat">Riwayat</a></li>
-        </ul>
-        <div class="navbar-auth">
-            @auth
-                <a href="{{ route('dashboard') }}" class="btn btn-primary">Dashboard</a>
-            @else
-                <a href="{{ route('login.form') }}" class="btn btn-secondary">Login</a>
-                <a href="{{ route('register.form') }}" class="btn btn-primary">Daftar</a>
-            @endauth
-        </div>
-    </nav>
+    @include('components.navbar')
 
     {{-- ===== HERO BANNER ===== --}}
     <div class="hero-banner">
@@ -764,12 +748,39 @@
                                 <strong>{{ $riwayatMagang->count() > 0 ? $riwayatMagang->count() : $perusahaan->jumlah_mahasiswa }}</strong> Alumni
                             </div>
                         </div>
+                        <div class="company-badges">
+                            @if($perusahaan->jenis_kegiatan)
+                                @if($perusahaan->jenis_kegiatan == 'Magang')
+                                    <span class="badge badge-magang">
+                                        <span class="material-icons-outlined" style="font-size: 16px;">work</span>
+                                        Terbuka untuk Magang
+                                    </span>
+                                @elseif($perusahaan->jenis_kegiatan == 'Kerja Praktik')
+                                    <span class="badge badge-kp">
+                                        <span class="material-icons-outlined" style="font-size: 16px;">business_center</span>
+                                        Terbuka untuk Kerja Praktik
+                                    </span>
+                                @elseif($perusahaan->jenis_kegiatan == 'Tugas Akhir')
+                                    <span class="badge badge-ta">
+                                        <span class="material-icons-outlined" style="font-size: 16px;">school</span>
+                                        Terbuka untuk Tugas Akhir
+                                    </span>
+                                @endif
+                            @endif
+                            <span class="badge badge-open">
+                                <span class="material-icons-outlined" style="font-size: 16px;">check_circle</span>
+                                500+ Karyawan
+                            </span>
                         </div>
                     </div>
                     <div class="company-actions">
                         <button class="btn-share" onclick="shareCompany()" title="Bagikan">
                             <span class="material-icons-outlined" style="font-size: 20px;">share</span>
                         </button>
+                        <a href="{{ route('perusahaan.index') }}" class="btn btn-primary btn-action">
+                            <span class="material-icons-outlined" style="font-size: 18px;">send</span>
+                            Ajukan KP/Magang
+                        </a>
                     </div>
                 </div>
             </div>
@@ -953,9 +964,26 @@
                         @endif
                     </div>
                 </div>
+
+                {{-- CTA Card --}}
+                <div class="sidebar-card cta-card">
+                    <h3 class="sidebar-title">
+                        <span class="material-icons-outlined">rocket_launch</span>
+                        Ingin Bergabung?
+                    </h3>
+                    <p class="cta-text">
+                        Kami membuka kesempatan magang untuk posisi Frontend, Backend, dan Data Science selama summer.
+                    </p>
+                    <a href="{{ route('perusahaan.index') }}" class="btn btn-cta">
+                        <span class="material-icons-outlined" style="font-size: 18px;">send</span>
+                        Lihat Lowongan
+                    </a>
+                </div>
             </div>
         </div>
     </div>
+
+    @include('components.footer')
 
     <script>
         // Navbar scroll effect
