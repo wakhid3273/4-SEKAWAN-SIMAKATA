@@ -113,7 +113,7 @@
                 <a href="#" class="social-icon" title="WhatsApp" id="social-whatsapp">
                     <span class="material-icons-outlined">chat</span>
                 </a>
-                <a href="{{ route('admin.login.form') }}" class="social-icon" title="Settings / Admin" id="social-admin">
+                <a href="{{ route('login.form') }}" class="social-icon" title="Settings / Admin" id="social-admin">
                     <span class="material-icons-outlined">settings</span>
                 </a>
             </div>

@@ -67,15 +67,15 @@
             font-size: 13px; font-family: inherit; color: var(--text-mid); background: #fff; outline: none; cursor: pointer;
         }
         .btn-search {
-            padding: 9px 20px; background: #059669; color: #fff; border: none;
+            padding: 9px 20px; background: #1a5fb4; color: #fff; border: none;
             border-radius: 8px; font-size: 13px; font-weight: 600; font-family: inherit; cursor: pointer; transition: background 0.2s;
         }
-        .btn-search:hover { background: #047857; }
+        .btn-search:hover { background: #154c90; }
 
         /* TABLE */
         .table-card { background: #fff; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
         .table-header { padding: 20px 24px; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; justify-content: space-between; }
-        .table-header h2 { font-size: 16px; font-weight: 700; color: var(--text-dark); }
+        .table-header h2 { font-size: 16px; font-weight: 700; color: var(--blue-main); }
         .table-count { font-size: 12px; color: var(--text-gray); background: #f1f5f9; padding: 4px 10px; border-radius: 99px; font-weight: 600; }
         table { width: 100%; border-collapse: collapse; }
         th {
