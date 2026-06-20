@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\MahasiswaMagang;
 use App\Models\FinalProject;
+use App\Events\MahasiswaMagangUpdated;
 
 class VerifikasiController extends Controller
 {
@@ -107,6 +108,13 @@ class VerifikasiController extends Controller
             'alasan_penolakan' => null,
         ]);
 
+        // Broadcast event (graceful failure jika Reverb tidak running)
+        try {
+            broadcast(new MahasiswaMagangUpdated($pengajuan))->toOthers();
+        } catch (\Exception $e) {
+            \Log::warning('Broadcasting failed: ' . $e->getMessage());
+        }
+
         return response()->json([
             'success' => true,
             'message' => 'Pengajuan berhasil disetujui.'
@@ -124,6 +132,13 @@ class VerifikasiController extends Controller
             'status' => 'Ditolak',
             'alasan_penolakan' => $request->alasan_penolakan,
         ]);
+
+        // Broadcast event (graceful failure jika Reverb tidak running)
+        try {
+            broadcast(new MahasiswaMagangUpdated($pengajuan))->toOthers();
+        } catch (\Exception $e) {
+            \Log::warning('Broadcasting failed: ' . $e->getMessage());
+        }
 
         return response()->json([
             'success' => true,
