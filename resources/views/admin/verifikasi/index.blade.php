@@ -177,7 +177,75 @@
     .action-btn.reject:hover { background: #fee2e2; color: #dc2626; }
     .action-btn .material-icons-outlined { font-size: 16px; }
 
-    /* Pagination Style removed - using partials.pagination */
+    .pagination-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 20px;
+        background: white;
+        border-top: 1px solid #e5e7eb;
+    }
+    .pagination-info {
+        font-size: 13px;
+        color: #6b7280;
+    }
+    .pagination-info strong {
+        color: #111827;
+        font-weight: 700;
+    }
+    
+    .pagination-links {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .pagination-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 36px;
+        height: 36px;
+        padding: 0 12px;
+        border: 1px solid #e5e7eb;
+        background: #ffffff;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        color: #374151;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        cursor: pointer;
+    }
+    .pagination-btn:hover:not(.disabled):not(.active) {
+        background: #f9fafb;
+        border-color: #1a5fb4;
+        color: #1a5fb4;
+    }
+    .pagination-btn.active {
+        background: #1a5fb4;
+        border-color: #1a5fb4;
+        color: #ffffff;
+    }
+    .pagination-btn.disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+    .pagination-btn .material-icons-outlined {
+        font-size: 18px;
+    }
+    
+    @media (max-width: 768px) {
+        .pagination-container {
+            flex-direction: column;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        .pagination-links {
+            width: 100%;
+            justify-content: center;
+        }
+    }
     
 </style>
 @endsection
@@ -323,8 +391,62 @@
         </div>
     </div>
     
-    <div style="padding: 0 20px 20px;">
-        {{ $pengajuan->appends(request()->query())->links('partials.pagination') }}
+    <div class="pagination-container">
+        <div class="pagination-info">
+            Showing <strong>{{ $pengajuan->firstItem() ?? 0 }}-{{ $pengajuan->lastItem() ?? 0 }}</strong> of <strong>{{ $pengajuan->total() }}</strong> results
+        </div>
+        <div class="pagination-links">
+            {{-- Previous Button --}}
+            @if ($pengajuan->onFirstPage())
+                <span class="pagination-btn disabled">
+                    <span class="material-icons-outlined">chevron_left</span>
+                </span>
+            @else
+                <a href="{{ $pengajuan->appends(request()->except('page'))->previousPageUrl() }}" class="pagination-btn">
+                    <span class="material-icons-outlined">chevron_left</span>
+                </a>
+            @endif
+
+            {{-- Page Numbers --}}
+            @php
+                $start = max($pengajuan->currentPage() - 2, 1);
+                $end = min($start + 4, $pengajuan->lastPage());
+                $start = max($end - 4, 1);
+            @endphp
+
+            @if($start > 1)
+                <a href="{{ $pengajuan->appends(request()->except('page'))->url(1) }}" class="pagination-btn">1</a>
+                @if($start > 2)
+                    <span class="pagination-btn disabled">...</span>
+                @endif
+            @endif
+
+            @for ($i = $start; $i <= $end; $i++)
+                @if ($i == $pengajuan->currentPage())
+                    <span class="pagination-btn active">{{ $i }}</span>
+                @else
+                    <a href="{{ $pengajuan->appends(request()->except('page'))->url($i) }}" class="pagination-btn">{{ $i }}</a>
+                @endif
+            @endfor
+
+            @if($end < $pengajuan->lastPage())
+                @if($end < $pengajuan->lastPage() - 1)
+                    <span class="pagination-btn disabled">...</span>
+                @endif
+                <a href="{{ $pengajuan->appends(request()->except('page'))->url($pengajuan->lastPage()) }}" class="pagination-btn">{{ $pengajuan->lastPage() }}</a>
+            @endif
+
+            {{-- Next Button --}}
+            @if ($pengajuan->hasMorePages())
+                <a href="{{ $pengajuan->appends(request()->except('page'))->nextPageUrl() }}" class="pagination-btn">
+                    <span class="material-icons-outlined">chevron_right</span>
+                </a>
+            @else
+                <span class="pagination-btn disabled">
+                    <span class="material-icons-outlined">chevron_right</span>
+                </span>
+            @endif
+        </div>
     </div>
 </div>
 
@@ -483,6 +605,7 @@
                                 <div class="detail-item"><div class="label">Nama Lengkap</div><div class="val">${data.nama}</div></div>
                                 <div class="detail-item"><div class="label">NIM</div><div class="val">${data.nim || '-'}</div></div>
                             </div>
+>>>>>>> .merge_file_EpfAfx
                         </div>
                         <div class="detail-section">
                             <div class="detail-section-title">Data Tugas Akhir</div>

@@ -222,104 +222,252 @@
 
         /* ===== FOOTER ===== */
         .admin-page-footer {
-            background: var(--card-bg);
+            background: #f8fafc;
             border-top: 1px solid var(--border);
-            padding: 28px 32px;
+            padding: 32px 32px 20px;
             margin-top: 12px;
         }
         .footer-inner {
-            display: grid;
-            grid-template-columns: 1fr auto auto;
-            gap: 32px;
-            align-items: start;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            flex-wrap: wrap;
         }
         .footer-brand-name {
             font-size: 16px;
             font-weight: 800;
             color: var(--accent-blue);
-            letter-spacing: 1.5px;
-            margin-bottom: 8px;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
         }
         .footer-brand-desc {
             font-size: 12px;
             color: var(--text-secondary);
             line-height: 1.6;
-            max-width: 240px;
         }
-        .footer-links h4 {
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: var(--text-primary);
-            margin-bottom: 10px;
-        }
-        .footer-links a {
-            display: block;
-            font-size: 12px;
-            color: var(--text-secondary);
-            text-decoration: none;
-            margin-bottom: 6px;
-            transition: color 0.2s;
-        }
-        .footer-links a:hover { color: var(--accent-blue); }
-        .footer-copy {
-            font-size: 11px;
-            color: var(--text-muted);
-            text-align: right;
-            line-height: 1.6;
-        }
-        .footer-copy-icons {
+        .footer-contact {
             display: flex;
+            align-items: center;
             gap: 10px;
-            justify-content: flex-end;
-            margin-top: 10px;
         }
-        .footer-icon-btn {
-            width: 28px;
-            height: 28px;
+        .social-icon {
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
+            background: #ffffff;
             border: 1px solid var(--border);
-            background: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
             color: var(--text-secondary);
-            transition: border-color 0.2s, color 0.2s;
+            transition: all 0.2s;
+            text-decoration: none;
         }
-        .footer-icon-btn:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
-        .footer-icon-btn .material-icons-outlined { font-size: 14px; }
+        .social-icon:hover {
+            background: var(--accent-blue-light);
+            color: var(--accent-blue);
+            border-color: rgba(26, 95, 180, 0.2);
+        }
+        .social-icon .material-icons-outlined {
+            font-size: 18px;
+        }
+        .footer-bottom {
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+            font-size: 11px;
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 20px;
+        }
 
         /* ===== RESPONSIVE ===== */
-        @media (max-width: 900px) {
+        @media (max-width: 1024px) {
             .sidebar {
-                width: 64px;
-                min-width: 64px;
+                width: 70px;
+                min-width: 70px;
             }
-            .sidebar-logo, .sidebar-user-info, .nav-item span:not(.material-icons-outlined),
-            .btn-logout span:not(.material-icons-outlined), .sidebar-user-avatar + .sidebar-user-info {
+            .sidebar-logo { 
+                font-size: 14px; 
+                padding: 24px 8px 16px;
+                text-align: center;
+                letter-spacing: 1px;
+            }
+            .sidebar-user-info, 
+            .nav-item span:not(.material-icons-outlined),
+            .btn-logout span:not(.material-icons-outlined) {
                 display: none;
             }
-            .nav-item, .btn-logout { justify-content: center; padding: 12px; }
-            .sidebar-user { justify-content: center; padding: 16px 0; }
-            .main-content { margin-left: 64px; }
-            .page-body { padding: 20px 16px; }
-            .footer-inner { grid-template-columns: 1fr; gap: 20px; }
-            .footer-copy { text-align: left; }
-            .footer-copy-icons { justify-content: flex-start; }
+            .nav-item, .btn-logout { 
+                justify-content: center; 
+                padding: 12px 8px; 
+            }
+            .sidebar-user { 
+                justify-content: center; 
+                padding: 14px 8px; 
+            }
+            .main-content { margin-left: 70px; }
+            .page-body { padding: 24px 20px; }
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                --sidebar-width: 0px;
+            }
+            
+            .sidebar {
+                width: 0;
+                min-width: 0;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            
+            .sidebar.mobile-open {
+                transform: translateX(0);
+                width: 220px;
+                min-width: 220px;
+                box-shadow: 4px 0 16px rgba(0,0,0,0.15);
+            }
+            
+            .sidebar.mobile-open .sidebar-logo,
+            .sidebar.mobile-open .sidebar-user-info,
+            .sidebar.mobile-open .nav-item span:not(.material-icons-outlined),
+            .sidebar.mobile-open .btn-logout span:not(.material-icons-outlined) {
+                display: block;
+            }
+            
+            .sidebar.mobile-open .nav-item,
+            .sidebar.mobile-open .btn-logout {
+                justify-content: flex-start;
+                padding: 10px 12px;
+            }
+            
+            .sidebar.mobile-open .sidebar-user {
+                justify-content: flex-start;
+            }
+            
+            .main-content { 
+                margin-left: 0; 
+            }
+            
+            .page-body { 
+                padding: 16px 16px; 
+            }
+            
+            .page-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .page-header h1 {
+                font-size: 22px;
+            }
+            
+            .admin-page-footer {
+                padding: 24px 20px 16px;
+            }
+            
+            .footer-inner { 
+                flex-direction: column; 
+                align-items: flex-start;
+                gap: 16px;
+            }
+            
+            /* Mobile Menu Toggle Button */
+            .mobile-menu-btn {
+                position: fixed;
+                top: 16px;
+                left: 16px;
+                width: 44px;
+                height: 44px;
+                border-radius: 12px;
+                background: var(--sidebar-bg);
+                border: none;
+                color: #ffffff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                z-index: 1000;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                transition: all 0.2s;
+            }
+            
+            .mobile-menu-btn:hover {
+                background: #1a2942;
+            }
+            
+            .mobile-menu-btn .material-icons-outlined {
+                font-size: 24px;
+            }
+            
+            /* Mobile Overlay */
+            .mobile-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0,0,0,0.5);
+                z-index: 99;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+            
+            .mobile-overlay.active {
+                display: block;
+                opacity: 1;
+            }
         }
 
         @media (max-width: 600px) {
-            .page-body { padding: 16px 12px; }
+            .page-body { 
+                padding: 12px 12px; 
+            }
+            
+            .page-header h1 {
+                font-size: 20px;
+            }
+            
+            .page-header .subtitle {
+                font-size: 12px;
+            }
+            
+            .admin-page-footer {
+                padding: 20px 16px 12px;
+            }
+            
+            .footer-brand-name {
+                font-size: 15px;
+            }
+            
+            .footer-brand-desc {
+                font-size: 11px;
+            }
+            
+            .mobile-menu-btn {
+                top: 12px;
+                left: 12px;
+                width: 40px;
+                height: 40px;
+            }
         }
     </style>
     @yield('extra_styles')
 </head>
 <body>
 <div class="admin-shell">
+    {{-- Mobile Menu Toggle Button (visible on mobile only) --}}
+    <button class="mobile-menu-btn" id="mobileMenuBtn" style="display: none;">
+        <span class="material-icons-outlined">menu</span>
+    </button>
+    
+    {{-- Mobile Overlay --}}
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+    
     {{-- ===== SIDEBAR ===== --}}
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
         <div class="sidebar-logo">SIMAKATA</div>
 
         {{-- Admin user info --}}
@@ -387,29 +535,54 @@
             <div class="footer-inner">
                 <div>
                     <div class="footer-brand-name">SIMAKATA</div>
-                    <p class="footer-brand-desc">The official management system for Informatics Final Projects and Internship tracking.</p>
+                    <p class="footer-brand-desc">Managed by 4 Sekawan</p>
                 </div>
-                <div class="footer-links">
-                    <h4>Admin Quick Links</h4>
-                    <a href="#">Audit Logs</a>
-                    <a href="#">System Configuration</a>
-                    <a href="#">Report Center</a>
+                <div class="footer-contact">
+                    <a href="https://wa.me/6281234567890" target="_blank" class="social-icon" title="Hubungi Admin via WhatsApp">
+                        <span class="material-icons-outlined">chat</span>
+                    </a>
                 </div>
-                <div class="footer-copy">
-                    &copy; 2024 HMIF Informatics SIMAKATA. All rights reserved.
-                    <div class="footer-copy-icons">
-                        <button class="footer-icon-btn" title="Help">
-                            <span class="material-icons-outlined">help_outline</span>
-                        </button>
-                        <button class="footer-icon-btn" title="Settings">
-                            <span class="material-icons-outlined">settings</span>
-                        </button>
-                    </div>
-                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2026 4 Sekawan
             </div>
         </footer>
     </div>
 </div>
+
+<script>
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const sidebar = document.getElementById('sidebar');
+    const mobileOverlay = document.getElementById('mobileOverlay');
+    
+    function toggleMobileMenu() {
+        sidebar.classList.toggle('mobile-open');
+        mobileOverlay.classList.toggle('active');
+    }
+    
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+    }
+    
+    if (mobileOverlay) {
+        mobileOverlay.addEventListener('click', toggleMobileMenu);
+    }
+    
+    // Show/hide mobile menu button based on screen size
+    function checkScreenSize() {
+        if (window.innerWidth <= 768) {
+            mobileMenuBtn.style.display = 'flex';
+        } else {
+            mobileMenuBtn.style.display = 'none';
+            sidebar.classList.remove('mobile-open');
+            mobileOverlay.classList.remove('active');
+        }
+    }
+    
+    window.addEventListener('load', checkScreenSize);
+    window.addEventListener('resize', checkScreenSize);
+</script>
 
 @yield('scripts')
 </body>

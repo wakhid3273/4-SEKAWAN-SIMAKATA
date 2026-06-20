@@ -375,11 +375,79 @@
     @media (max-width: 900px) {
         .stats-grid { grid-template-columns: 1fr 1fr; }
         .mid-row { grid-template-columns: 1fr; }
+        .btn-export {
+            width: 100%;
+            justify-content: center;
+        }
     }
     @media (max-width: 600px) {
         .stats-grid { grid-template-columns: 1fr; }
-        .table-search input { width: 120px; }
-        .table-footer { flex-direction: column; align-items: flex-start; }
+        .stat-card {
+            padding: 18px 20px;
+        }
+        .stat-info .stat-value {
+            font-size: 28px;
+        }
+        .stat-icon-wrap {
+            width: 44px;
+            height: 44px;
+        }
+        .stat-icon-wrap .material-icons-outlined {
+            font-size: 20px;
+        }
+        .table-card-header {
+            padding: 16px 16px 12px;
+        }
+        .table-search {
+            width: 100%;
+        }
+        .table-search input { 
+            width: 100%;
+            flex: 1;
+        }
+        .header-right {
+            width: 100%;
+        }
+        .data-table {
+            display: block;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .data-table th,
+        .data-table td {
+            padding: 10px 16px;
+            font-size: 12px;
+        }
+        .entity-avatar {
+            width: 30px;
+            height: 30px;
+            font-size: 10px;
+        }
+        .entity-name {
+            font-size: 12px;
+        }
+        .table-footer { 
+            flex-direction: column; 
+            align-items: flex-start;
+            padding: 12px 16px;
+        }
+        .pagination {
+            width: 100%;
+            justify-content: space-between;
+        }
+        .btn-page {
+            flex: 1;
+        }
+        .chart-card {
+            padding: 18px 16px;
+        }
+        .bar-chart-area {
+            height: 140px;
+            gap: 6px;
+        }
+        .bar-label {
+            font-size: 9px;
+        }
     }
 </style>
 @endsection
