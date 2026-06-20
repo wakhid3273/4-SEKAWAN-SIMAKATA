@@ -100,5 +100,7 @@
     <div>
         {{ $perusahaan->appends(request()->query())->links('partials.pagination') }}
     </div>
+    @endif
 </div>
 @endsection
+
