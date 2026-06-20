@@ -448,22 +448,17 @@
                 <span>Dashboard</span>
             </a>
 
-            <a href="#" id="nav-kp" class="nav-item">
+            <a href="{{ route('perusahaan.index') }}" id="nav-kp" class="nav-item">
                 <span class="material-icons-outlined">work_outline</span>
                 <span>Input KP/Magang</span>
             </a>
 
-            <a href="#" id="nav-ta" class="nav-item">
+            <a href="{{ route('judul-ta.index') }}" id="nav-ta" class="nav-item">
                 <span class="material-icons-outlined">description</span>
                 <span>Input Tugas Akhir</span>
             </a>
 
-
-            <a href="#" id="nav-rekomendasi" class="nav-item">
-                <span class="material-icons-outlined">location_on</span>
-                <span>Rekomendasi Lokasi</span>
-            </a>
-            <a href="#" id="nav-riwayat" class="nav-item">
+            <a href="{{ route('riwayat.index') }}" id="nav-riwayat" class="nav-item">
                 <span class="material-icons-outlined">history</span>
                 <span>Riwayat Aktivitas</span>
             </a>
@@ -504,10 +499,7 @@
                 <a href="{{ route('landing') }}" class="topbar-icon-btn" title="Ke Beranda" id="btn-home" style="text-decoration: none; display: flex; align-items: center; justify-content: center; color: var(--text-gray);">
                     <span class="material-icons-outlined">home</span>
                 </a>
-                <button class="topbar-icon-btn" id="btn-notif" aria-label="Notifikasi">
-                    <span class="material-icons-outlined">notifications</span>
-                    <span class="notif-dot"></span>
-                </button>
+                {{-- Notification bell removed --}}
                 
                 <!-- Profile Pic -->
                 <div class="topbar-divider"></div>
@@ -533,14 +525,7 @@
                     <h2>Selamat Datang, {{ $user->nama_lengkap ?? 'Mahasiswa Informatika' }} 👋</h2>
                     <p>Kelola Kerja Praktik, Magang, dan Tugas Akhir Anda dalam satu platform yang terintegrasi dan efisien.</p>
                     <div class="banner-btns">
-                        <a href="#" class="btn-banner-white" id="btn-panduan-ta">
-                            <span class="material-icons-outlined">menu_book</span>
-                            Panduan TA
-                        </a>
-                        <a href="#" class="btn-banner-white" id="btn-panduan-kp">
-                            <span class="material-icons-outlined">work_outline</span>
-                            Panduan KP
-                        </a>
+                        {{-- Panduan buttons removed --}}
                     </div>
                 </div>
             </div>
@@ -605,7 +590,7 @@
                                 <span class="material-icons-outlined">timeline</span>
                                 Riwayat Aktivitas
                             </div>
-                            <a href="#" class="card-link" id="link-lihat-semua">Lihat Semua</a>
+                            <a href="{{ route('riwayat.index') }}" class="card-link" id="link-lihat-semua">Lihat Semua</a>
                         </div>
                         <div>
                             @foreach($riwayat_aktivitas as $i => $aktivitas)
@@ -661,37 +646,27 @@
                             </div>
                         </div>
                         <div>
-                            <a href="#" class="quick-action" id="qa-input-ta">
+                            <a href="{{ route('judul-ta.index') }}" class="quick-action" id="qa-input-ta">
                                 <div class="qa-icon qa-indigo">
                                     <span class="material-icons-outlined">description</span>
                                 </div>
-                            <div>
+                                <div>
                                     <div class="qa-label">Input Tugas Akhir</div>
                                     <div class="qa-sub">Ajukan judul TA baru</div>
                                 </div>
-                            <div class="qa-arrow"><span class="material-icons-outlined">chevron_right</span></div>
+                                <div class="qa-arrow"><span class="material-icons-outlined">chevron_right</span></div>
                             </a>
-                            <a href="#" class="quick-action" id="qa-input-kp">
+                            <a href="{{ route('perusahaan.index') }}" class="quick-action" id="qa-input-kp">
                                 <div class="qa-icon qa-blue">
                                     <span class="material-icons-outlined">work_outline</span>
                                 </div>
-                            <div>
+                                <div>
                                     <div class="qa-label">Input KP/Magang</div>
                                     <div class="qa-sub">Daftarkan pengajuan magang</div>
                                 </div>
                                 <div class="qa-arrow"><span class="material-icons-outlined">chevron_right</span></div>
                             </a>
-                            <a href="#" class="quick-action" id="qa-rekomendasi">
-                                <div class="qa-icon qa-green">
-                                    <span class="material-icons-outlined">location_on</span>
-                                </div>
-                                <div>
-                                    <div class="qa-label">Rekomendasi Lokasi</div>
-                                    <div class="qa-sub">Cari lokasi magang terbaik</div>
-                                </div>
-                                <div class="qa-arrow"><span class="material-icons-outlined">chevron_right</span></div>
-                            </a>
-                            <a href="#" class="quick-action" id="qa-riwayat">
+                            <a href="{{ route('riwayat.index') }}" class="quick-action" id="qa-riwayat">
                                 <div class="qa-icon qa-amber">
                                     <span class="material-icons-outlined">history</span>
                                 </div>
