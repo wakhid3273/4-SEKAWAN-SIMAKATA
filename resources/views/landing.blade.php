@@ -852,7 +852,7 @@
                     </a>
                     <a href="{{ route('register.form') }}" class="btn-secondary" id="btn-hero-register">Daftar Akun</a>
                     <a href="{{ route('login.form') }}" class="btn-secondary" id="btn-hero-login">Login</a>
-                @endauth
+                @endguest
                 @auth
                     <a href="{{ route('dashboard') }}" class="btn-primary" id="btn-hero-dashboard">
                         <span class="material-icons-outlined">dashboard</span>
@@ -960,12 +960,11 @@
         <h2>Siap Memulai Langkah Karir Anda?</h2>
         <p>Bergabunglah dengan ribuan mahasiswa lainnya yang telah sukses menempuh magang dan tugas akhir melalui SIMAKATA.</p>
         <div class="cta-buttons">
+            <a href="{{ auth()->check() ? route('dashboard') : route('login.form') }}" class="btn-cta-primary" id="btn-cta-dashboard">Dashboard Saya</a>
             @guest
-                <a href="{{ route('register.form') }}" class="btn-cta-primary" id="btn-cta-register">Daftar Sekarang</a>
                 <a href="#" class="btn-cta-secondary" id="btn-cta-hubungi">Hubungi Admin</a>
             @endguest
             @auth
-                <a href="{{ route('dashboard') }}" class="btn-cta-primary" id="btn-cta-dashboard">Ke Dashboard Saya</a>
                 <form method="POST" action="{{ route('logout') }}" style="margin:0;">
                     @csrf
                     <button type="submit" class="btn-cta-secondary" id="btn-cta-logout">Logout</button>
