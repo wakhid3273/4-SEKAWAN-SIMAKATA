@@ -51,6 +51,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/perusahaan/{id}/edit', [PerusahaanController::class, 'edit'])->name('admin.perusahaan.edit');
         Route::put('/admin/perusahaan/{id}', [PerusahaanController::class, 'update'])->name('admin.perusahaan.update');
         Route::delete('/admin/perusahaan/{id}', [PerusahaanController::class, 'destroy'])->name('admin.perusahaan.destroy');
+
+        // Admin Mahasiswa Management
+        Route::get('/admin/mahasiswa/export-pdf', [\App\Http\Controllers\Admin\MahasiswaController::class, 'exportPdf'])->name('admin.mahasiswa.export-pdf');
+        Route::resource('/admin/mahasiswa', \App\Http\Controllers\Admin\MahasiswaController::class)->names('admin.mahasiswa');
     });
 
     // User dashboard

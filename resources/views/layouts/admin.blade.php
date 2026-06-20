@@ -347,7 +347,7 @@
                 <span class="material-icons-outlined">verified_user</span>
                 <span>Verifikasi Data</span>
             </a>
-            <a href="#" id="nav-mahasiswa" class="nav-item {{ request()->routeIs('admin.mahasiswa*') ? 'active' : '' }}">
+            <a href="{{ route('admin.mahasiswa.index') }}" id="nav-mahasiswa" class="nav-item {{ request()->routeIs('admin.mahasiswa*') ? 'active' : '' }}">
                 <span class="material-icons-outlined">people</span>
                 <span>Data Mahasiswa</span>
             </a>
