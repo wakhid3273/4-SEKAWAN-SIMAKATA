@@ -76,10 +76,10 @@
     .stat-icon-wrap.teal   { background: #f0fdf4; color: #15803d; }
     .stat-icon-wrap.orange { background: #fff7ed; color: #ea580c; }
 
-    /* ===== MIDDLE ROW: Chart + System Health ===== */
+    /* ===== MIDDLE ROW: Chart ===== */
     .mid-row {
         display: grid;
-        grid-template-columns: 1fr 280px;
+        grid-template-columns: 1fr;
         gap: 18px;
         margin-bottom: 24px;
     }
@@ -187,60 +187,6 @@
         letter-spacing: 0.5px;
     }
     .bar-label.active-label { color: #1a5fb4; }
-
-    /* System Health Card */
-    .health-card {
-        border-radius: 14px;
-        overflow: hidden;
-        background: linear-gradient(160deg, #0a3d6b 0%, #0d5fa8 60%, #0e6fc4 100%);
-        padding: 26px 22px;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        position: relative;
-        animation: fade-up 0.5s ease 0.25s both;
-        box-shadow: 0 4px 20px rgba(10,61,107,0.25);
-        min-height: 230px;
-    }
-    .health-card::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200'%3E%3Cpath d='M0,100 C50,60 100,140 150,100 S250,60 300,100 L300,200 L0,200Z' fill='rgba(255,255,255,0.04)'/%3E%3Cpath d='M0,130 C60,90 120,160 180,120 S260,80 300,120 L300,200 L0,200Z' fill='rgba(255,255,255,0.03)'/%3E%3C/svg%3E");
-        background-size: cover;
-        background-position: center;
-        border-radius: 14px;
-    }
-    .health-card-content { position: relative; z-index: 1; }
-    .health-card h3 { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 10px; }
-    .health-card p { font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.6; margin-bottom: 14px; }
-    .uptime-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        background: rgba(255,255,255,0.12);
-        backdrop-filter: blur(6px);
-        border: 1px solid rgba(255,255,255,0.15);
-        border-radius: 99px;
-        padding: 5px 12px;
-        font-size: 11px;
-        font-weight: 700;
-        color: #fff;
-        letter-spacing: 0.8px;
-        text-transform: uppercase;
-    }
-    .uptime-dot {
-        width: 7px;
-        height: 7px;
-        border-radius: 50%;
-        background: #4ade80;
-        box-shadow: 0 0 6px rgba(74,222,128,0.8);
-        animation: pulse-dot 2s ease-in-out infinite;
-    }
-    @keyframes pulse-dot {
-        0%,100% { opacity: 1; }
-        50% { opacity: 0.4; }
-    }
 
     /* ===== PENDING TABLE CARD ===== */
     .table-card { animation: fade-up 0.5s ease 0.3s both; }
@@ -429,7 +375,6 @@
     @media (max-width: 900px) {
         .stats-grid { grid-template-columns: 1fr 1fr; }
         .mid-row { grid-template-columns: 1fr; }
-        .health-card { min-height: 180px; }
     }
     @media (max-width: 600px) {
         .stats-grid { grid-template-columns: 1fr; }
@@ -500,7 +445,7 @@
     </div>
 </div>
 
-{{-- ===== MIDDLE ROW: Charts + System Health ===== --}}
+{{-- ===== MIDDLE ROW: Charts ===== --}}
 <div class="mid-row">
     {{-- Sebaran Bar Charts (auto-slide) --}}
     <div class="card chart-card">
@@ -547,18 +492,6 @@
         <div style="display:flex;gap:6px;justify-content:center;margin-top:14px;">
             <span class="chart-dot active" id="dot-kp" onclick="showSlide('kp')"></span>
             <span class="chart-dot" id="dot-magang" onclick="showSlide('magang')"></span>
-        </div>
-    </div>
-
-    {{-- System Health --}}
-    <div class="health-card">
-        <div class="health-card-content">
-            <h3>System Health</h3>
-            <p>All systems operational. Cloud syncing active for student repositories.</p>
-            <div class="uptime-badge">
-                <div class="uptime-dot"></div>
-                99.9% Uptime
-            </div>
         </div>
     </div>
 </div>
