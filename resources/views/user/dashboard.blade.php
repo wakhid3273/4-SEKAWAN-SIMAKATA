@@ -443,6 +443,10 @@
             <div class="brand-sub">Academic Management</div>
         </div>
         <nav class="sidebar-nav">
+            <a href="{{ route('landing') }}" id="nav-home" class="nav-item" title="Ke Landing Page">
+                <span class="material-icons-outlined">home</span>
+                <span>Home</span>
+            </a>
             <a href="{{ route('user.dashboard') }}" id="nav-dashboard" class="nav-item active">
                 <span class="material-icons-outlined">dashboard</span>
                 <span>Dashboard</span>
@@ -496,9 +500,6 @@
             </div>
             
             <div class="topbar-right">
-                <a href="{{ route('landing') }}" class="topbar-icon-btn" title="Ke Beranda" id="btn-home" style="text-decoration: none; display: flex; align-items: center; justify-content: center; color: var(--text-gray);">
-                    <span class="material-icons-outlined">home</span>
-                </a>
                 {{-- Notification bell removed --}}
                 
                 <!-- Profile Pic -->
@@ -509,7 +510,11 @@
                         <div class="topbar-user-role">Mahasiswa</div>
                     </div>
                     <div class="topbar-avatar">
-                        {{ strtoupper(substr($user->nama_lengkap ?? 'M', 0, 1)) }}
+                        @if(Auth::user()->avatar)
+                            <img src="{{ Storage::url(Auth::user()->avatar) }}" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                        @else
+                            {{ strtoupper(substr($user->nama_lengkap ?? 'M', 0, 1)) }}
+                        @endif
                     </div>
                 </div>
             </div>
@@ -683,10 +688,20 @@
         </main>
 
             {{-- Footer --}}
-        <footer class="page-footer">
-            <div class="footer-inner">
-                <div class="footer-brand">SIMAKATA</div>
-                <div class="footer-copy">© 2024 HMIF Informatics SIMAKATA. All rights reserved.</div>
+        <footer class="user-page-footer" style="background: #f8fafc; border-top: 1px solid var(--border); padding: 32px 32px 20px; margin-top: 12px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
+                <div>
+                    <div style="font-size: 16px; font-weight: 800; color: var(--blue-primary); letter-spacing: 1px; margin-bottom: 6px;">SIMAKATA</div>
+                    <p style="font-size: 12px; color: var(--text-2); line-height: 1.6; margin: 0;">Managed by 4 Sekawan</p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <a href="https://wa.me/6281234567890" target="_blank" style="width: 36px; height: 36px; border-radius: 50%; background: #ffffff; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--text-2); transition: all 0.2s; text-decoration: none;" title="Hubungi Admin via WhatsApp">
+                        <span class="material-icons-outlined" style="font-size: 18px;">chat</span>
+                    </a>
+                </div>
+            </div>
+            <div style="padding-top: 16px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text-3); text-align: center; margin-top: 20px;">
+                &copy; 2026 4 Sekawan
             </div>
         </footer>
     </div>{{-- /main --}}
