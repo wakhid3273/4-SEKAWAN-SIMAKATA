@@ -65,4 +65,36 @@ class ProfileController extends Controller
             'aktivitasTerbaru'
         ));
     }
+
+    public function edit()
+    {
+        $admin = Auth::user();
+        return view('admin.edit-profile', compact('admin'));
+    }
+
+    public function update(Request $request)
+    {
+        $admin = Auth::user();
+
+        $rules = [
+            'nama_lengkap' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $admin->id,
+            'nim' => 'required|string|max:50|unique:users,nim,' . $admin->id,
+            'password' => 'nullable|min:6',
+        ];
+
+        $request->validate($rules);
+
+        $admin->nama_lengkap = $request->nama_lengkap;
+        $admin->email = $request->email;
+        $admin->nim = $request->nim;
+
+        if ($request->filled('password')) {
+            $admin->password = \Illuminate\Support\Facades\Hash::make($request->password);
+        }
+
+        $admin->save();
+
+        return redirect()->route('admin.profil')->with('success', 'Profil berhasil diperbarui.');
+    }
 }

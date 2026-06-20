@@ -350,10 +350,10 @@
             <p><span class="material-icons-outlined" style="font-size: 16px;">admin_panel_settings</span> System
                 Administrator</p>
         </div>
-        <button class="btn-edit-profile">
+        <a href="{{ route('admin.profil.edit') }}" class="btn-edit-profile" style="text-decoration: none;">
             <span class="material-icons-outlined" style="font-size: 18px;">edit</span>
             Edit Profil
-        </button>
+        </a>
     </div>
 
     <div class="stats-grid-profile">
@@ -431,7 +431,7 @@
                             <div style="font-weight:600; font-size:13px;">Ubah Password</div>
                             <div style="font-size:11px; color:#6b7280;">Update password secara berkala</div>
                         </div>
-                        <span class="material-icons-outlined" style="color:#9ca3af; cursor:pointer;">chevron_right</span>
+                        <a href="{{ route('admin.profil.edit') }}" style="color:#9ca3af; text-decoration:none;"><span class="material-icons-outlined">chevron_right</span></a>
                     </div>
                     <div
                         style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #f3f4f6; padding-bottom:12px; margin-bottom:12px;">
