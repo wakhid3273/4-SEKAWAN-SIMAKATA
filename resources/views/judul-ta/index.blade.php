@@ -161,7 +161,7 @@
                 </thead>
                 <tbody>
                     @forelse($judulTa as $item)
-                        <tr>
+                        <tr data-project-id="{{ $item->id }}">
                             <td style="color:#94a3b8; font-size:12px;">{{ $judulTa->firstItem() + $loop->index }}</td>
                             <td>
                                 <div class="title-cell">{{ $item->title ?? '-' }}</div>

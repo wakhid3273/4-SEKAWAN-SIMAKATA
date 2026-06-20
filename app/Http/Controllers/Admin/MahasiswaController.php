@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Events\MahasiswaDataUpdated;
 
 class MahasiswaController extends Controller
 {
@@ -89,6 +90,14 @@ class MahasiswaController extends Controller
             'role'           => 'user',
         ]);
 
+        // Broadcast event
+        try {
+            $user = User::where('nim', $validated['nim'])->first();
+            if ($user) broadcast(new MahasiswaDataUpdated($user, 'created'));
+        } catch (\Exception $e) {
+            \Log::warning('Broadcasting MahasiswaDataUpdated failed: ' . $e->getMessage());
+        }
+
         return redirect()->route('admin.mahasiswa.index')
                          ->with('success', 'Mahasiswa berhasil ditambahkan.');
     }
@@ -148,6 +157,13 @@ class MahasiswaController extends Controller
 
         $mahasiswa->update($data);
 
+        // Broadcast event
+        try {
+            broadcast(new MahasiswaDataUpdated($mahasiswa->fresh(), 'updated'));
+        } catch (\Exception $e) {
+            \Log::warning('Broadcasting MahasiswaDataUpdated failed: ' . $e->getMessage());
+        }
+
         return redirect()->route('admin.mahasiswa.index')
                          ->with('success', 'Data mahasiswa berhasil diperbarui.');
     }
@@ -158,7 +174,16 @@ class MahasiswaController extends Controller
     public function destroy(User $mahasiswa)
     {
         abort_if($mahasiswa->role !== 'user', 403);
+        $id = $mahasiswa->id;
+        $mahasiswaCopy = clone $mahasiswa;
         $mahasiswa->delete();
+
+        // Broadcast event
+        try {
+            broadcast(new MahasiswaDataUpdated($mahasiswaCopy, 'deleted'));
+        } catch (\Exception $e) {
+            \Log::warning('Broadcasting MahasiswaDataUpdated failed: ' . $e->getMessage());
+        }
 
         return redirect()->route('admin.mahasiswa.index')
                          ->with('success', 'Mahasiswa berhasil dihapus.');

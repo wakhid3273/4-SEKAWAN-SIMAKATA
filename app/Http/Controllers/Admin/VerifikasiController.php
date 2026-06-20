@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\MahasiswaMagang;
 use App\Models\FinalProject;
 use App\Events\MahasiswaMagangUpdated;
+use App\Events\FinalProjectUpdated;
 
 class VerifikasiController extends Controller
 {
@@ -164,10 +165,17 @@ class VerifikasiController extends Controller
 
     public function approveTa($id)
     {
-        $pengajuan = FinalProject::findOrFail($id);
+        $pengajuan = FinalProject::with('student')->findOrFail($id);
         $pengajuan->update([
             'status' => 'approved',
         ]);
+
+        // Broadcast event
+        try {
+            broadcast(new FinalProjectUpdated($pengajuan));
+        } catch (\Exception $e) {
+            \Log::warning('Broadcasting FinalProjectUpdated failed: ' . $e->getMessage());
+        }
 
         return response()->json([
             'success' => true,
@@ -181,12 +189,17 @@ class VerifikasiController extends Controller
             'alasan_penolakan' => 'required|string'
         ]);
 
-        $pengajuan = FinalProject::findOrFail($id);
+        $pengajuan = FinalProject::with('student')->findOrFail($id);
         $pengajuan->update([
             'status' => 'rejected',
-            // asumsikan tabel final_projects tidak punya alasan penolakan,
-            // atau jika punya tambahkan: 'alasan_penolakan' => $request->alasan_penolakan,
         ]);
+
+        // Broadcast event
+        try {
+            broadcast(new FinalProjectUpdated($pengajuan));
+        } catch (\Exception $e) {
+            \Log::warning('Broadcasting FinalProjectUpdated failed: ' . $e->getMessage());
+        }
 
         return response()->json([
             'success' => true,

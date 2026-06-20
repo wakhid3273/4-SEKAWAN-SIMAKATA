@@ -165,7 +165,7 @@
                 </thead>
                 <tbody>
                     @forelse($riwayat as $item)
-                        <tr>
+                        <tr data-mahasiswa-id="{{ $item->id }}">
                             <td style="color:#94a3b8; font-size:12px;">{{ $riwayat->firstItem() + $loop->index }}</td>
                             <td>
                                 <div class="name-cell">{{ $item->nama ?? '-' }}</div>
