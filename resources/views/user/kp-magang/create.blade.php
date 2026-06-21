@@ -1,174 +1,551 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Input KP/Magang - SIMAKATA">
+    <title>Input KP/Magang — SIMAKATA</title>
 
-@section('content')
-<div class="min-h-screen bg-gray-50">
-    <div class="flex">
-        {{-- Sidebar --}}
-        <aside class="w-64 bg-white shadow-sm min-h-screen">
-            <div class="p-6">
-                <div class="flex items-center gap-3 mb-8">
-                    <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-                        <span class="text-white font-bold text-lg">S</span>
-                    </div>
-                    <div>
-                        <h1 class="font-bold text-xl text-gray-900">SIMAKATA</h1>
-                        <p class="text-xs text-gray-500">Sistem Manajemen</p>
-                    </div>
-                </div>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 
-                <nav class="space-y-1">
-                    <a href="{{ route('user.dashboard') }}" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                        </svg>
-                        <span>Dashboard</span>
-                    </a>
+    <style>
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-                    <a href="{{ route('user.kp-magang.create') }}" class="flex items-center gap-3 px-4 py-3 text-white bg-blue-600 rounded-lg transition">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                        </svg>
-                        <span>Input KP/Magang</span>
-                    </a>
+        :root {
+            --sidebar-w: 220px;
+            --sidebar-bg: #0d1b2e;
+            --sidebar-hover: rgba(255,255,255,0.06);
+            --sidebar-active-bg: #1a5fb4;
+            --blue-primary: #1a5fb4;
+            --blue-dark: #0a3d6b;
+            --blue-light: #e8f2ff;
+            --amber: #f4a807;
+            --text-1: #111827;
+            --text-2: #6b7280;
+            --text-3: #9ca3af;
+            --border: #e5e7eb;
+            --bg-page: #f3f6fb;
+            --card-bg: #ffffff;
+            --radius: 14px;
+            --shadow-sm: 0 1px 4px rgba(0,0,0,0.07);
+            --shadow-md: 0 4px 18px rgba(0,0,0,0.09);
+        }
 
-                    <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
-                        </svg>
-                        <span>Input Tugas Akhir</span>
-                    </a>
+        html, body {
+            height: 100%;
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg-page);
+            color: var(--text-1);
+            font-size: 14px;
+            line-height: 1.5;
+        }
 
-                    <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                        <span>Riwayat dan Lokasi</span>
-                    </a>
+        /* ===== LAYOUT SHELL ===== */
+        .shell { display: flex; min-height: 100vh; }
 
-                    <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                        </svg>
-                        <span>Analisis Aktivitas</span>
-                    </a>
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            width: var(--sidebar-w);
+            min-width: var(--sidebar-w);
+            background: var(--sidebar-bg);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0; left: 0;
+            height: 100vh;
+            z-index: 100;
+            overflow-y: auto;
+            scrollbar-width: none;
+        }
+        .sidebar::-webkit-scrollbar { display: none; }
 
-                    <a href="{{ route('user.profil') }}" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                        </svg>
-                        <span>Profil</span>
-                    </a>
-                </nav>
+        .sidebar-brand {
+            padding: 24px 22px 18px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .brand-name {
+            font-size: 17px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #fff;
+        }
+        .brand-sub {
+            font-size: 10px;
+            color: rgba(255,255,255,0.38);
+            margin-top: 3px;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 14px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            color: rgba(255,255,255,0.58);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: background 0.18s, color 0.18s;
+        }
+        .nav-item .material-icons-outlined { font-size: 20px; flex-shrink: 0; }
+        .nav-item:hover { background: var(--sidebar-hover); color: rgba(255,255,255,0.9); }
+        .nav-item.active { background: var(--sidebar-active-bg); color: #fff; font-weight: 600; }
+
+        .sidebar-footer {
+            padding: 14px 12px 18px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .btn-logout {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 10px;
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.45);
+            font-size: 13px;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 0.18s, color 0.18s;
+            text-align: left;
+        }
+        .btn-logout .material-icons-outlined { font-size: 20px; }
+        .btn-logout:hover { background: rgba(239,68,68,0.12); color: #f87171; }
+
+        /* ===== MAIN CONTENT ===== */
+        .main {
+            margin-left: var(--sidebar-w);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* ===== TOPBAR ===== */
+        .topbar {
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            padding: 0 32px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            gap: 16px;
+        }
+        .topbar-heading { }
+        .topbar-heading h1 { font-size: 18px; font-weight: 700; color: var(--text-1); }
+        .topbar-heading p { font-size: 12px; color: var(--text-2); margin-top: 1px; }
+        .topbar-right { display: flex; align-items: center; gap: 14px; }
+        .topbar-divider { width: 1px; height: 28px; background: var(--border); }
+        .topbar-user { display: flex; align-items: center; gap: 10px; }
+        .topbar-user-name { font-size: 13px; font-weight: 600; color: var(--text-1); text-align: right; }
+        .topbar-user-role { font-size: 11px; color: var(--text-2); text-align: right; }
+        .topbar-avatar {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4a6fa5, #1a5fb4);
+            display: flex; align-items: center; justify-content: center;
+            color: #fff;
+            font-size: 14px; font-weight: 700;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+        .topbar-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* ===== PAGE BODY ===== */
+        .page-body { flex: 1; padding: 28px 32px 32px; }
+
+        /* ===== CARD ===== */
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        /* ===== FORM STYLES ===== */
+        .form-label {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--text-2);
+            margin-bottom: 8px;
+        }
+        .form-input, .form-select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 13px;
+            font-family: inherit;
+            color: var(--text-1);
+            background: #fff;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--blue-primary);
+            box-shadow: 0 0 0 3px rgba(26, 95, 180, 0.1);
+        }
+        .form-input::placeholder {
+            color: var(--text-3);
+        }
+
+        /* Radio Button Custom Style */
+        .radio-option {
+            position: relative;
+        }
+        .radio-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+        }
+        .radio-label {
+            display: block;
+            padding: 12px 24px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--text-2);
+            background: #fff;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .radio-option input[type="radio"]:checked + .radio-label {
+            border-color: var(--blue-primary);
+            background: var(--blue-light);
+            color: var(--blue-primary);
+        }
+        .radio-label:hover {
+            border-color: var(--blue-primary);
+        }
+
+        /* File Upload Box */
+        .file-upload-box {
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            padding: 24px 16px;
+            text-align: center;
+            transition: border-color 0.2s;
+            cursor: pointer;
+            background: #fafbfc;
+        }
+        .file-upload-box:hover {
+            border-color: var(--blue-primary);
+            background: #fff;
+        }
+        .file-upload-box input[type="file"] {
+            display: none;
+        }
+        .file-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 12px;
+            color: var(--blue-primary);
+        }
+        .file-title {
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--text-1);
+            margin-bottom: 4px;
+        }
+        .file-desc {
+            font-size: 11px;
+            color: var(--text-2);
+            margin-bottom: 8px;
+        }
+        .file-link {
+            color: var(--blue-primary);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Progress Steps */
+        .progress-steps {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+        }
+        .step-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .step-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        .step-circle.active {
+            background: var(--blue-primary);
+            color: #fff;
+        }
+        .step-circle.inactive {
+            background: #e5e7eb;
+            color: var(--text-3);
+        }
+        .step-label {
+            font-weight: 600;
+            font-size: 13px;
+        }
+        .step-label.active { color: var(--text-1); }
+        .step-label.inactive { color: var(--text-3); }
+        .step-line {
+            flex: 1;
+            height: 2px;
+            background: var(--border);
+            margin: 0 16px;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: var(--blue-light);
+            border: 1px solid rgba(26, 95, 180, 0.2);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            gap: 14px;
+            margin-bottom: 28px;
+        }
+        .info-icon {
+            width: 24px;
+            height: 24px;
+            color: var(--blue-primary);
+            flex-shrink: 0;
+        }
+        .info-content h3 {
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--blue-dark);
+            margin-bottom: 6px;
+        }
+        .info-content p {
+            font-size: 12px;
+            color: var(--blue-dark);
+            line-height: 1.6;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 11px 24px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            text-decoration: none;
+            border: none;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background: var(--blue-primary);
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: var(--blue-dark);
+        }
+        .btn-secondary {
+            background: #fff;
+            color: var(--text-1);
+            border: 1px solid var(--border);
+        }
+        .btn-secondary:hover {
+            background: #f9fafb;
+        }
+        .btn .material-icons-outlined {
+            font-size: 18px;
+        }
+
+        /* Form Actions */
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 28px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            :root { --sidebar-w: 0px; }
+            .sidebar { display: none; }
+            .main { margin-left: 0; }
+            .topbar { padding: 0 16px; }
+            .topbar-heading h1 { font-size: 15px; }
+            .page-body { padding: 16px; }
+            .progress-steps { flex-direction: column; align-items: stretch; }
+            .step-line { display: none; }
+            .form-actions { flex-direction: column; gap: 12px; }
+            .form-actions .btn { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+<div class="shell">
+
+    {{-- ===== SIDEBAR ===== --}}
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-name">SIMAKATA</div>
+            <div class="brand-sub">Academic Management</div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="{{ route('landing') }}" class="nav-item" title="Ke Landing Page">
+                <span class="material-icons-outlined">home</span>
+                <span>Home</span>
+            </a>
+            <a href="{{ route('user.dashboard') }}" class="nav-item">
+                <span class="material-icons-outlined">dashboard</span>
+                <span>Dashboard</span>
+            </a>
+            <a href="{{ route('user.kp-magang.create') }}" class="nav-item active">
+                <span class="material-icons-outlined">work_outline</span>
+                <span>Input KP/Magang</span>
+            </a>
+            <a href="{{ route('judul-ta.index') }}" class="nav-item">
+                <span class="material-icons-outlined">description</span>
+                <span>Input Tugas Akhir</span>
+            </a>
+            <a href="{{ route('user.riwayat-aktivitas') }}" class="nav-item">
+                <span class="material-icons-outlined">history</span>
+                <span>Riwayat Aktivitas</span>
+            </a>
+            <a href="{{ route('user.profil') }}" class="nav-item">
+                <span class="material-icons-outlined">person</span>
+                <span>Profil</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <form method="POST" action="{{ route('logout') }}" style="margin: 0;">
+                @csrf
+                <button type="submit" class="btn-logout">
+                    <span class="material-icons-outlined">logout</span>
+                    <span>Logout</span>
+                </button>
+            </form>
+        </div>
+    </aside>
+
+    {{-- ===== MAIN ===== --}}
+    <div class="main">
+        
+        {{-- Topbar --}}
+        <header class="topbar">
+            <div class="topbar-heading">
+                <h1>Input KP/Magang</h1>
+                <p>Lengkapi data untuk pengajuan Kerja Praktik atau Magang Anda.</p>
             </div>
-        </aside>
-
-        {{-- Main Content --}}
-        <main class="flex-1">
-            {{-- Header --}}
-            <header class="bg-white shadow-sm">
-                <div class="flex items-center justify-between px-8 py-4">
-                    <div class="flex-1 max-w-md">
-                        <div class="relative">
-                            <input type="text" placeholder="Search activities..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            <svg class="w-5 h-5 text-gray-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                            </svg>
-                        </div>
+            
+            <div class="topbar-right">
+                <div class="topbar-divider"></div>
+                <div class="topbar-user">
+                    <div>
+                        <div class="topbar-user-name">{{ Auth::user()->nama_lengkap }}</div>
+                        <div class="topbar-user-role">Mahasiswa</div>
                     </div>
-
-                    <div class="flex items-center gap-4">
-                        <button class="p-2 hover:bg-gray-100 rounded-lg">
-                            <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
-                            </svg>
-                        </button>
-                        <button class="p-2 hover:bg-gray-100 rounded-lg">
-                            <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
-                            </svg>
-                        </button>
-                        <div class="flex items-center gap-3">
-                            <div class="text-right">
-                                <p class="text-sm font-semibold text-gray-900">{{ Auth::user()->nama_lengkap }}</p>
-                                <p class="text-xs text-gray-500">Mahasiswa</p>
-                            </div>
-                            <img src="{{ Auth::user()->avatar ? Storage::url(Auth::user()->avatar) : 'https://ui-avatars.com/api/?name='.urlencode(Auth::user()->nama_lengkap).'&background=0D6EFD&color=fff' }}" 
-                                 alt="Avatar" 
-                                 class="w-10 h-10 rounded-full">
-                        </div>
+                    <div class="topbar-avatar">
+                        @if(Auth::user()->avatar)
+                            <img src="{{ Storage::url(Auth::user()->avatar) }}" alt="Avatar">
+                        @else
+                            {{ strtoupper(substr(Auth::user()->nama_lengkap ?? 'M', 0, 1)) }}
+                        @endif
                     </div>
                 </div>
-            </header>
+            </div>
+        </header>
 
-            {{-- Content --}}
-            <div class="p-8">
-                <div class="max-w-4xl">
-                    <h1 class="text-3xl font-bold text-gray-900 mb-2">Pengajuan KP/Magang</h1>
-                    <p class="text-gray-600 mb-8">Silakan lengkapi data berikut untuk mengajukan administrasi Kerja Praktik atau Magang Anda.</p>
-
-                    {{-- Progress Steps --}}
-                    <div class="flex items-center justify-between mb-8">
-                        <div class="flex items-center">
-                            <div class="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-lg">1</div>
-                            <div class="ml-3">
-                                <p class="font-semibold text-gray-900">Pengajuan</p>
-                            </div>
-                        </div>
-                        <div class="flex-1 h-1 bg-gray-200 mx-4"></div>
-                        <div class="flex items-center">
-                            <div class="w-12 h-12 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center font-bold text-lg">2</div>
-                            <div class="ml-3">
-                                <p class="font-semibold text-gray-500">Dokumen</p>
-                            </div>
-                        </div>
-                        <div class="flex-1 h-1 bg-gray-200 mx-4"></div>
-                        <div class="flex items-center">
-                            <div class="w-12 h-12 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center font-bold text-lg">3</div>
-                            <div class="ml-3">
-                                <p class="font-semibold text-gray-500">Konfirmasi</p>
-                            </div>
-                        </div>
+        {{-- Page Content --}}
+        <main class="page-body">
+            <div style="max-width: 960px;">
+                
+                {{-- Progress Steps --}}
+                <div class="progress-steps">
+                    <div class="step-item">
+                        <div class="step-circle active">1</div>
+                        <div class="step-label active">Pengajuan</div>
                     </div>
-
-                    {{-- Info Box --}}
-                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-8 flex gap-3">
-                        <svg class="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                        <div>
-                            <h3 class="font-semibold text-blue-900 mb-1">Petunjuk Pengisian</h3>
-                            <p class="text-sm text-blue-800">Pastikan nama pengajuan sesuai dengan data terdaftar. Unggah dokumen dalam format PDF dengan ukuran maksimal 2MB per file.</p>
-                        </div>
+                    <div class="step-line"></div>
+                    <div class="step-item">
+                        <div class="step-circle inactive">2</div>
+                        <div class="step-label inactive">Dokumen</div>
                     </div>
+                    <div class="step-line"></div>
+                    <div class="step-item">
+                        <div class="step-circle inactive">3</div>
+                        <div class="step-label inactive">Konfirmasi</div>
+                    </div>
+                </div>
 
-                    {{-- Form --}}
-                    <form action="{{ route('user.kp-magang.store') }}" method="POST" enctype="multipart/form-data" class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                {{-- Info Box --}}
+                <div class="info-box">
+                    <span class="material-icons-outlined info-icon">info</span>
+                    <div class="info-content">
+                        <h3>Petunjuk Pengisian</h3>
+                        <p>Pastikan nama pengajuan sesuai dengan data terdaftar. Unggah dokumen dalam format PDF dengan ukuran maksimal 2MB per file.</p>
+                    </div>
+                </div>
+
+                {{-- Form Card --}}
+                <div class="card">
+                    <form action="{{ route('user.kp-magang.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-
-                        <div class="grid grid-cols-2 gap-6 mb-6">
+                        
+                        <div style="padding: 28px 32px;">
+                            
                             {{-- Jenis Kegiatan --}}
-                            <div class="col-span-2">
-                                <label class="block text-sm font-semibold text-gray-700 mb-2">JENIS KEGIATAN *</label>
-                                <div class="flex gap-4">
-                                    <label class="flex-1">
-                                        <input type="radio" name="kegiatan" value="Kerja Praktik" class="peer sr-only" required checked>
-                                        <div class="px-6 py-3 border-2 border-gray-300 rounded-lg text-center cursor-pointer peer-checked:border-blue-600 peer-checked:bg-blue-50 peer-checked:text-blue-600 hover:border-blue-400 transition">
-                                            <span class="font-semibold">Kerja Praktik</span>
-                                        </div>
+                            <div style="margin-bottom: 24px;">
+                                <label class="form-label">Jenis Kegiatan *</label>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                                    <label class="radio-option">
+                                        <input type="radio" name="kegiatan" value="Kerja Praktik" required checked>
+                                        <span class="radio-label">Kerja Praktik</span>
                                     </label>
-                                    <label class="flex-1">
-                                        <input type="radio" name="kegiatan" value="Magang" class="peer sr-only" required>
-                                        <div class="px-6 py-3 border-2 border-gray-300 rounded-lg text-center cursor-pointer peer-checked:border-blue-600 peer-checked:bg-blue-50 peer-checked:text-blue-600 hover:border-blue-400 transition">
-                                            <span class="font-semibold">Magang</span>
-                                        </div>
+                                    <label class="radio-option">
+                                        <input type="radio" name="kegiatan" value="Magang" required>
+                                        <span class="radio-label">Magang</span>
                                     </label>
                                 </div>
                             </div>
 
                             {{-- Nama Perusahaan --}}
-                            <div class="col-span-2">
-                                <label class="block text-sm font-semibold text-gray-700 mb-2">NAMA PERUSAHAAN *</label>
-                                <select name="perusahaan_id" required class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <div style="margin-bottom: 24px;">
+                                <label class="form-label">Nama Perusahaan *</label>
+                                <select name="perusahaan_id" required class="form-select">
                                     <option value="">Pilih Perusahaan dan Lokasi</option>
                                     @foreach($perusahaan as $p)
                                         <option value="{{ $p->id }}">{{ $p->nama }} - {{ $p->lokasi }}</option>
@@ -176,96 +553,89 @@
                                 </select>
                             </div>
 
-                            {{-- NIM --}}
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-2">NIM / NISN *</label>
-                                <input type="text" name="nim" value="{{ $user->nim }}" required class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Contoh: E020180001">
-                            </div>
-
-                            {{-- Bidang/Divisi --}}
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-2">BIDANG / DIVISI *</label>
-                                <input type="text" name="angkatan" value="{{ $user->angkatan }}" required class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Contoh: Product & Technology">
-                            </div>
-
-                            {{-- Periode Memulai --}}
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-2">PERIODE MEMULAI *</label>
-                                <input type="date" name="periode" required class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                            </div>
-
-                            {{-- Periode Selesai --}}
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-2">SELESAI *</label>
-                                <input type="date" required class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                            </div>
-
-                            {{-- Nama Lengkap (hidden, auto dari user) --}}
-                            <input type="hidden" name="nama" value="{{ $user->nama_lengkap }}">
-                        </div>
-
-                        {{-- Upload Dokumen --}}
-                        <div class="border-t pt-6 mb-6">
-                            <h3 class="text-lg font-bold text-gray-900 mb-4">UPLOAD DOKUMEN PENDUKUNG</h3>
-                            
-                            <div class="grid grid-cols-3 gap-4">
-                                {{-- CV/Resume --}}
-                                <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition">
-                                    <label class="cursor-pointer">
-                                        <input type="file" name="cv_file" accept=".pdf" required class="hidden" onchange="updateFileName(this, 'cv-name')">
-                                        <svg class="w-12 h-12 text-blue-500 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                                        </svg>
-                                        <p class="font-semibold text-gray-900 mb-1">CV/Resume</p>
-                                        <p class="text-xs text-gray-500 mb-2" id="cv-name">File: PDF, Max 2MB</p>
-                                        <span class="text-blue-600 text-sm">Upload File</span>
-                                    </label>
+                            {{-- Grid 2 Columns --}}
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;">
+                                
+                                {{-- NIM --}}
+                                <div>
+                                    <label class="form-label">NIM / NISN *</label>
+                                    <input type="text" name="nim" value="{{ $user->nim }}" required class="form-input" placeholder="Contoh: E020180001">
                                 </div>
+
+                                {{-- Bidang/Divisi --}}
+                                <div>
+                                    <label class="form-label">Bidang / Divisi *</label>
+                                    <input type="text" name="angkatan" value="{{ $user->angkatan }}" required class="form-input" placeholder="Contoh: Product & Technology">
+                                </div>
+
+                                {{-- Periode Memulai --}}
+                                <div>
+                                    <label class="form-label">Periode Memulai *</label>
+                                    <input type="date" name="periode" required class="form-input">
+                                </div>
+
+                                {{-- Periode Selesai --}}
+                                <div>
+                                    <label class="form-label">Selesai *</label>
+                                    <input type="date" required class="form-input">
+                                </div>
+                            </div>
+
+                            {{-- Hidden Field --}}
+                            <input type="hidden" name="nama" value="{{ $user->nama_lengkap }}">
+
+                            {{-- Divider --}}
+                            <div style="border-top: 1px solid var(--border); margin: 32px 0;"></div>
+
+                            {{-- Upload Dokumen --}}
+                            <h3 style="font-size: 15px; font-weight: 700; color: var(--text-1); margin-bottom: 20px;">Upload Dokumen Pendukung</h3>
+                            
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px;">
+                                
+                                {{-- CV/Resume --}}
+                                <label class="file-upload-box">
+                                    <input type="file" name="cv_file" accept=".pdf" required onchange="updateFileName(this, 'cv-name')">
+                                    <span class="material-icons-outlined file-icon">description</span>
+                                    <div class="file-title">CV/Resume</div>
+                                    <div class="file-desc" id="cv-name">File: PDF, Max 2MB</div>
+                                    <span class="file-link">Upload File</span>
+                                </label>
 
                                 {{-- Transkrip Nilai --}}
-                                <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition">
-                                    <label class="cursor-pointer">
-                                        <input type="file" name="transkrip_file" accept=".pdf" required class="hidden" onchange="updateFileName(this, 'transkrip-name')">
-                                        <svg class="w-12 h-12 text-blue-500 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                                        </svg>
-                                        <p class="font-semibold text-gray-900 mb-1">Transkrip Nilai</p>
-                                        <p class="text-xs text-gray-500 mb-2" id="transkrip-name">File: PDF, Max 2MB</p>
-                                        <span class="text-blue-600 text-sm">Upload File</span>
-                                    </label>
-                                </div>
+                                <label class="file-upload-box">
+                                    <input type="file" name="transkrip_file" accept=".pdf" required onchange="updateFileName(this, 'transkrip-name')">
+                                    <span class="material-icons-outlined file-icon">article</span>
+                                    <div class="file-title">Transkrip Nilai</div>
+                                    <div class="file-desc" id="transkrip-name">File: PDF, Max 2MB</div>
+                                    <span class="file-link">Upload File</span>
+                                </label>
 
                                 {{-- Portofolio/Sertifikat --}}
-                                <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition">
-                                    <label class="cursor-pointer">
-                                        <input type="file" name="portofolio_file" accept=".pdf" class="hidden" onchange="updateFileName(this, 'porto-name')">
-                                        <svg class="w-12 h-12 text-blue-500 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                                        </svg>
-                                        <p class="font-semibold text-gray-900 mb-1">Portofolio/Sertifikat</p>
-                                        <p class="text-xs text-gray-500 mb-2" id="porto-name">File: PDF, Max 2MB</p>
-                                        <span class="text-blue-600 text-sm">Upload File</span>
-                                    </label>
-                                </div>
+                                <label class="file-upload-box">
+                                    <input type="file" name="portofolio_file" accept=".pdf" onchange="updateFileName(this, 'porto-name')">
+                                    <span class="material-icons-outlined file-icon">folder_open</span>
+                                    <div class="file-title">Portofolio/Sertifikat</div>
+                                    <div class="file-desc" id="porto-name">File: PDF, Max 2MB</div>
+                                    <span class="file-link">Upload File</span>
+                                </label>
                             </div>
-                        </div>
 
-                        {{-- Form Actions --}}
-                        <div class="flex justify-between items-center">
-                            <a href="{{ route('user.dashboard') }}" class="px-6 py-2.5 border border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition">
-                                Simpan Draft
-                            </a>
-                            <button type="submit" class="px-8 py-2.5 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition flex items-center gap-2">
-                                Lanjutkan
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                                </svg>
-                            </button>
+                            {{-- Form Actions --}}
+                            <div class="form-actions">
+                                <a href="{{ route('user.dashboard') }}" class="btn btn-secondary">Simpan Draft</a>
+                                <button type="submit" class="btn btn-primary">
+                                    Lanjutkan
+                                    <span class="material-icons-outlined">arrow_forward</span>
+                                </button>
+                            </div>
+
                         </div>
                     </form>
                 </div>
+
             </div>
         </main>
+
     </div>
 </div>
 
@@ -275,4 +645,5 @@ function updateFileName(input, elementId) {
     document.getElementById(elementId).textContent = fileName;
 }
 </script>
-@endsection
+</body>
+</html>

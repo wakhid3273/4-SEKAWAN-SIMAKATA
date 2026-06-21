@@ -291,6 +291,10 @@
             <div class="brand-sub">Academic Management</div>
         </div>
         <nav class="sidebar-nav">
+            <a href="{{ route('landing') }}" class="nav-item" title="Ke Landing Page">
+                <span class="material-icons-outlined">home</span>
+                <span>Home</span>
+            </a>
             <a href="{{ route('user.dashboard') }}" class="nav-item">
                 <span class="material-icons-outlined">dashboard</span>
                 <span>Dashboard</span>

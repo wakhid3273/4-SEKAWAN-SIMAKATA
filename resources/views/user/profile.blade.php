@@ -641,19 +641,23 @@
         </div>
 
         <nav class="sidebar-nav">
+            <a href="{{ route('landing') }}" id="nav-home" class="nav-item" title="Ke Landing Page">
+                <span class="material-icons-outlined">home</span>
+                <span>Home</span>
+            </a>
             <a href="{{ route('user.dashboard') }}" id="nav-dashboard" class="nav-item">
                 <span class="material-icons-outlined">dashboard</span>
                 <span>Dashboard</span>
             </a>
-            <a href="#" id="nav-kp" class="nav-item">
+            <a href="{{ route('user.kp-magang.create') }}" id="nav-kp" class="nav-item">
                 <span class="material-icons-outlined">work_outline</span>
                 <span>Input KP/Magang</span>
             </a>
-            <a href="#" id="nav-ta" class="nav-item">
+            <a href="{{ route('judul-ta.index') }}" id="nav-ta" class="nav-item">
                 <span class="material-icons-outlined">description</span>
                 <span>Input Tugas Akhir</span>
             </a>
-            <a href="#" id="nav-riwayat" class="nav-item">
+            <a href="{{ route('user.riwayat-aktivitas') }}" id="nav-riwayat" class="nav-item">
                 <span class="material-icons-outlined">history</span>
                 <span>Riwayat Aktivitas</span>
             </a>
