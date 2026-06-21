@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Perusahaan;
 use App\Models\FinalProject;
 use App\Models\MahasiswaMagang;
+use App\Models\AdminActivityLog;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -20,6 +21,12 @@ class DashboardController extends Controller
         $pendingMahasiswa = MahasiswaMagang::where('status', 'pending')
             ->orderBy('created_at', 'desc')
             ->take(10)
+            ->get();
+
+        // Riwayat Aktivitas Admin (5 terbaru)
+        $riwayatAdmin = AdminActivityLog::with('admin')
+            ->orderBy('created_at', 'desc')
+            ->take(5)
             ->get();
 
         // Sebaran Tempat KP (dari MahasiswaMagang)
@@ -63,7 +70,8 @@ class DashboardController extends Controller
             'menungguVerifikasi',
             'pendingMahasiswa',
             'sebaranKP',
-            'sebaranMagang'
+            'sebaranMagang',
+            'riwayatAdmin'
         ));
     }
 

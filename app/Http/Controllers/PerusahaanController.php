@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Perusahaan;
 use App\Models\MahasiswaMagang;
+use App\Models\AdminActivityLog;
 use App\Events\PerusahaanCreated;
 use App\Events\PerusahaanUpdated;
 use App\Events\PerusahaanDeleted;
@@ -86,6 +87,20 @@ class PerusahaanController extends Controller
 
         $perusahaan = Perusahaan::create($request->all());
         
+        // Log aktivitas admin
+        if (auth()->check() && auth()->user()->role === 'admin') {
+            AdminActivityLog::log(
+                'create_perusahaan',
+                "Menambahkan perusahaan baru: {$perusahaan->nama}",
+                'Perusahaan',
+                $perusahaan->id,
+                [
+                    'nama' => $perusahaan->nama,
+                    'lokasi' => $perusahaan->lokasi,
+                ]
+            );
+        }
+        
         // Broadcast event (graceful failure jika Reverb tidak running)
         try {
             broadcast(new PerusahaanCreated($perusahaan));
@@ -116,7 +131,23 @@ class PerusahaanController extends Controller
         ]);
 
         $perusahaan = Perusahaan::findOrFail($id);
+        $namaLama = $perusahaan->nama;
         $perusahaan->update($request->all());
+        
+        // Log aktivitas admin
+        if (auth()->check() && auth()->user()->role === 'admin') {
+            AdminActivityLog::log(
+                'update_perusahaan',
+                "Mengubah data perusahaan: {$namaLama}",
+                'Perusahaan',
+                $perusahaan->id,
+                [
+                    'nama_lama' => $namaLama,
+                    'nama_baru' => $perusahaan->nama,
+                    'lokasi' => $perusahaan->lokasi,
+                ]
+            );
+        }
         
         // Broadcast event (graceful failure jika Reverb tidak running)
         try {
@@ -131,7 +162,21 @@ class PerusahaanController extends Controller
     public function destroy($id)
     {
         $perusahaan = Perusahaan::findOrFail($id);
+        $namaPerusahaan = $perusahaan->nama;
         $perusahaan->delete();
+        
+        // Log aktivitas admin
+        if (auth()->check() && auth()->user()->role === 'admin') {
+            AdminActivityLog::log(
+                'delete_perusahaan',
+                "Menghapus perusahaan: {$namaPerusahaan}",
+                'Perusahaan',
+                $id,
+                [
+                    'nama' => $namaPerusahaan,
+                ]
+            );
+        }
         
         // Broadcast event (graceful failure jika Reverb tidak running)
         try {

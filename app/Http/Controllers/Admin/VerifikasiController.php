@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\MahasiswaMagang;
 use App\Models\FinalProject;
+use App\Models\AdminActivityLog;
 use App\Events\MahasiswaMagangUpdated;
 use App\Events\FinalProjectUpdated;
 
@@ -109,6 +110,19 @@ class VerifikasiController extends Controller
             'alasan_penolakan' => null,
         ]);
 
+        // Log aktivitas admin
+        AdminActivityLog::log(
+            'approve_kp',
+            "Menyetujui pengajuan {$pengajuan->kegiatan} atas nama {$pengajuan->nama} ({$pengajuan->nim})",
+            'MahasiswaMagang',
+            $pengajuan->id,
+            [
+                'mahasiswa_nama' => $pengajuan->nama,
+                'mahasiswa_nim' => $pengajuan->nim,
+                'kegiatan' => $pengajuan->kegiatan,
+            ]
+        );
+
         // Broadcast event (graceful failure jika Reverb tidak running)
         try {
             broadcast(new MahasiswaMagangUpdated($pengajuan))->toOthers();
@@ -133,6 +147,20 @@ class VerifikasiController extends Controller
             'status' => 'Ditolak',
             'alasan_penolakan' => $request->alasan_penolakan,
         ]);
+
+        // Log aktivitas admin
+        AdminActivityLog::log(
+            'reject_kp',
+            "Menolak pengajuan {$pengajuan->kegiatan} atas nama {$pengajuan->nama} ({$pengajuan->nim})",
+            'MahasiswaMagang',
+            $pengajuan->id,
+            [
+                'mahasiswa_nama' => $pengajuan->nama,
+                'mahasiswa_nim' => $pengajuan->nim,
+                'kegiatan' => $pengajuan->kegiatan,
+                'alasan_penolakan' => $request->alasan_penolakan,
+            ]
+        );
 
         // Broadcast event (graceful failure jika Reverb tidak running)
         try {
@@ -170,6 +198,19 @@ class VerifikasiController extends Controller
             'status' => 'approved',
         ]);
 
+        // Log aktivitas admin
+        AdminActivityLog::log(
+            'approve_ta',
+            "Menyetujui Judul Tugas Akhir atas nama {$pengajuan->student->nama_lengkap} ({$pengajuan->student->nim})",
+            'FinalProject',
+            $pengajuan->id,
+            [
+                'mahasiswa_nama' => $pengajuan->student->nama_lengkap,
+                'mahasiswa_nim' => $pengajuan->student->nim,
+                'judul_ta' => $pengajuan->title,
+            ]
+        );
+
         // Broadcast event
         try {
             broadcast(new FinalProjectUpdated($pengajuan));
@@ -193,6 +234,20 @@ class VerifikasiController extends Controller
         $pengajuan->update([
             'status' => 'rejected',
         ]);
+
+        // Log aktivitas admin
+        AdminActivityLog::log(
+            'reject_ta',
+            "Menolak Judul Tugas Akhir atas nama {$pengajuan->student->nama_lengkap} ({$pengajuan->student->nim})",
+            'FinalProject',
+            $pengajuan->id,
+            [
+                'mahasiswa_nama' => $pengajuan->student->nama_lengkap,
+                'mahasiswa_nim' => $pengajuan->student->nim,
+                'judul_ta' => $pengajuan->title,
+                'alasan_penolakan' => $request->alasan_penolakan,
+            ]
+        );
 
         // Broadcast event
         try {

@@ -44,6 +44,11 @@ Route::middleware('auth')->group(function () {
         ->middleware('role:admin')
         ->name('admin.dashboard');
 
+    // Admin Riwayat Aktivitas
+    Route::get('/admin/riwayat-aktivitas', [\App\Http\Controllers\Admin\RiwayatAktivitasController::class, 'index'])
+        ->middleware('role:admin')
+        ->name('admin.riwayat-aktivitas');
+
     // Route untuk export PDF
     Route::get('/admin/dashboard/export', [AdminDashboardController::class, 'export'])
         ->middleware('role:admin')
