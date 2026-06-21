@@ -418,11 +418,22 @@
                                 <td>{{ $item->created_at ? $item->created_at->format('d M Y') : 'N/A' }}</td>
                                 <td>
                                     @php
+                                        $statusLabel = 'Pending Review';
                                         $statusClass = 'status-pending';
-                                        if($item->status === 'Disetujui') $statusClass = 'status-approved';
-                                        if($item->status === 'Ditolak') $statusClass = 'status-rejected';
+                                        if($item->status === 'approved' || $item->status === 'Disetujui') { 
+                                            $statusLabel = 'Disetujui'; 
+                                            $statusClass = 'status-approved'; 
+                                        }
+                                        if($item->status === 'rejected' || $item->status === 'Ditolak') { 
+                                            $statusLabel = 'Ditolak'; 
+                                            $statusClass = 'status-rejected'; 
+                                        }
+                                        if($item->status === 'pending' || $item->status === 'Pending Review') {
+                                            $statusLabel = 'Pending Review';
+                                            $statusClass = 'status-pending';
+                                        }
                                     @endphp
-                                    <span class="status-badge {{ $statusClass }}">{{ $item->status ?? 'Pending Review' }}</span>
+                                    <span class="status-badge {{ $statusClass }}">{{ $statusLabel }}</span>
                                 </td>
                             @else
                                 <td>{{ $item->title }}</td>
@@ -440,7 +451,7 @@
                             <td>
                                 <div class="action-buttons">
                                     <button class="action-btn view" title="Lihat Detail" onclick="openDetailModal({{ $item->id }}, '{{ $tab }}')"><span class="material-icons-outlined">visibility</span></button>
-                                    @if(($tab === 'kp_magang' && $item->status === 'Pending Review') || ($tab === 'ta' && $item->status === 'pending'))
+                                    @if(($tab === 'kp_magang' && ($item->status === 'pending' || $item->status === 'Pending Review')) || ($tab === 'ta' && $item->status === 'pending'))
                                         <button class="action-btn approve" title="Setujui" onclick="approvePengajuan({{ $item->id }}, '{{ $tab }}')"><span class="material-icons-outlined">check_circle</span></button>
                                         <button class="action-btn reject" title="Tolak" onclick="openRejectModal({{ $item->id }}, '{{ $tab }}')"><span class="material-icons-outlined">cancel</span></button>
                                     @endif

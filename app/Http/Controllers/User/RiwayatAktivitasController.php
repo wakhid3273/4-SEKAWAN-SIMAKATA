@@ -43,10 +43,21 @@ class RiwayatAktivitasController extends Controller
         // Statistik
         $stats = [
             'total' => $riwayatMagang->count() + $riwayatTA->count(),
-            'pending' => $riwayatMagang->where('status', 'Pending Review')->count() + 
-                        $riwayatTA->where('status', 'pending')->count(),
-            'disetujui' => $riwayatMagang->where('status', 'Disetujui')->count() + 
-                          $riwayatTA->where('status', 'approved')->count(),
+            // Support both old format (Pending Review) and new format (pending)
+            'pending' => $riwayatMagang->filter(function($item) {
+                return $item->status === 'Pending Review' || $item->status === 'pending';
+            })->count() + 
+            $riwayatTA->where('status', 'pending')->count(),
+            // Support both old format (Disetujui) and new format (approved)
+            'disetujui' => $riwayatMagang->filter(function($item) {
+                return $item->status === 'Disetujui' || $item->status === 'approved';
+            })->count() + 
+            $riwayatTA->where('status', 'approved')->count(),
+            // Support both old format (Ditolak) and new format (rejected)
+            'ditolak' => $riwayatMagang->filter(function($item) {
+                return $item->status === 'Ditolak' || $item->status === 'rejected';
+            })->count() + 
+            $riwayatTA->where('status', 'rejected')->count(),
         ];
         
         return view('user.riwayat-aktivitas.index', compact(

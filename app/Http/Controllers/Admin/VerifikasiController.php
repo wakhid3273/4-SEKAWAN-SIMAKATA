@@ -57,15 +57,39 @@ class VerifikasiController extends Controller
             }
 
             if ($status && $status !== 'Semua Status') {
-                $query->where('status', $status);
+                // Map display status to database status
+                // Note: Support both old format (Disetujui/Ditolak) and new format (approved/rejected/pending)
+                if ($status === 'Pending Review') {
+                    $query->where(function($q) {
+                        $q->where('status', 'pending')
+                          ->orWhere('status', 'Pending Review');
+                    });
+                } elseif ($status === 'Disetujui') {
+                    $query->where(function($q) {
+                        $q->where('status', 'approved')
+                          ->orWhere('status', 'Disetujui');
+                    });
+                } elseif ($status === 'Ditolak') {
+                    $query->where(function($q) {
+                        $q->where('status', 'rejected')
+                          ->orWhere('status', 'Ditolak');
+                    });
+                }
             }
 
             $pengajuan = $query->paginate(10)->withQueryString();
 
             $totalPengajuan = MahasiswaMagang::count();
-            $pendingReview = MahasiswaMagang::where('status', 'pending')->count();
-            $disetujui = MahasiswaMagang::where('status', 'approved')->count();
-            $ditolak = MahasiswaMagang::where('status', 'rejected')->count();
+            // Count both old and new format
+            $pendingReview = MahasiswaMagang::where('status', 'pending')
+                ->orWhere('status', 'Pending Review')
+                ->count();
+            $disetujui = MahasiswaMagang::where('status', 'approved')
+                ->orWhere('status', 'Disetujui')
+                ->count();
+            $ditolak = MahasiswaMagang::where('status', 'rejected')
+                ->orWhere('status', 'Ditolak')
+                ->count();
         }
 
         return view('admin.verifikasi.index', compact(
@@ -106,7 +130,7 @@ class VerifikasiController extends Controller
     {
         $pengajuan = MahasiswaMagang::findOrFail($id);
         $pengajuan->update([
-            'status' => 'approved', // Standardized to lowercase
+            'status' => 'Disetujui', // Use same format as existing data
             'alasan_penolakan' => null,
         ]);
 
@@ -144,7 +168,7 @@ class VerifikasiController extends Controller
 
         $pengajuan = MahasiswaMagang::findOrFail($id);
         $pengajuan->update([
-            'status' => 'rejected', // Standardized to lowercase
+            'status' => 'Ditolak', // Use same format as existing data
             'alasan_penolakan' => $request->alasan_penolakan,
         ]);
 

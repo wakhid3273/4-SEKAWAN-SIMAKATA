@@ -152,7 +152,7 @@
         /* STATS ROW */
         .stats-row {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 16px;
             margin-bottom: 24px;
         }
@@ -279,6 +279,30 @@
         .empty-state .material-icons-outlined { font-size: 64px; color: var(--text-3); opacity: 0.3; margin-bottom: 16px; }
         .empty-state h3 { font-size: 16px; font-weight: 600; color: var(--text-2); margin-bottom: 8px; }
         .empty-state p { font-size: 13px; color: var(--text-3); }
+        
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 640px) {
+            .stats-row {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                display: none;
+            }
+            .main {
+                margin-left: 0;
+            }
+            .topbar {
+                padding: 0 16px;
+            }
+            .page-body {
+                padding: 20px 16px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -384,6 +408,15 @@
                         <p>Disetujui</p>
                     </div>
                 </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #fee2e2; color: #dc2626;">
+                        <span class="material-icons-outlined">cancel</span>
+                    </div>
+                    <div class="stat-info">
+                        <h3>{{ $stats['ditolak'] }}</h3>
+                        <p>Ditolak</p>
+                    </div>
+                </div>
             </div>
 
             <!-- TIMELINE CARD -->
@@ -470,20 +503,26 @@
                                         $badgeClass = 'badge-pending';
                                         $badgeText = 'Menunggu Verifikasi';
                                         
-                                        if ($magang->status === 'approved') {
+                                        // Check for approved status (support both formats)
+                                        if ($magang->status === 'approved' || $magang->status === 'Disetujui') {
                                             $dotClass = 'td-blue';
                                             $icon = 'check_circle';
                                             $badgeClass = 'badge-approved';
                                             $badgeText = 'Disetujui';
-                                        } elseif ($magang->status === 'rejected') {
+                                        } 
+                                        // Check for rejected status (support both formats)
+                                        elseif ($magang->status === 'rejected' || $magang->status === 'Ditolak') {
                                             $dotClass = 'td-red';
                                             $icon = 'cancel';
                                             $badgeClass = 'badge-rejected';
                                             $badgeText = 'Ditolak';
-                                        } else {
-                                            // default: pending
+                                        } 
+                                        // Check for pending status (support both formats)
+                                        elseif ($magang->status === 'pending' || $magang->status === 'Pending Review') {
                                             $dotClass = 'td-amber';
                                             $icon = 'pending_actions';
+                                            $badgeClass = 'badge-pending';
+                                            $badgeText = 'Menunggu Verifikasi';
                                         }
                                     @endphp
                                     
