@@ -668,23 +668,23 @@
         </div>
 
         <nav class="sidebar-nav">
+            <a href="{{ route('landing') }}" class="nav-item">
+                <span class="material-icons-outlined">home</span>
+                <span>Home</span>
+            </a>
             <a href="{{ route('user.dashboard') }}" id="nav-dashboard" class="nav-item">
                 <span class="material-icons-outlined">dashboard</span>
                 <span>Dashboard</span>
             </a>
-            <a href="#" id="nav-kp" class="nav-item">
+            <a href="{{ route('user.kp-magang.create') }}" id="nav-kp" class="nav-item">
                 <span class="material-icons-outlined">work_outline</span>
                 <span>Input KP/Magang</span>
             </a>
-            <a href="#" id="nav-ta" class="nav-item">
+            <a href="{{ route('user.tugas-akhir.create') }}" id="nav-ta" class="nav-item">
                 <span class="material-icons-outlined">description</span>
                 <span>Input Tugas Akhir</span>
             </a>
-            <a href="#" id="nav-rekomendasi" class="nav-item">
-                <span class="material-icons-outlined">location_on</span>
-                <span>Rekomendasi Lokasi</span>
-            </a>
-            <a href="#" id="nav-riwayat" class="nav-item">
+            <a href="{{ route('user.riwayat-aktivitas') }}" id="nav-riwayat" class="nav-item">
                 <span class="material-icons-outlined">history</span>
                 <span>Riwayat Aktivitas</span>
             </a>
@@ -710,18 +710,14 @@
 
         {{-- Top Navbar --}}
         <header class="topbar">
-            <div class="topbar-search">
-                <span class="material-icons-outlined">search</span>
-                <input type="text" placeholder="Cari aktivitas atau dokumen..." id="topbar-search-input">
+            <div class="topbar-heading" style="display:flex;flex-direction:column;justify-content:center;">
+                <h1 style="font-size:18px;font-weight:700;color:var(--text-1);">Edit Profil</h1>
+                <p style="font-size:12px;color:var(--text-2);">Perbarui informasi akun Anda.</p>
             </div>
-
             <div class="topbar-right">
                 <button class="topbar-icon-btn" id="btn-notif" aria-label="Notifikasi">
                     <span class="material-icons-outlined">notifications</span>
                     <span class="notif-dot"></span>
-                </button>
-                <button class="topbar-icon-btn" id="btn-help" aria-label="Bantuan">
-                    <span class="material-icons-outlined">help_outline</span>
                 </button>
                 <div class="topbar-divider"></div>
                 <div class="topbar-user" id="topbar-user">
@@ -730,7 +726,11 @@
                         <div class="u-role">Mahasiswa</div>
                     </div>
                     <div class="topbar-avatar">
-                        {{ strtoupper(substr($user->nama_lengkap ?? 'M', 0, 1)) }}
+                        @if(Auth::user()->avatar)
+                            <img src="{{ Storage::url(Auth::user()->avatar) }}" alt="Avatar" style="width:100%;height:100%;object-fit:cover;">
+                        @else
+                            {{ strtoupper(substr($user->nama_lengkap ?? 'M', 0, 1)) }}
+                        @endif
                     </div>
                 </div>
             </div>

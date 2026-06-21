@@ -653,7 +653,7 @@
                 <span class="material-icons-outlined">work_outline</span>
                 <span>Input KP/Magang</span>
             </a>
-            <a href="{{ route('judul-ta.index') }}" id="nav-ta" class="nav-item">
+            <a href="{{ route('user.tugas-akhir.create') }}" id="nav-ta" class="nav-item">
                 <span class="material-icons-outlined">description</span>
                 <span>Input Tugas Akhir</span>
             </a>
@@ -683,11 +683,10 @@
 
         {{-- Top Navbar --}}
         <header class="topbar">
-            <div class="topbar-search">
-                <span class="material-icons-outlined">search</span>
-                <input type="text" placeholder="Cari aktivitas atau dokumen..." id="topbar-search-input">
+            <div class="topbar-heading" style="display:flex;flex-direction:column;justify-content:center;">
+                <h1 style="font-size:18px;font-weight:700;color:var(--text-1);">Profil</h1>
+                <p style="font-size:12px;color:var(--text-2);">Informasi akun dan akademik Anda.</p>
             </div>
-
             <div class="topbar-right">
                 <div class="topbar-divider"></div>
                 <div class="topbar-user" id="topbar-user">
@@ -697,7 +696,7 @@
                     </div>
                     <div class="topbar-avatar">
                         @if(Auth::user()->avatar)
-                            <img src="{{ Storage::url(Auth::user()->avatar) }}" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover;">
+                            <img src="{{ Storage::url(Auth::user()->avatar) }}" alt="Avatar" style="width:100%;height:100%;object-fit:cover;">
                         @else
                             {{ strtoupper(substr($user->nama_lengkap ?? 'M', 0, 1)) }}
                         @endif
@@ -734,154 +733,88 @@
                             <span class="material-icons-outlined">edit</span>
                             Edit Profil
                         </a>
-                        <button class="btn-banner btn-banner-secondary" id="btn-bagikan-profil">
-                            <span class="material-icons-outlined">share</span>
-                            Bagikan Profil
-                        </button>
                     </div>
                 </div>
             </div>
 
-            {{-- ===== CONTENT GRID ===== --}}
-            <div class="content-grid">
-
-                {{-- LEFT: Informasi Akademik + Stat Cards --}}
-                <div>
-                    {{-- Informasi Akademik --}}
-                    <div class="card" id="card-akademik">
-                        <div class="card-header">
-                            <div class="card-title">
-                                <span class="material-icons-outlined">school</span>
-                                Informasi Akademik
-                            </div>
-                        </div>
-                        <div class="academic-grid">
-                            <div class="academic-cell">
-                                <div class="academic-label">Nama Lengkap</div>
-                                <div class="academic-value">{{ $user->nama_lengkap ?? '-' }}</div>
-                            </div>
-                            <div class="academic-cell">
-                                <div class="academic-label">NIM</div>
-                                <div class="academic-value" style="display: flex; align-items: center; gap: 8px;">
-                                    <span>{{ $user->nim ?? '-' }}</span>
-                                    @if($user->nim)
-                                    <button class="btn-copy-mini" data-copy="{{ $user->nim }}" title="Copy NIM">
-                                        <span class="material-icons-outlined" style="font-size: 14px;">content_copy</span>
-                                    </button>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="academic-cell">
-                                <div class="academic-label">Angkatan</div>
-                                <div class="academic-value">{{ $user->angkatan ?? '-' }}</div>
-                            </div>
-                            <div class="academic-cell">
-                                <div class="academic-label">Program Studi</div>
-                                <div class="academic-value">{{ $user->program_studi ?? '-' }}</div>
-                            </div>
-                            <div class="academic-cell">
-                                <div class="academic-label">Semester Aktif</div>
-                                <div class="academic-value">{{ $user->semester_aktif ?? '-' }}</div>
-                            </div>
+                {{-- Informasi Akademik & Kontak digabung --}}
+                <div class="card" id="card-info" style="margin-bottom:20px;">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span class="material-icons-outlined">school</span>
+                            Informasi Akademik & Kontak
                         </div>
                     </div>
-
-                    {{-- Stat Cards --}}
-                    <div class="stat-grid" id="stat-grid">
-                        <div class="stat-card" id="stat-kp">
-                            <div class="stat-icon-wrap si-blue">
-                                <span class="material-icons-outlined">work_history</span>
-                            </div>
-                            <div class="stat-number">{{ $totalKpMagang }}</div>
-                            <div class="stat-label">Total Pengajuan<br>KP/Magang</div>
+                    <div class="academic-grid">
+                        <div class="academic-cell">
+                            <div class="academic-label">Nama Lengkap</div>
+                            <div class="academic-value">{{ $user->nama_lengkap ?? '-' }}</div>
                         </div>
-                        <div class="stat-card" id="stat-ta">
-                            <div class="stat-icon-wrap si-indigo">
-                                <span class="material-icons-outlined">article</span>
+                        <div class="academic-cell">
+                            <div class="academic-label">NIM</div>
+                            <div class="academic-value" style="display:flex;align-items:center;gap:8px;">
+                                <span>{{ $user->nim ?? '-' }}</span>
+                                @if($user->nim)
+                                <button class="btn-copy-mini" data-copy="{{ $user->nim }}" title="Copy NIM">
+                                    <span class="material-icons-outlined" style="font-size:14px;">content_copy</span>
+                                </button>
+                                @endif
                             </div>
-                            <div class="stat-number">{{ $totalTugasAkhir }}</div>
-                            <div class="stat-label">Total Pengajuan<br>Tugas Akhir</div>
                         </div>
-                        <div class="stat-card" id="stat-pending">
-                            <div class="stat-icon-wrap si-amber">
-                                <span class="material-icons-outlined">pending_actions</span>
-                            </div>
-                            <div class="stat-number">{{ $pengajuanPending }}</div>
-                            <div class="stat-label">Pengajuan<br>Pending</div>
+                        <div class="academic-cell">
+                            <div class="academic-label">Angkatan</div>
+                            <div class="academic-value">{{ $user->angkatan ?? '-' }}</div>
                         </div>
-                        <div class="stat-card" id="stat-disetujui">
-                            <div class="stat-icon-wrap si-green">
-                                <span class="material-icons-outlined">check_circle_outline</span>
+                        <div class="academic-cell">
+                            <div class="academic-label">Program Studi</div>
+                            <div class="academic-value">{{ $user->program_studi ?? '-' }}</div>
+                        </div>
+                        <div class="academic-cell">
+                            <div class="academic-label">Semester Aktif</div>
+                            <div class="academic-value">{{ $user->semester_aktif ?? '-' }}</div>
+                        </div>
+                        <div class="academic-cell">
+                            <div class="academic-label">Nomor Telepon</div>
+                            <div class="academic-value">{{ $user->nomor_telepon ?? '-' }}</div>
+                        </div>
+                        <div class="academic-cell" style="grid-column:1/-1;border-right:none;">
+                            <div class="academic-label">Email</div>
+                            <div class="academic-value" style="display:flex;align-items:center;gap:8px;">
+                                <span>{{ $user->email ?? '-' }}</span>
+                                @if($user->email)
+                                <button class="btn-copy-mini" data-copy="{{ $user->email }}" title="Copy Email">
+                                    <span class="material-icons-outlined" style="font-size:14px;">content_copy</span>
+                                </button>
+                                @endif
                             </div>
-                            <div class="stat-number">{{ $pengajuanDisetujui }}</div>
-                            <div class="stat-label">Pengajuan<br>Disetujui</div>
                         </div>
                     </div>
                 </div>
 
-                {{-- RIGHT COLUMN --}}
-                <div class="right-col">
-
-                    {{-- Informasi Kontak --}}
-                    <div class="card" id="card-kontak">
-                        <div class="card-header">
-                            <div class="card-title">
-                                <span class="material-icons-outlined">contact_page</span>
-                                Informasi Kontak
-                            </div>
-                        </div>
-                        <div class="contact-item" id="contact-email">
-                            <div class="contact-icon">
-                                <span class="material-icons-outlined">alternate_email</span>
-                            </div>
-                            <div style="flex: 1;">
-                                <div class="contact-label">Email Institusi</div>
-                                <div class="contact-value" style="display: flex; align-items: center; gap: 8px; justify-content: space-between;">
-                                    <span>{{ $user->email ?? '-' }}</span>
-                                    @if($user->email)
-                                    <button class="btn-copy-mini" data-copy="{{ $user->email }}" title="Copy Email">
-                                        <span class="material-icons-outlined" style="font-size: 14px;">content_copy</span>
-                                    </button>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                        <div class="contact-item" id="contact-phone">
-                            <div class="contact-icon" style="background:#ede9fe; color:#6d28d9;">
-                                <span class="material-icons-outlined">phone_iphone</span>
-                            </div>
-                            <div>
-                                <div class="contact-label">Nomor Telepon</div>
-                                <div class="contact-value">{{ $user->nomor_telepon ?? '-' }}</div>
-                            </div>
+                {{-- Keamanan Akun --}}
+                <div class="card" id="card-keamanan">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span class="material-icons-outlined">shield</span>
+                            Keamanan Akun
                         </div>
                     </div>
-
-                    {{-- Keamanan Akun --}}
-                    <div class="card" id="card-keamanan">
-                        <div class="card-header">
-                            <div class="card-title">
-                                <span class="material-icons-outlined">shield</span>
-                                Keamanan Akun
-                            </div>
-                        </div>
-                        <div class="last-login-box">
-                            <span class="material-icons-outlined">schedule</span>
-                            <div class="last-login-text">
-                                Terakhir Login:
-                                {{ $user->last_login_at ? $user->last_login_at->diffForHumans() : '-' }}
-                            </div>
-                        </div>
-                        <a href="{{ route('user.profil.edit') }}" class="btn-ubah-password" id="btn-ubah-password" style="text-decoration:none;">
-                            <span class="material-icons-outlined">lock_reset</span>
-                            Ubah Password
-                        </a>
-                        <div class="security-hint">
-                            Disarankan untuk mengubah password secara berkala setiap 6 bulan.
+                    <div class="last-login-box">
+                        <span class="material-icons-outlined">schedule</span>
+                        <div class="last-login-text">
+                            Terakhir Login:
+                            {{ $user->last_login_at ? $user->last_login_at->diffForHumans() : '-' }}
                         </div>
                     </div>
+                    <a href="{{ route('user.profil.edit') }}" class="btn-ubah-password" id="btn-ubah-password" style="text-decoration:none;">
+                        <span class="material-icons-outlined">lock_reset</span>
+                        Ubah Password
+                    </a>
+                    <div class="security-hint">
+                        Disarankan untuk mengubah password secara berkala setiap 6 bulan.
+                    </div>
+                </div>
 
-                </div>{{-- /right-col --}}
             </div>{{-- /content-grid --}}
 
         </main>
