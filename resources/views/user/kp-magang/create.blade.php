@@ -497,7 +497,7 @@
                 </div>
             @endif
 
-            <div class="card">
+            <div class="card" style="max-width: 800px; margin: 0 auto;">
                 <div class="card-header">
                     <div class="card-title">
                         <span class="material-icons-outlined">work_outline</span>
@@ -638,48 +638,7 @@
                             </div>
                         </div>
 
-                        <hr class="divider">
 
-                        {{-- ===== UPLOAD DOKUMEN ===== --}}
-                        <div class="section-heading">
-                            <span class="material-icons-outlined">upload_file</span>
-                            Upload Dokumen
-                        </div>
-
-                        <div class="upload-grid">
-                            {{-- CV/Resume --}}
-                            <label class="file-upload-box" for="cv_file">
-                                <input type="file" id="cv_file" name="cv_file" accept=".pdf" required
-                                    onchange="updateFileName(this, 'cv-name')">
-                                <span class="material-icons-outlined">description</span>
-                                <div class="file-title">
-                                    CV / Resume
-                                    <span class="required-badge">Wajib</span>
-                                </div>
-                                <div class="file-desc">Format PDF, maks. 2MB</div>
-                                <div class="file-name" id="cv-name">Belum ada file dipilih</div>
-                            </label>
-
-                            {{-- Transkrip Nilai --}}
-                            <label class="file-upload-box" for="transkrip_file">
-                                <input type="file" id="transkrip_file" name="transkrip_file" accept=".pdf" required
-                                    onchange="updateFileName(this, 'transkrip-name')">
-                                <span class="material-icons-outlined">article</span>
-                                <div class="file-title">
-                                    Transkrip Nilai
-                                    <span class="required-badge">Wajib</span>
-                                </div>
-                                <div class="file-desc">Format PDF, maks. 2MB</div>
-                                <div class="file-name" id="transkrip-name">Belum ada file dipilih</div>
-                            </label>
-                        </div>
-
-                        @error('cv_file')
-                            <div class="field-error" style="margin-top:8px;"><span class="material-icons-outlined">warning</span>{{ $message }}</div>
-                        @enderror
-                        @error('transkrip_file')
-                            <div class="field-error" style="margin-top:4px;"><span class="material-icons-outlined">warning</span>{{ $message }}</div>
-                        @enderror
 
                         {{-- ===== FORM ACTIONS ===== --}}
                         <div class="form-actions">

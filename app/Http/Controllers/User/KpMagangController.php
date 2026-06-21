@@ -31,9 +31,6 @@ class KpMagangController extends Controller
             'nama' => 'required|string',
             'angkatan' => 'required|string',
             'periode' => 'required|string',
-            'cv_file' => 'required|file|mimes:pdf|max:2048',
-            'transkrip_file' => 'required|file|mimes:pdf|max:2048',
-            'portofolio_file' => 'nullable|file|mimes:pdf|max:2048',
         ]);
 
         // Logic: User bisa pilih existing perusahaan ATAU ketik manual
@@ -74,12 +71,7 @@ class KpMagangController extends Controller
             return back()->withErrors(['perusahaan' => 'Pilih perusahaan dari daftar atau ketik nama perusahaan baru.'])->withInput();
         }
 
-        // Upload files
-        $cvPath = $request->file('cv_file')->store('cv', 'public');
-        $transkripPath = $request->file('transkrip_file')->store('transkrip', 'public');
-        $portofolioPath = $request->hasFile('portofolio_file') 
-            ? $request->file('portofolio_file')->store('portofolio', 'public') 
-            : null;
+        // File uploads removed by user request
 
         // Create pengajuan
         $pengajuan = MahasiswaMagang::create([
@@ -90,9 +82,6 @@ class KpMagangController extends Controller
             'nama' => $validated['nama'],
             'angkatan' => $validated['angkatan'],
             'periode' => $validated['periode'],
-            'cv_file' => $cvPath,
-            'transkrip_file' => $transkripPath,
-            'portofolio_file' => $portofolioPath,
             'status' => 'pending', // Standardized to lowercase
         ]);
 
@@ -144,9 +133,6 @@ class KpMagangController extends Controller
             'nama' => 'required|string',
             'angkatan' => 'required|string',
             'periode' => 'required|string',
-            'cv_file' => 'nullable|file|mimes:pdf|max:2048',
-            'transkrip_file' => 'nullable|file|mimes:pdf|max:2048',
-            'portofolio_file' => 'nullable|file|mimes:pdf|max:2048',
         ]);
 
         // Handle perusahaan (sama seperti store)
@@ -184,28 +170,7 @@ class KpMagangController extends Controller
         $pengajuan->angkatan = $validated['angkatan'];
         $pengajuan->periode = $validated['periode'];
 
-        // Update files if uploaded
-        if ($request->hasFile('cv_file')) {
-            // Delete old file
-            if ($pengajuan->cv_file && Storage::disk('public')->exists($pengajuan->cv_file)) {
-                Storage::disk('public')->delete($pengajuan->cv_file);
-            }
-            $pengajuan->cv_file = $request->file('cv_file')->store('cv', 'public');
-        }
-
-        if ($request->hasFile('transkrip_file')) {
-            if ($pengajuan->transkrip_file && Storage::disk('public')->exists($pengajuan->transkrip_file)) {
-                Storage::disk('public')->delete($pengajuan->transkrip_file);
-            }
-            $pengajuan->transkrip_file = $request->file('transkrip_file')->store('transkrip', 'public');
-        }
-
-        if ($request->hasFile('portofolio_file')) {
-            if ($pengajuan->portofolio_file && Storage::disk('public')->exists($pengajuan->portofolio_file)) {
-                Storage::disk('public')->delete($pengajuan->portofolio_file);
-            }
-            $pengajuan->portofolio_file = $request->file('portofolio_file')->store('portofolio', 'public');
-        }
+        // Update files logic removed by user request
 
         // Reset status to pending after update (submit ulang untuk review)
         $pengajuan->status = 'pending';

@@ -737,8 +737,11 @@
                 </div>
             </div>
 
+            {{-- ===== CONTENT GRID ===== --}}
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+
                 {{-- Informasi Akademik & Kontak digabung --}}
-                <div class="card" id="card-info" style="margin-bottom:20px;">
+                <div class="card" id="card-info">
                     <div class="card-header">
                         <div class="card-title">
                             <span class="material-icons-outlined">school</span>
@@ -815,7 +818,7 @@
                     </div>
                 </div>
 
-            </div>{{-- /content-grid --}}
+            </div>{{-- /flex-column --}}
 
         </main>
 

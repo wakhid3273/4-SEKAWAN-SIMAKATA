@@ -272,7 +272,7 @@
                 </div>
             @endif
 
-            <div class="card">
+            <div class="card" style="max-width: 800px; margin: 0 auto;">
                 <div class="card-header">
                     <div class="card-title">
                         <span class="material-icons-outlined">edit_note</span>
