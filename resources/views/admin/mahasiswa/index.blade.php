@@ -476,15 +476,40 @@
 
 @section('scripts')
 <script>
-    // Live search (client side — debounce submit)
+    // Live search dengan instant feedback
     const searchInput = document.getElementById('search-input');
+    const filterForm = document.getElementById('filter-form');
     let debounceTimer;
-    if (searchInput) {
+    let isSearching = false;
+    
+    if (searchInput && filterForm) {
+        // Add loading indicator
+        const loadingIndicator = document.createElement('div');
+        loadingIndicator.style.cssText = 'position:absolute;right:50px;top:50%;transform:translateY(-50%);display:none;';
+        loadingIndicator.innerHTML = '<span style="color:#1a5fb4;font-size:12px;">Mencari...</span>';
+        searchInput.parentElement.style.position = 'relative';
+        searchInput.parentElement.appendChild(loadingIndicator);
+        
         searchInput.addEventListener('input', function() {
             clearTimeout(debounceTimer);
+            
+            // Show loading indicator
+            if (this.value.length > 0) {
+                loadingIndicator.style.display = 'block';
+            }
+            
+            // Reduced delay from 500ms to 300ms for faster response
             debounceTimer = setTimeout(() => {
-                document.getElementById('filter-form').submit();
-            }, 500);
+                if (!isSearching) {
+                    isSearching = true;
+                    filterForm.submit();
+                }
+            }, 300);
+        });
+        
+        // Hide loading on form submit
+        filterForm.addEventListener('submit', function() {
+            loadingIndicator.style.display = 'none';
         });
     }
 </script>

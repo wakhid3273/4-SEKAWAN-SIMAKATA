@@ -682,7 +682,6 @@
                                 <div class="detail-item"><div class="label">Nama Lengkap</div><div class="val">${data.nama}</div></div>
                                 <div class="detail-item"><div class="label">NIM</div><div class="val">${data.nim || '-'}</div></div>
                             </div>
->>>>>>> .merge_file_EpfAfx
                         </div>
                         <div class="detail-section">
                             <div class="detail-section-title">Data Tugas Akhir</div>

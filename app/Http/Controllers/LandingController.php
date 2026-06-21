@@ -16,7 +16,7 @@ class LandingController extends Controller
         // Get dynamic stats
         $perusahaanCount = DB::table('perusahaan')->count();
         $mahasiswaMagangCount = DB::table('mahasiswa_magang')->count();
-        $mahasiswaKpCount = DB::table('final_projects')->count(); // Assuming final_projects is used for Kerja Praktik
+        $mahasiswaKpCount = DB::table('mahasiswa_magang')->count(); // Count from mahasiswa_magang for KP/Magang
         
         // Kirim ke view landing.blade.php
         return view('landing', compact('user', 'perusahaanCount', 'mahasiswaMagangCount', 'mahasiswaKpCount'));
