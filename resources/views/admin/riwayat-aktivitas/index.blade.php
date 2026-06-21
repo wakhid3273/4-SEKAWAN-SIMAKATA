@@ -42,7 +42,7 @@
 </div>
 
 <!-- Timeline Card -->
-<div class="card">
+<div class="card timeline-card">
     <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
         <h3 class="card-title">
             <span class="material-icons-outlined" style="vertical-align: middle;">timeline</span>
@@ -167,7 +167,41 @@
     display: flex;
     align-items: center;
     gap: 16px;
+    /* Premium Enhancement */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
 }
+
+/* Accent Line */
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, currentColor, transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* Premium Hover Effect */
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.06);
+    border-color: #d1d5db;
+}
+
+.stat-card:hover::before {
+    opacity: 1;
+}
+
+/* Set accent color per card */
+.stat-card:nth-child(1)::before { color: #1a5fb4; }
+.stat-card:nth-child(2)::before { color: #059669; }
+.stat-card:nth-child(3)::before { color: #d97706; }
 .stat-icon {
     width: 48px;
     height: 48px;
@@ -176,7 +210,14 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    transition: all 0.3s ease;
 }
+
+/* Icon Animation on Hover */
+.stat-card:hover .stat-icon {
+    transform: scale(1.1);
+}
+
 .stat-icon .material-icons-outlined {
     font-size: 24px;
 }
@@ -185,7 +226,15 @@
     font-weight: 700;
     color: #111827;
     margin: 0;
+    transition: all 0.3s ease;
 }
+
+/* Number Emphasis on Hover */
+.stat-card:hover .stat-info h3 {
+    transform: scale(1.02);
+    transform-origin: left;
+}
+
 .stat-info p {
     font-size: 11px;
     font-weight: 600;
@@ -193,6 +242,11 @@
     letter-spacing: 0.7px;
     color: #9ca3af;
     margin: 2px 0 0 0;
+    transition: color 0.3s ease;
+}
+
+.stat-card:hover .stat-info p {
+    color: #1a5fb4;
 }
 .timeline-section {
     padding: 20px 0;
@@ -278,6 +332,29 @@
     font-size: 11px;
     font-weight: 600;
     color: #9ca3af;
+}
+
+/* Premium Timeline Card Hover */
+.timeline-card {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.timeline-card:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+    border-color: #d1d5db;
+}
+
+/* Timeline Item Hover Effect */
+.timeline-item {
+    transition: all 0.2s ease;
+    padding-left: 4px;
+}
+
+.timeline-item:hover {
+    background: #f9fafb;
+    border-radius: 8px;
+    padding-left: 8px;
 }
 </style>
 @endsection

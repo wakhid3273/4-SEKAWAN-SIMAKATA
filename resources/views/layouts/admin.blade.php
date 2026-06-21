@@ -542,7 +542,7 @@
                     <p class="footer-brand-desc">Managed by 4 Sekawan</p>
                 </div>
                 <div class="footer-contact">
-                    <a href="https://wa.me/6281234567890" target="_blank" class="social-icon" title="Hubungi Admin via WhatsApp">
+                    <a href="https://wa.me/6288233037896?text=Halo%20Admin%20SIMAKATA,%20saya%20butuh%20bantuan" target="_blank" class="social-icon" title="Hubungi Admin via WhatsApp">
                         <span class="material-icons-outlined">chat</span>
                     </a>
                 </div>

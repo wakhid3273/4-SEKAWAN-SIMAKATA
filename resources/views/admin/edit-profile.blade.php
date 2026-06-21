@@ -17,6 +17,17 @@
         padding: 32px 40px;
         box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
         margin-bottom: 24px;
+        /* Premium Enhancement */
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    /* Subtle Hover Effect */
+    .card-edit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+        border-color: rgba(26, 95, 180, 0.1);
     }
     
     .section-title {
@@ -130,6 +141,13 @@
         background: #f9fafb;
         border-radius: 12px;
         border: 1px solid #f3f4f6;
+        transition: all 0.3s ease;
+    }
+    
+    /* Subtle Hover */
+    .profile-photo-section:hover {
+        background: #f3f4f6;
+        border-color: #e5e7eb;
     }
     
     .profile-photo-preview-wrapper {
@@ -143,6 +161,13 @@
         object-fit: cover;
         border: 3px solid #fff;
         box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    /* Avatar Hover */
+    .profile-photo-preview-wrapper:hover .profile-photo-preview {
+        transform: scale(1.05);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     }
     
     .profile-photo-actions {
@@ -258,11 +283,12 @@
         text-align: center;
         background: #fafbfc;
         cursor: pointer;
-        transition: all 0.2s;
+        transition: all 0.3s ease;
     }
     .cover-upload-area:hover {
         border-color: #1a5fb4;
-        background: #f9fafb;
+        background: #f0f5fb;
+        transform: translateY(-2px);
     }
     .cover-upload-area .material-icons-outlined {
         font-size: 56px;
@@ -324,7 +350,14 @@
         align-items: start;
         gap: 10px;
         line-height: 1.6;
+        transition: all 0.3s ease;
     }
+    
+    .info-box:hover {
+        background: #e0f2fe;
+        border-color: #7dd3fc;
+    }
+    
     .info-box .material-icons-outlined {
         font-size: 18px;
         color: #0284c7;

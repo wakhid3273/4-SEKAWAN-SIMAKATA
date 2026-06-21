@@ -730,7 +730,7 @@
                     <p style="font-size: 12px; color: var(--text-2); line-height: 1.6; margin: 0;">Managed by 4 Sekawan</p>
                 </div>
                 <div style="display: flex; align-items: center; gap: 10px;">
-                    <a href="https://wa.me/6281234567890" target="_blank" style="width: 36px; height: 36px; border-radius: 50%; background: #ffffff; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--text-2); transition: all 0.2s; text-decoration: none;" title="Hubungi Admin via WhatsApp">
+                    <a href="https://wa.me/6288233037896?text=Halo%20Admin%20SIMAKATA,%20saya%20butuh%20bantuan" target="_blank" style="width: 36px; height: 36px; border-radius: 50%; background: #ffffff; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--text-2); transition: all 0.2s; text-decoration: none;" title="Hubungi Admin via WhatsApp">
                         <span class="material-icons-outlined" style="font-size: 18px;">chat</span>
                     </a>
                 </div>

@@ -68,7 +68,7 @@
             <p class="footer-brand-desc">Managed by 4 Sekawan</p>
         </div>
         <div class="footer-contact">
-            <a href="https://wa.me/6281234567890" target="_blank" class="social-icon" title="Hubungi Admin via WhatsApp" id="social-whatsapp">
+            <a href="https://wa.me/6288233037896" target="_blank" class="social-icon" title="Hubungi Admin via WhatsApp" id="social-whatsapp">
                 <span class="material-icons-outlined">chat</span>
             </a>
         </div>

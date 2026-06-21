@@ -93,7 +93,7 @@
         </p>
 
         <div class="auth-help">
-            <a href="https://wa.me/6281234567890" target="_blank">
+            <a href="https://wa.me/6288233037896?text=Halo%20Admin%20SIMAKATA,%20saya%20butuh%20bantuan%20untuk%20reset%20password" target="_blank">
                 <span class="material-icons-outlined">chat</span>
                 Pusat Bantuan
             </a>

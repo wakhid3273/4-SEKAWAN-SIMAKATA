@@ -798,8 +798,8 @@
             <div class="hero-cta">
                 @guest
                     <a href="#features" class="btn-primary" id="btn-hero-database">
-                        <span class="material-icons-outlined">corporate_fare</span>
-                        Lihat Database Perusahaan
+                        <span class="material-icons-outlined">info</span>
+                        Lihat Fitur Utama Platform
                     </a>
                     <a href="{{ route('register.form') }}" class="btn-secondary" id="btn-hero-register">Daftar Akun</a>
                     <a href="{{ route('login.form') }}" class="btn-secondary" id="btn-hero-login">Login</a>
@@ -913,7 +913,7 @@
         <div class="cta-buttons">
             <a href="{{ auth()->check() ? route('dashboard') : route('login.form') }}" class="btn-cta-primary" id="btn-cta-dashboard">Dashboard Saya</a>
             @guest
-                <a href="#" class="btn-cta-secondary" id="btn-cta-hubungi">Hubungi Admin</a>
+                <a href="https://wa.me/6288233037896?text=Halo%20Admin%20SIMAKATA,%20saya%20ingin%20bertanya%20tentang%20sistem" target="_blank" class="btn-cta-secondary" id="btn-cta-hubungi">Hubungi Admin</a>
             @endguest
             @auth
                 <form method="POST" action="{{ route('logout') }}" style="margin:0;">
