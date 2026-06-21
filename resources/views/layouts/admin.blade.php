@@ -60,9 +60,10 @@
             top: 0;
             left: 0;
             height: 100vh;
-            z-index: 100;
+            z-index: 300;
             overflow-y: auto;
             scrollbar-width: none;
+            transition: transform 0.3s ease;
         }
         .sidebar::-webkit-scrollbar { display: none; }
 
@@ -193,6 +194,163 @@
             padding: 32px 32px 24px;
         }
 
+        /* Mobile topbar hidden on desktop, shown on mobile via media query */
+        .mobile-topbar { display: none; }
+
+        /* ===== MOBILE FULLSCREEN NAV OVERLAY ===== */
+        .mobile-nav-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: #ffffff;
+            z-index: 500;
+            flex-direction: column;
+            opacity: 0;
+            transform: scale(0.98);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+        }
+        .mobile-nav-overlay.active {
+            display: flex;
+            opacity: 1;
+            transform: scale(1);
+        }
+        .mobile-nav-overlay-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            border-bottom: 1px solid #f0f2f5;
+        }
+        .mobile-nav-overlay-brand {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--accent-blue);
+            letter-spacing: 1.5px;
+        }
+        .mobile-nav-close-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: none;
+            border: none;
+            color: #374151;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+        .mobile-nav-close-btn:hover { background: #f3f4f6; }
+        .mobile-nav-close-btn .material-icons-outlined { font-size: 26px; }
+
+        /* User info in overlay */
+        .mobile-nav-user {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 24px 28px 20px;
+            border-bottom: 1px solid #f0f2f5;
+        }
+        .mobile-nav-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4a6fa5, var(--accent-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+            color: #fff;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+        .mobile-nav-avatar img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+        .mobile-nav-user-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: #111827;
+        }
+        .mobile-nav-user-role {
+            font-size: 11px;
+            color: #9ca3af;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+        }
+
+        /* Nav items in overlay */
+        .mobile-nav-links {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 16px 20px;
+            gap: 4px;
+            overflow-y: auto;
+        }
+        .mobile-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            color: #374151;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: background 0.15s ease, color 0.15s ease;
+        }
+        .mobile-nav-item .material-icons-outlined {
+            font-size: 22px;
+            color: #9ca3af;
+            flex-shrink: 0;
+        }
+        .mobile-nav-item:hover {
+            background: #f3f6fb;
+            color: var(--accent-blue);
+        }
+        .mobile-nav-item:hover .material-icons-outlined {
+            color: var(--accent-blue);
+        }
+        .mobile-nav-item.active {
+            background: var(--accent-blue-light);
+            color: var(--accent-blue);
+            font-weight: 700;
+        }
+        .mobile-nav-item.active .material-icons-outlined {
+            color: var(--accent-blue);
+        }
+        .mobile-nav-divider {
+            height: 1px;
+            background: #f0f2f5;
+            margin: 8px 0;
+        }
+        .mobile-nav-logout-btn {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 12px;
+            background: none;
+            border: none;
+            color: #ef4444;
+            font-size: 15px;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            text-align: left;
+            transition: background 0.15s ease;
+        }
+        .mobile-nav-logout-btn .material-icons-outlined {
+            font-size: 22px;
+            color: #ef4444;
+        }
+        .mobile-nav-logout-btn:hover { background: #fef2f2; }
+
         /* ===== PAGE HEADER ===== */
         .page-header {
             display: flex;
@@ -313,114 +471,73 @@
         }
 
         @media (max-width: 768px) {
-            :root {
-                --sidebar-width: 0px;
-            }
-            
+            /* Sidebar desktop disembunyikan total di mobile */
             .sidebar {
-                width: 0;
-                min-width: 0;
-                transform: translateX(-100%);
-                transition: transform 0.3s ease;
+                display: none !important;
             }
-            
-            .sidebar.mobile-open {
-                transform: translateX(0);
-                width: 220px;
-                min-width: 220px;
-                box-shadow: 4px 0 16px rgba(0,0,0,0.15);
+
+            /* Main content ambil penuh */
+            .main-content {
+                margin-left: 0;
             }
-            
-            .sidebar.mobile-open .sidebar-logo,
-            .sidebar.mobile-open .sidebar-user-info,
-            .sidebar.mobile-open .nav-item span:not(.material-icons-outlined),
-            .sidebar.mobile-open .btn-logout span:not(.material-icons-outlined) {
-                display: block;
+
+            .page-body {
+                padding: 16px;
             }
-            
-            .sidebar.mobile-open .nav-item,
-            .sidebar.mobile-open .btn-logout {
-                justify-content: flex-start;
-                padding: 10px 12px;
-            }
-            
-            .sidebar.mobile-open .sidebar-user {
-                justify-content: flex-start;
-            }
-            
-            .main-content { 
-                margin-left: 0; 
-            }
-            
-            .page-body { 
-                padding: 16px 16px; 
-            }
-            
+
             .page-header {
                 flex-direction: column;
                 align-items: stretch;
             }
-            
+
             .page-header h1 {
                 font-size: 22px;
             }
-            
+
             .admin-page-footer {
                 padding: 24px 20px 16px;
             }
-            
-            .footer-inner { 
-                flex-direction: column; 
+
+            .footer-inner {
+                flex-direction: column;
                 align-items: flex-start;
                 gap: 16px;
             }
-            
-            /* Mobile Menu Toggle Button */
+
+            /* ===== MOBILE TOPBAR ===== */
+            .mobile-topbar {
+                display: flex !important;
+                align-items: center;
+                justify-content: space-between;
+                background: #ffffff;
+                padding: 12px 20px;
+                border-bottom: 1px solid #e5e7eb;
+                position: sticky;
+                top: 0;
+                z-index: 200;
+                box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+            }
+            .mobile-topbar-brand {
+                font-size: 18px;
+                font-weight: 800;
+                color: var(--accent-blue);
+                letter-spacing: 1.5px;
+            }
             .mobile-menu-btn {
-                position: fixed;
-                top: 16px;
-                left: 16px;
-                width: 44px;
-                height: 44px;
-                border-radius: 12px;
-                background: var(--sidebar-bg);
-                border: none;
-                color: #ffffff;
-                display: flex;
+                display: flex !important;
                 align-items: center;
                 justify-content: center;
+                width: 40px;
+                height: 40px;
+                background: none;
+                border: none;
+                color: #374151;
                 cursor: pointer;
-                z-index: 1000;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                transition: all 0.2s;
+                border-radius: 8px;
+                transition: background 0.2s;
             }
-            
-            .mobile-menu-btn:hover {
-                background: #1a2942;
-            }
-            
-            .mobile-menu-btn .material-icons-outlined {
-                font-size: 24px;
-            }
-            
-            /* Mobile Overlay */
-            .mobile-overlay {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: rgba(0,0,0,0.5);
-                z-index: 99;
-                opacity: 0;
-                transition: opacity 0.3s ease;
-            }
-            
-            .mobile-overlay.active {
-                display: block;
-                opacity: 1;
-            }
+            .mobile-menu-btn:hover { background: #f3f4f6; }
+            .mobile-menu-btn .material-icons-outlined { font-size: 26px; }
         }
 
         @media (max-width: 600px) {
@@ -447,28 +564,79 @@
             .footer-brand-desc {
                 font-size: 11px;
             }
-            
-            .mobile-menu-btn {
-                top: 12px;
-                left: 12px;
-                width: 40px;
-                height: 40px;
-            }
         }
     </style>
     @yield('extra_styles')
 </head>
 <body>
 <div class="admin-shell">
-    {{-- Mobile Menu Toggle Button (visible on mobile only) --}}
-    <button class="mobile-menu-btn" id="mobileMenuBtn" style="display: none;">
-        <span class="material-icons-outlined">menu</span>
-    </button>
-    
-    {{-- Mobile Overlay --}}
-    <div class="mobile-overlay" id="mobileOverlay"></div>
-    
-    {{-- ===== SIDEBAR ===== --}}
+
+    {{-- ===== FULLSCREEN MOBILE NAV OVERLAY ===== --}}
+    <div class="mobile-nav-overlay" id="mobileNavOverlay">
+        {{-- Header --}}
+        <div class="mobile-nav-overlay-header">
+            <span class="mobile-nav-overlay-brand">SIMAKATA</span>
+            <button class="mobile-nav-close-btn" id="mobileNavCloseBtn">
+                <span class="material-icons-outlined">close</span>
+            </button>
+        </div>
+
+        {{-- User Info --}}
+        <a href="{{ route('admin.profil') }}" style="text-decoration:none;" onclick="closeMobileNav()">
+            <div class="mobile-nav-user">
+                <div class="mobile-nav-avatar">
+                    @if(auth()->check() && auth()->user()->profile_photo)
+                        <img src="{{ Storage::url(auth()->user()->profile_photo) }}" alt="Avatar">
+                    @elseif(auth()->check() && auth()->user()->avatar)
+                        <img src="{{ Storage::url(auth()->user()->avatar) }}" alt="Avatar">
+                    @else
+                        {{ strtoupper(substr(auth()->user()->nama_lengkap ?? 'A', 0, 1)) }}
+                    @endif
+                </div>
+                <div>
+                    <div class="mobile-nav-user-name">{{ auth()->user()->nama_lengkap ?? 'Admin Panel' }}</div>
+                    <div class="mobile-nav-user-role">System Administrator</div>
+                </div>
+            </div>
+        </a>
+
+        {{-- Nav Links --}}
+        <div class="mobile-nav-links">
+            <a href="{{ route('landing') }}" class="mobile-nav-item" onclick="closeMobileNav()">
+                <span class="material-icons-outlined">home</span>
+                <span>Home</span>
+            </a>
+            <a href="{{ route('admin.dashboard') }}" class="mobile-nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" onclick="closeMobileNav()">
+                <span class="material-icons-outlined">dashboard</span>
+                <span>Dashboard</span>
+            </a>
+            <a href="{{ route('admin.perusahaan.index') }}" class="mobile-nav-item {{ request()->routeIs('admin.perusahaan*') ? 'active' : '' }}" onclick="closeMobileNav()">
+                <span class="material-icons-outlined">business</span>
+                <span>Kelola Perusahaan</span>
+            </a>
+            <a href="{{ route('admin.verifikasi.index') }}" class="mobile-nav-item {{ request()->routeIs('admin.verifikasi*') ? 'active' : '' }}" onclick="closeMobileNav()">
+                <span class="material-icons-outlined">verified_user</span>
+                <span>Verifikasi Data</span>
+            </a>
+            <a href="{{ route('admin.mahasiswa.index') }}" class="mobile-nav-item {{ request()->routeIs('admin.mahasiswa*') ? 'active' : '' }}" onclick="closeMobileNav()">
+                <span class="material-icons-outlined">people</span>
+                <span>Data Mahasiswa</span>
+            </a>
+
+            <div class="mobile-nav-divider"></div>
+
+            {{-- Logout --}}
+            <form method="POST" action="{{ route('logout') }}" style="margin:0;">
+                @csrf
+                <button type="submit" class="mobile-nav-logout-btn">
+                    <span class="material-icons-outlined">logout</span>
+                    <span>Logout</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    {{-- ===== SIDEBAR (desktop only) ===== --}}
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-logo">SIMAKATA</div>
 
@@ -530,6 +698,14 @@
 
     {{-- ===== MAIN ===== --}}
     <div class="main-content">
+        {{-- Mobile Topbar (only visible on mobile) --}}
+        <div class="mobile-topbar">
+            <div class="mobile-topbar-brand">SIMAKATA</div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Buka menu">
+                <span class="material-icons-outlined">menu</span>
+            </button>
+        </div>
+
         <div class="page-body">
             @yield('content')
         </div>
@@ -555,37 +731,34 @@
 </div>
 
 <script>
-    // Mobile menu toggle
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const sidebar = document.getElementById('sidebar');
-    const mobileOverlay = document.getElementById('mobileOverlay');
-    
-    function toggleMobileMenu() {
-        sidebar.classList.toggle('mobile-open');
-        mobileOverlay.classList.toggle('active');
+    const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+    const mobileNavCloseBtn = document.getElementById('mobileNavCloseBtn');
+
+    function openMobileNav() {
+        mobileNavOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
     }
-    
+
+    function closeMobileNav() {
+        mobileNavOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
     if (mobileMenuBtn) {
-        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+        mobileMenuBtn.addEventListener('click', openMobileNav);
     }
-    
-    if (mobileOverlay) {
-        mobileOverlay.addEventListener('click', toggleMobileMenu);
+
+    if (mobileNavCloseBtn) {
+        mobileNavCloseBtn.addEventListener('click', closeMobileNav);
     }
-    
-    // Show/hide mobile menu button based on screen size
-    function checkScreenSize() {
-        if (window.innerWidth <= 768) {
-            mobileMenuBtn.style.display = 'flex';
-        } else {
-            mobileMenuBtn.style.display = 'none';
-            sidebar.classList.remove('mobile-open');
-            mobileOverlay.classList.remove('active');
+
+    // Tutup overlay saat layar diperbesar ke desktop
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            closeMobileNav();
         }
-    }
-    
-    window.addEventListener('load', checkScreenSize);
-    window.addEventListener('resize', checkScreenSize);
+    });
 </script>
 
 @yield('scripts')
