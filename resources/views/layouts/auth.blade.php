@@ -76,17 +76,38 @@
             border-radius: 24px;
             overflow: hidden;
             background: #ffffff;
+            
+            /* ENHANCED CARD ELEVATION - Premium Depth */
             box-shadow:
-                0 4px 6px -1px rgba(0,0,0,0.05),
-                0 25px 50px -12px rgba(0,0,0,0.12),
-                0 0 0 1px rgba(0,0,0,0.03);
-            animation: card-entrance 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+                0 0 0 1px rgba(0,0,0,0.02),
+                0 1px 2px -1px rgba(0,0,0,0.04),
+                0 4px 8px -2px rgba(0,0,0,0.06),
+                0 12px 24px -4px rgba(0,0,0,0.08),
+                0 24px 48px -8px rgba(0,0,0,0.12);
+            
+            /* Subtle border for depth */
+            border: 1px solid rgba(0,0,0,0.04);
+            
+            /* Initial entrance animation - slower and more elegant */
+            animation: card-entrance-premium 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+            
+            /* For smooth swap transitions */
+            transition: box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        @keyframes card-entrance {
+        .auth-card:hover {
+            box-shadow:
+                0 0 0 1px rgba(0,0,0,0.03),
+                0 2px 4px -1px rgba(0,0,0,0.05),
+                0 8px 16px -4px rgba(0,0,0,0.08),
+                0 16px 32px -6px rgba(0,0,0,0.12),
+                0 32px 64px -12px rgba(0,0,0,0.16);
+        }
+
+        @keyframes card-entrance-premium {
             from {
                 opacity: 0;
-                transform: translateY(30px) scale(0.97);
+                transform: translateY(40px) scale(0.96);
             }
             to {
                 opacity: 1;
@@ -106,6 +127,13 @@
             justify-content: center;
             padding: 48px 40px;
             overflow: hidden;
+            
+            /* Initial animation - slower fade + slide from left */
+            animation: panel-slide-left-premium 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+            
+            /* For swap animation */
+            transition: all 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+            transform-origin: center center;
         }
 
         /* Decorative circles in the brand panel */
@@ -153,12 +181,22 @@
             height: auto;
             margin-bottom: 32px;
             filter: drop-shadow(0 10px 30px rgba(0,0,0,0.3));
-            animation: float-illustration 5s ease-in-out infinite;
+            
+            /* ENHANCED floating - slower and more subtle */
+            animation: float-illustration-premium 10s ease-in-out infinite;
+            
+            /* Smooth hover interaction */
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        @keyframes float-illustration {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
+        .brand-illustration:hover {
+            animation-play-state: paused;
+            transform: scale(1.02) translateY(-5px);
+        }
+
+        @keyframes float-illustration-premium {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
 
         .brand-title {
@@ -187,6 +225,13 @@
             padding: 48px 52px;
             position: relative;
             background: linear-gradient(180deg, #ffffff 60%, #fffdf5 100%);
+            
+            /* Initial animation - slower fade + slide from right */
+            animation: panel-slide-right-premium 1.3s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+            
+            /* For swap animation */
+            transition: all 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+            transform-origin: center center;
         }
 
         .auth-form-panel h1 {
@@ -248,6 +293,7 @@
             font-size: 20px;
             pointer-events: none;
             transition: color 0.2s;
+            display: block; /* Ensure icon is visible */
         }
 
         .input-wrapper input {
@@ -283,21 +329,7 @@
         }
 
         .toggle-password {
-            position: absolute;
-            right: 14px;
-            background: none;
-            border: none;
-            color: #9ca3af;
-            cursor: pointer;
-            font-size: 20px;
-            padding: 4px;
-            display: flex;
-            align-items: center;
-            transition: color 0.2s;
-        }
-
-        .toggle-password:hover {
-            color: #6b7280;
+            display: none; /* Hide duplicate toggle icon - already in design */
         }
 
         /* ===== REMEMBER ME ===== */
@@ -391,7 +423,7 @@
         .auth-help {
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: center; /* Center the help link */
             gap: 24px;
             margin-top: 20px;
         }
@@ -532,6 +564,372 @@
                 font-size: 14px;
             }
         }
+
+        /* ============================================
+           PREMIUM ANIMATIONS & MICRO-INTERACTIONS
+           ============================================ */
+
+        /* ========== EXIT ANIMATION FOR PAGE TRANSITIONS ========== */
+        
+        /* When user clicks to navigate between Login/Register */
+        .auth-card.exiting {
+            animation: card-exit 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            pointer-events: none;
+        }
+
+        @keyframes card-exit {
+            to {
+                opacity: 0;
+                transform: translateY(-20px) scale(0.96);
+            }
+        }
+
+        /* ========== PAGE LOAD ANIMATIONS ========== */
+
+        /* Panel entrance - slower and more elegant */
+        @keyframes panel-slide-left-premium {
+            from {
+                opacity: 0;
+                transform: translateX(-60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes panel-slide-right-premium {
+            from {
+                opacity: 0;
+                transform: translateX(60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        .auth-card {
+            animation: card-entrance 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .auth-brand {
+            animation: panel-slide-left 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+        }
+
+        .auth-form-panel {
+            animation: panel-slide-right 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+        }
+
+        .auth-form-panel h1 {
+            animation: fade-slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+        }
+
+        .auth-form-panel .subtitle {
+            animation: fade-slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+        }
+
+        .form-group {
+            animation: fade-slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        .form-group:nth-child(1) { animation-delay: 0.5s; }
+        .form-group:nth-child(2) { animation-delay: 0.55s; }
+        .form-group:nth-child(3) { animation-delay: 0.6s; }
+        .form-group:nth-child(4) { animation-delay: 0.65s; }
+
+        .btn-submit {
+            animation: fade-slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.7s both;
+        }
+
+        .auth-switch {
+            animation: fade-in 0.5s ease 0.8s both;
+        }
+
+        .auth-help {
+            animation: fade-in 0.5s ease 0.9s both;
+        }
+
+        @keyframes panel-slide-left {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes panel-slide-right {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fade-slide-up {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Subtle Parallax (applied via JavaScript) */
+        .parallax-enabled .auth-brand {
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform;
+        }
+
+        .parallax-enabled .brand-illustration {
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform;
+        }
+
+        .parallax-enabled .brand-diamond {
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform;
+        }
+
+        /* Enhanced Button Hover - More Premium */
+        .btn-submit {
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, box-shadow;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 0 0 1px rgba(30,95,168,0.1),
+                0 8px 16px -4px rgba(30,95,168,0.3),
+                0 20px 40px -8px rgba(30,95,168,0.25);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0) scale(0.98);
+            transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Loading State */
+        .btn-submit.loading {
+            pointer-events: none;
+            opacity: 0.7;
+            position: relative;
+        }
+
+        .btn-submit.loading::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            top: 50%;
+            left: 50%;
+            margin-left: -8px;
+            margin-top: -8px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spinner 0.6s linear infinite;
+        }
+
+        @keyframes spinner {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Enhanced Input Focus - More Professional */
+        .input-wrapper input {
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: border-color, box-shadow, transform;
+        }
+
+        .input-wrapper input:focus {
+            transform: translateY(-1px);
+            box-shadow: 
+                0 0 0 3px rgba(37,99,235,0.08),
+                0 2px 8px -2px rgba(37,99,235,0.15);
+        }
+
+        .input-icon {
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Toggle Password Animation */
+        .toggle-password {
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .toggle-password:hover {
+            transform: scale(1.1);
+        }
+
+        .toggle-password:active {
+            transform: scale(0.95);
+        }
+
+        /* Illustration Floating */
+        .brand-illustration {
+            animation: float-illustration 6s ease-in-out infinite;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .brand-illustration:hover {
+            animation-play-state: paused;
+            transform: scale(1.02) translateY(-5px);
+        }
+
+        @keyframes float-illustration {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+        }
+
+        /* Decorative Elements Floating - SLOWER & MORE SUBTLE */
+        body::before {
+            animation: float-bg-premium 14s ease-in-out infinite;
+        }
+
+        body::after {
+            animation: float-bg2-premium 18s ease-in-out infinite;
+        }
+
+        @keyframes float-bg-premium {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(12px, 8px); }
+            50% { transform: translate(22px, 18px); }
+            75% { transform: translate(10px, 25px); }
+        }
+
+        @keyframes float-bg2-premium {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(-8px, -12px); }
+            50% { transform: translate(-18px, -22px); }
+            75% { transform: translate(-10px, -16px); }
+        }
+
+        .auth-brand::before {
+            animation: pulse-ring-premium 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse-ring-premium {
+            0%, 100% { 
+                transform: scale(1); 
+                opacity: 0.25; 
+            }
+            50% { 
+                transform: scale(1.15); 
+                opacity: 0.08; 
+            }
+        }
+
+        .auth-brand::after {
+            animation: float-circle-premium 12s ease-in-out infinite;
+        }
+
+        @keyframes float-circle-premium {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-12px, 12px) scale(1.08); }
+        }
+
+        .brand-diamond {
+            animation: rotate-diamond-premium 20s linear infinite;
+        }
+
+        @keyframes rotate-diamond-premium {
+            from { transform: rotate(45deg); }
+            to { transform: rotate(405deg); }
+        }
+
+        /* Link Hover Enhancement */
+        .form-label a,
+        .auth-switch a,
+        .auth-help a {
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+
+        .form-label a:hover,
+        .auth-switch a:hover,
+        .auth-help a:hover {
+            transform: translateY(-1px);
+        }
+
+        /* Alert Smooth Entrance */
+        .alert {
+            animation: alert-in 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes alert-in {
+            from { 
+                opacity: 0; 
+                transform: translateY(-10px) scale(0.97); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
+        }
+
+        /* Form Button Shine Effect on Hover */
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .btn-submit:hover::before {
+            left: 100%;
+        }
+
+        /* Performance Optimization */
+        .auth-card,
+        .auth-brand,
+        .auth-form-panel,
+        .brand-illustration,
+        .btn-submit,
+        .input-wrapper input {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Reduce motion for accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            .brand-illustration,
+            body::before,
+            body::after,
+            .auth-brand::before,
+            .auth-brand::after,
+            .brand-diamond {
+                animation: none !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -540,6 +938,104 @@
     <footer class="auth-footer">
         &copy; 2024 HMIF Informatics SIMAKATA. Managed by Informatics Department.
     </footer>
+
+    <!-- Premium Animation Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const authCard = document.querySelector('.auth-card');
+            const authBrand = document.querySelector('.auth-brand');
+            const illustration = document.querySelector('.brand-illustration');
+            const diamond = document.querySelector('.brand-diamond');
+            
+            // ========== EXIT ANIMATION FOR PAGE NAVIGATION ==========
+            function initExitAnimation() {
+                // Find all navigation links (Login ↔ Register)
+                const navLinks = document.querySelectorAll('.auth-switch a');
+                
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        // Check if it's an internal navigation
+                        const href = this.getAttribute('href');
+                        if (href && href.startsWith('/') && !e.ctrlKey && !e.metaKey) {
+                            e.preventDefault();
+                            
+                            // Add exit animation class
+                            authCard.classList.add('exiting');
+                            
+                            // Navigate after animation completes
+                            setTimeout(() => {
+                                window.location.href = href;
+                            }, 600);
+                        }
+                    });
+                });
+            }
+            
+            initExitAnimation();
+            
+            // ========== SUBTLE PARALLAX ==========
+            // Check if user prefers reduced motion
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            
+            if (!prefersReducedMotion && authCard && window.innerWidth > 768) {
+                document.body.classList.add('parallax-enabled');
+                
+                authCard.addEventListener('mousemove', function(e) {
+                    const rect = authCard.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const percentX = (x - centerX) / centerX;
+                    const percentY = (y - centerY) / centerY;
+                    
+                    const maxMove = 8;
+                    
+                    if (illustration) {
+                        const moveX = percentX * maxMove;
+                        const moveY = percentY * maxMove;
+                        illustration.style.transform = `translateY(${moveY}px) translateX(${moveX}px)`;
+                    }
+                    
+                    if (diamond) {
+                        const moveX = percentX * (maxMove * 0.5);
+                        const moveY = percentY * (maxMove * 0.5);
+                        diamond.style.transform = `rotate(45deg) translateY(${-moveY}px) translateX(${-moveX}px)`;
+                    }
+                });
+                
+                authCard.addEventListener('mouseleave', function() {
+                    if (illustration) {
+                        illustration.style.transform = '';
+                    }
+                    if (diamond) {
+                        diamond.style.transform = '';
+                    }
+                });
+            }
+            
+            // ========== BUTTON LOADING STATE ==========
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    const submitBtn = form.querySelector('.btn-submit');
+                    if (submitBtn && !submitBtn.classList.contains('loading')) {
+                        submitBtn.classList.add('loading');
+                        const originalText = submitBtn.textContent;
+                        submitBtn.textContent = '';
+                        
+                        // Remove loading after 10s as fallback
+                        setTimeout(() => {
+                            submitBtn.classList.remove('loading');
+                            submitBtn.textContent = originalText;
+                        }, 10000);
+                    }
+                });
+            });
+        });
+    </script>
 
     @yield('scripts')
 </body>

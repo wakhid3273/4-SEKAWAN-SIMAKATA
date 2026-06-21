@@ -105,10 +105,6 @@
                 <span class="material-icons-outlined">chat</span>
                 Pusat Bantuan
             </a>
-            <a href="#">
-                <span class="material-icons-outlined">menu_book</span>
-                Panduan
-            </a>
         </div>
     </div>
 </div>
