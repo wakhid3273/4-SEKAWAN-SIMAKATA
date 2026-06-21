@@ -21,11 +21,13 @@
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             background: #f0f4f8;
             position: relative;
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: auto;
         }
 
         /* ===== DECORATIVE BACKGROUND ===== */
@@ -448,14 +450,12 @@
 
         /* ===== FOOTER ===== */
         .auth-footer {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
+            margin-top: 24px;
             font-size: 12px;
             color: #9ca3af;
-            white-space: nowrap;
+            text-align: center;
             z-index: 1;
+            padding-bottom: 20px;
         }
 
         /* ===== ALERTS ===== */
@@ -500,21 +500,22 @@
         @media (max-width: 768px) {
             body {
                 padding: 16px;
-                align-items: flex-start;
-                padding-top: 40px;
+                padding-top: 24px;
+                justify-content: flex-start;
             }
 
             .auth-card {
                 flex-direction: column;
                 min-height: auto;
                 border-radius: 20px;
+                width: 100%;
             }
 
             .auth-brand {
                 width: 100%;
                 min-width: unset;
                 padding: 32px 24px;
-                min-height: 240px;
+                min-height: auto;
             }
 
             .brand-illustration {
@@ -539,12 +540,7 @@
             }
 
             .auth-footer {
-                position: relative;
-                bottom: auto;
-                left: auto;
-                transform: none;
-                text-align: center;
-                margin-top: 24px;
+                margin-top: 16px;
                 padding-bottom: 16px;
             }
         }
