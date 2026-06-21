@@ -463,7 +463,7 @@
                 <span>Input KP/Magang</span>
             </a>
 
-            <a href="{{ route('judul-ta.index') }}" id="nav-ta" class="nav-item">
+            <a href="{{ route('user.tugas-akhir.create') }}" id="nav-ta" class="nav-item">
                 <span class="material-icons-outlined">description</span>
                 <span>Input Tugas Akhir</span>
             </a>
@@ -509,7 +509,7 @@
                         <div class="topbar-user-name">{{ $user->nama_lengkap ?? 'Mahasiswa' }}</div>
                         <div class="topbar-user-role">Mahasiswa</div>
                     </div>
-                    <div class="topbar-avatar">
+                    <div class="topbar-avatar" style="overflow:hidden;">
                         @if(Auth::user()->avatar)
                             <img src="{{ Storage::url(Auth::user()->avatar) }}" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
                         @else
@@ -686,7 +686,7 @@
                             </div>
                         </div>
                         <div>
-                            <a href="{{ route('judul-ta.index') }}" class="quick-action" id="qa-input-ta">
+                            <a href="{{ route('user.tugas-akhir.create') }}" class="quick-action" id="qa-input-ta">
                                 <div class="qa-icon qa-indigo">
                                     <span class="material-icons-outlined">description</span>
                                 </div>
