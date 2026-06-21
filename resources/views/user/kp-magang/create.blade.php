@@ -6,15 +6,12 @@
     <meta name="description" content="Input KP/Magang - SIMAKATA">
     <title>Input KP/Magang — SIMAKATA</title>
 
-    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 
     <style>
-        /* ===== RESET & BASE ===== */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
@@ -25,7 +22,6 @@
             --blue-primary: #1a5fb4;
             --blue-dark: #0a3d6b;
             --blue-light: #e8f2ff;
-            --amber: #f4a807;
             --text-1: #111827;
             --text-2: #6b7280;
             --text-3: #9ca3af;
@@ -46,7 +42,6 @@
             line-height: 1.5;
         }
 
-        /* ===== LAYOUT SHELL ===== */
         .shell { display: flex; min-height: 100vh; }
 
         /* ===== SIDEBAR ===== */
@@ -69,17 +64,8 @@
             padding: 24px 22px 18px;
             border-bottom: 1px solid rgba(255,255,255,0.06);
         }
-        .brand-name {
-            font-size: 17px;
-            font-weight: 800;
-            letter-spacing: 2px;
-            color: #fff;
-        }
-        .brand-sub {
-            font-size: 10px;
-            color: rgba(255,255,255,0.38);
-            margin-top: 3px;
-        }
+        .brand-name { font-size: 17px; font-weight: 800; letter-spacing: 2px; color: #fff; }
+        .brand-sub { font-size: 10px; color: rgba(255,255,255,0.38); margin-top: 3px; }
 
         .sidebar-nav {
             flex: 1;
@@ -88,7 +74,6 @@
             flex-direction: column;
             gap: 2px;
         }
-
         .nav-item {
             display: flex;
             align-items: center;
@@ -129,7 +114,7 @@
         .btn-logout .material-icons-outlined { font-size: 20px; }
         .btn-logout:hover { background: rgba(239,68,68,0.12); color: #f87171; }
 
-        /* ===== MAIN CONTENT ===== */
+        /* ===== MAIN ===== */
         .main {
             margin-left: var(--sidebar-w);
             flex: 1;
@@ -152,7 +137,6 @@
             z-index: 50;
             gap: 16px;
         }
-        .topbar-heading { }
         .topbar-heading h1 { font-size: 18px; font-weight: 700; color: var(--text-1); }
         .topbar-heading p { font-size: 12px; color: var(--text-2); margin-top: 1px; }
         .topbar-right { display: flex; align-items: center; gap: 14px; }
@@ -173,7 +157,20 @@
         .topbar-avatar img { width: 100%; height: 100%; object-fit: cover; }
 
         /* ===== PAGE BODY ===== */
-        .page-body { flex: 1; padding: 28px 32px 32px; }
+        .page-body { flex: 1; padding: 28px 32px 40px; }
+
+        /* ===== ALERTS ===== */
+        .alert {
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 13px;
+        }
+        .alert-error { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; }
+        .alert-success { background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; }
 
         /* ===== CARD ===== */
         .card {
@@ -183,8 +180,27 @@
             box-shadow: var(--shadow-sm);
             overflow: hidden;
         }
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 28px;
+            border-bottom: 1px solid #f1f3f5;
+            background: #fafbfc;
+        }
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-1);
+        }
+        .card-title .material-icons-outlined { font-size: 22px; color: var(--blue-primary); }
 
-        /* ===== FORM STYLES ===== */
+        /* ===== FORM ===== */
+        .form-body { padding: 28px 28px; }
+
         .form-label {
             display: block;
             font-size: 11px;
@@ -194,10 +210,10 @@
             color: var(--text-2);
             margin-bottom: 8px;
         }
-        .form-input, .form-select {
+        .form-input, .form-select, .form-textarea {
             width: 100%;
-            padding: 10px 14px;
-            border: 1px solid var(--border);
+            padding: 11px 14px;
+            border: 1.5px solid var(--border);
             border-radius: 10px;
             font-size: 13px;
             font-family: inherit;
@@ -205,29 +221,36 @@
             background: #fff;
             transition: border-color 0.2s, box-shadow 0.2s;
         }
-        .form-input:focus, .form-select:focus {
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
             outline: none;
             border-color: var(--blue-primary);
             box-shadow: 0 0 0 3px rgba(26, 95, 180, 0.1);
         }
-        .form-input::placeholder {
-            color: var(--text-3);
-        }
+        .form-input::placeholder, .form-textarea::placeholder { color: var(--text-3); }
+        .form-input.is-error, .form-select.is-error { border-color: #ef4444; }
 
-        /* Radio Button Custom Style */
-        .radio-option {
-            position: relative;
+        .field-error {
+            font-size: 12px;
+            color: #ef4444;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
-        .radio-option input[type="radio"] {
-            position: absolute;
-            opacity: 0;
-        }
+        .field-error .material-icons-outlined { font-size: 14px; }
+
+        /* ===== RADIO KEGIATAN ===== */
+        .radio-group { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .radio-option { position: relative; }
+        .radio-option input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; }
         .radio-label {
-            display: block;
-            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 20px;
             border: 2px solid var(--border);
             border-radius: 10px;
-            text-align: center;
             font-weight: 600;
             font-size: 13px;
             color: var(--text-2);
@@ -240,127 +263,89 @@
             background: var(--blue-light);
             color: var(--blue-primary);
         }
-        .radio-label:hover {
-            border-color: var(--blue-primary);
-        }
+        .radio-label:hover { border-color: var(--blue-primary); }
+        .radio-label .material-icons-outlined { font-size: 18px; }
 
-        /* File Upload Box */
-        .file-upload-box {
-            border: 2px dashed var(--border);
-            border-radius: 12px;
-            padding: 24px 16px;
-            text-align: center;
-            transition: border-color 0.2s;
-            cursor: pointer;
-            background: #fafbfc;
+        /* ===== PERUSAHAAN TOGGLE ===== */
+        .company-mode-tabs {
+            display: flex;
+            gap: 0;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 12px;
         }
-        .file-upload-box:hover {
-            border-color: var(--blue-primary);
-            background: #fff;
-        }
-        .file-upload-box input[type="file"] {
-            display: none;
-        }
-        .file-icon {
-            width: 48px;
-            height: 48px;
-            margin: 0 auto 12px;
-            color: var(--blue-primary);
-        }
-        .file-title {
-            font-weight: 600;
-            font-size: 13px;
-            color: var(--text-1);
-            margin-bottom: 4px;
-        }
-        .file-desc {
-            font-size: 11px;
-            color: var(--text-2);
-            margin-bottom: 8px;
-        }
-        .file-link {
-            color: var(--blue-primary);
+        .mode-tab {
+            flex: 1;
+            padding: 9px 14px;
             font-size: 12px;
             font-weight: 600;
+            font-family: inherit;
+            border: none;
+            background: #fff;
+            color: var(--text-2);
+            cursor: pointer;
+            transition: background 0.15s, color 0.15s;
         }
-
-        /* Progress Steps */
-        .progress-steps {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 32px;
-        }
-        .step-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .step-circle {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 18px;
-            flex-shrink: 0;
-        }
-        .step-circle.active {
+        .mode-tab.active {
             background: var(--blue-primary);
             color: #fff;
         }
-        .step-circle.inactive {
-            background: #e5e7eb;
-            color: var(--text-3);
-        }
-        .step-label {
-            font-weight: 600;
-            font-size: 13px;
-        }
-        .step-label.active { color: var(--text-1); }
-        .step-label.inactive { color: var(--text-3); }
-        .step-line {
-            flex: 1;
-            height: 2px;
-            background: var(--border);
-            margin: 0 16px;
+        .mode-tab:first-child { border-right: 1.5px solid var(--border); }
+        .company-panel { display: none; }
+        .company-panel.show { display: block; }
+
+        /* ===== DIVIDER ===== */
+        .divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 24px 0;
         }
 
-        /* Info Box */
-        .info-box {
-            background: var(--blue-light);
-            border: 1px solid rgba(26, 95, 180, 0.2);
+        /* ===== UPLOAD ===== */
+        .upload-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .file-upload-box {
+            border: 2px dashed var(--border);
             border-radius: 12px;
-            padding: 16px;
-            display: flex;
-            gap: 14px;
-            margin-bottom: 28px;
+            padding: 20px 16px;
+            text-align: center;
+            cursor: pointer;
+            background: #fafbfc;
+            transition: border-color 0.2s, background 0.2s;
+            display: block;
         }
-        .info-icon {
-            width: 24px;
-            height: 24px;
-            color: var(--blue-primary);
-            flex-shrink: 0;
-        }
-        .info-content h3 {
+        .file-upload-box:hover { border-color: var(--blue-primary); background: var(--blue-light); }
+        .file-upload-box input[type="file"] { display: none; }
+        .file-upload-box .material-icons-outlined { font-size: 32px; color: var(--blue-primary); margin-bottom: 8px; }
+        .file-title { font-weight: 600; font-size: 13px; color: var(--text-1); margin-bottom: 4px; }
+        .file-desc { font-size: 11px; color: var(--text-2); }
+        .file-name { font-size: 11px; color: var(--blue-primary); font-weight: 600; margin-top: 6px; }
+        .required-badge {
+            display: inline-block;
+            background: #fef3c7;
+            color: #92400e;
+            font-size: 10px;
             font-weight: 700;
-            font-size: 13px;
-            color: var(--blue-dark);
-            margin-bottom: 6px;
-        }
-        .info-content p {
-            font-size: 12px;
-            color: var(--blue-dark);
-            line-height: 1.6;
+            padding: 1px 6px;
+            border-radius: 4px;
+            margin-left: 4px;
+            letter-spacing: 0.3px;
         }
 
-        /* Buttons */
+        /* ===== FORM ACTIONS ===== */
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 12px;
+            margin-top: 28px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
         .btn {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 7px;
             padding: 11px 24px;
             border-radius: 10px;
             font-size: 13px;
@@ -371,44 +356,43 @@
             border: none;
             transition: all 0.2s;
         }
-        .btn-primary {
-            background: var(--blue-primary);
-            color: #fff;
-        }
-        .btn-primary:hover {
-            background: var(--blue-dark);
-        }
-        .btn-secondary {
-            background: #fff;
+        .btn .material-icons-outlined { font-size: 18px; }
+        .btn-primary { background: var(--blue-primary); color: #fff; }
+        .btn-primary:hover { background: var(--blue-dark); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(26,95,180,0.3); }
+        .btn-secondary { background: #fff; color: var(--text-1); border: 1.5px solid var(--border); }
+        .btn-secondary:hover { background: #f9fafb; }
+
+        /* ===== SECTION HEADING ===== */
+        .section-heading {
+            font-size: 13px;
+            font-weight: 700;
             color: var(--text-1);
-            border: 1px solid var(--border);
-        }
-        .btn-secondary:hover {
-            background: #f9fafb;
-        }
-        .btn .material-icons-outlined {
-            font-size: 18px;
-        }
-
-        /* Form Actions */
-        .form-actions {
+            margin-bottom: 16px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-top: 28px;
+            gap: 8px;
         }
+        .section-heading .material-icons-outlined { font-size: 18px; color: var(--blue-primary); }
 
-        /* Responsive */
+        /* ===== GRID ===== */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .field-group { margin-bottom: 20px; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            .upload-grid { grid-template-columns: 1fr; }
+            .radio-group { grid-template-columns: 1fr 1fr; }
+        }
         @media (max-width: 768px) {
             :root { --sidebar-w: 0px; }
             .sidebar { display: none; }
             .main { margin-left: 0; }
             .topbar { padding: 0 16px; }
-            .topbar-heading h1 { font-size: 15px; }
             .page-body { padding: 16px; }
-            .progress-steps { flex-direction: column; align-items: stretch; }
-            .step-line { display: none; }
-            .form-actions { flex-direction: column; gap: 12px; }
+            .form-body { padding: 20px 16px; }
+            .card-header { padding: 14px 16px; }
+            .form-actions { flex-direction: column; }
             .form-actions .btn { width: 100%; justify-content: center; }
         }
     </style>
@@ -436,7 +420,7 @@
                 <span class="material-icons-outlined">work_outline</span>
                 <span>Input KP/Magang</span>
             </a>
-            <a href="{{ route('judul-ta.index') }}" class="nav-item">
+            <a href="{{ route('user.tugas-akhir.create') }}" class="nav-item">
                 <span class="material-icons-outlined">description</span>
                 <span>Input Tugas Akhir</span>
             </a>
@@ -463,14 +447,13 @@
 
     {{-- ===== MAIN ===== --}}
     <div class="main">
-        
+
         {{-- Topbar --}}
         <header class="topbar">
             <div class="topbar-heading">
                 <h1>Input KP/Magang</h1>
-                <p>Lengkapi data untuk pengajuan Kerja Praktik atau Magang Anda.</p>
+                <p>Lengkapi data pengajuan Kerja Praktik atau Magang Anda.</p>
             </div>
-            
             <div class="topbar-right">
                 <div class="topbar-divider"></div>
                 <div class="topbar-user">
@@ -491,159 +474,276 @@
 
         {{-- Page Content --}}
         <main class="page-body">
-            <div style="max-width: 960px;">
-                
-                {{-- Progress Steps --}}
-                <div class="progress-steps">
-                    <div class="step-item">
-                        <div class="step-circle active">1</div>
-                        <div class="step-label active">Pengajuan</div>
+
+            {{-- Error Messages --}}
+            @if($errors->any())
+                <div class="alert alert-error">
+                    <span class="material-icons-outlined" style="font-size:18px;flex-shrink:0;">error_outline</span>
+                    <div>
+                        <strong>Perbaiki kesalahan berikut:</strong>
+                        <ul style="margin-top:4px;padding-left:16px;">
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
                     </div>
-                    <div class="step-line"></div>
-                    <div class="step-item">
-                        <div class="step-circle inactive">2</div>
-                        <div class="step-label inactive">Dokumen</div>
-                    </div>
-                    <div class="step-line"></div>
-                    <div class="step-item">
-                        <div class="step-circle inactive">3</div>
-                        <div class="step-label inactive">Konfirmasi</div>
+                </div>
+            @endif
+
+            @if(session('success'))
+                <div class="alert alert-success">
+                    <span class="material-icons-outlined" style="font-size:18px;flex-shrink:0;">check_circle</span>
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="material-icons-outlined">work_outline</span>
+                        Form Pengajuan KP / Magang
                     </div>
                 </div>
 
-                {{-- Info Box --}}
-                <div class="info-box">
-                    <span class="material-icons-outlined info-icon">info</span>
-                    <div class="info-content">
-                        <h3>Petunjuk Pengisian</h3>
-                        <p>Pastikan nama pengajuan sesuai dengan data terdaftar. Unggah dokumen dalam format PDF dengan ukuran maksimal 2MB per file.</p>
-                    </div>
-                </div>
+                <form action="{{ route('user.kp-magang.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-body">
 
-                {{-- Form Card --}}
-                <div class="card">
-                    <form action="{{ route('user.kp-magang.store') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        
-                        <div style="padding: 28px 32px;">
-                            
-                            {{-- Jenis Kegiatan --}}
-                            <div style="margin-bottom: 24px;">
-                                <label class="form-label">Jenis Kegiatan *</label>
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-                                    <label class="radio-option">
-                                        <input type="radio" name="kegiatan" value="Kerja Praktik" required checked>
-                                        <span class="radio-label">Kerja Praktik</span>
-                                    </label>
-                                    <label class="radio-option">
-                                        <input type="radio" name="kegiatan" value="Magang" required>
-                                        <span class="radio-label">Magang</span>
-                                    </label>
-                                </div>
-                            </div>
+                        {{-- Hidden fields --}}
+                        <input type="hidden" name="nama" value="{{ $user->nama_lengkap }}">
+                        <input type="hidden" name="nim" value="{{ $user->nim }}">
 
-                            {{-- Nama Perusahaan --}}
-                            <div style="margin-bottom: 24px;">
-                                <label class="form-label">Nama Perusahaan *</label>
-                                <select name="perusahaan_id" required class="form-select">
-                                    <option value="">Pilih Perusahaan dan Lokasi</option>
-                                    @foreach($perusahaan as $p)
-                                        <option value="{{ $p->id }}">{{ $p->nama }} - {{ $p->lokasi }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            {{-- Grid 2 Columns --}}
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;">
-                                
-                                {{-- NIM --}}
-                                <div>
-                                    <label class="form-label">NIM / NISN *</label>
-                                    <input type="text" name="nim" value="{{ $user->nim }}" required class="form-input" placeholder="Contoh: E020180001">
-                                </div>
-
-                                {{-- Bidang/Divisi --}}
-                                <div>
-                                    <label class="form-label">Bidang / Divisi *</label>
-                                    <input type="text" name="angkatan" value="{{ $user->angkatan }}" required class="form-input" placeholder="Contoh: Product & Technology">
-                                </div>
-
-                                {{-- Periode Memulai --}}
-                                <div>
-                                    <label class="form-label">Periode Memulai *</label>
-                                    <input type="date" name="periode" required class="form-input">
-                                </div>
-
-                                {{-- Periode Selesai --}}
-                                <div>
-                                    <label class="form-label">Selesai *</label>
-                                    <input type="date" required class="form-input">
-                                </div>
-                            </div>
-
-                            {{-- Hidden Field --}}
-                            <input type="hidden" name="nama" value="{{ $user->nama_lengkap }}">
-
-                            {{-- Divider --}}
-                            <div style="border-top: 1px solid var(--border); margin: 32px 0;"></div>
-
-                            {{-- Upload Dokumen --}}
-                            <h3 style="font-size: 15px; font-weight: 700; color: var(--text-1); margin-bottom: 20px;">Upload Dokumen Pendukung</h3>
-                            
-                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px;">
-                                
-                                {{-- CV/Resume --}}
-                                <label class="file-upload-box">
-                                    <input type="file" name="cv_file" accept=".pdf" required onchange="updateFileName(this, 'cv-name')">
-                                    <span class="material-icons-outlined file-icon">description</span>
-                                    <div class="file-title">CV/Resume</div>
-                                    <div class="file-desc" id="cv-name">File: PDF, Max 2MB</div>
-                                    <span class="file-link">Upload File</span>
+                        {{-- ===== JENIS KEGIATAN ===== --}}
+                        <div class="field-group">
+                            <label class="form-label">Jenis Kegiatan <span style="color:#ef4444">*</span></label>
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" name="kegiatan" value="Kerja Praktik" required
+                                        {{ old('kegiatan', 'Kerja Praktik') === 'Kerja Praktik' ? 'checked' : '' }}>
+                                    <span class="radio-label">
+                                        <span class="material-icons-outlined">engineering</span>
+                                        Kerja Praktik
+                                    </span>
                                 </label>
-
-                                {{-- Transkrip Nilai --}}
-                                <label class="file-upload-box">
-                                    <input type="file" name="transkrip_file" accept=".pdf" required onchange="updateFileName(this, 'transkrip-name')">
-                                    <span class="material-icons-outlined file-icon">article</span>
-                                    <div class="file-title">Transkrip Nilai</div>
-                                    <div class="file-desc" id="transkrip-name">File: PDF, Max 2MB</div>
-                                    <span class="file-link">Upload File</span>
-                                </label>
-
-                                {{-- Portofolio/Sertifikat --}}
-                                <label class="file-upload-box">
-                                    <input type="file" name="portofolio_file" accept=".pdf" onchange="updateFileName(this, 'porto-name')">
-                                    <span class="material-icons-outlined file-icon">folder_open</span>
-                                    <div class="file-title">Portofolio/Sertifikat</div>
-                                    <div class="file-desc" id="porto-name">File: PDF, Max 2MB</div>
-                                    <span class="file-link">Upload File</span>
+                                <label class="radio-option">
+                                    <input type="radio" name="kegiatan" value="Magang"
+                                        {{ old('kegiatan') === 'Magang' ? 'checked' : '' }}>
+                                    <span class="radio-label">
+                                        <span class="material-icons-outlined">work</span>
+                                        Magang
+                                    </span>
                                 </label>
                             </div>
+                        </div>
 
-                            {{-- Form Actions --}}
-                            <div class="form-actions">
-                                <a href="{{ route('user.dashboard') }}" class="btn btn-secondary">Simpan Draft</a>
-                                <button type="submit" class="btn btn-primary">
-                                    Lanjutkan
-                                    <span class="material-icons-outlined">arrow_forward</span>
+                        <hr class="divider">
+
+                        {{-- ===== PERUSAHAAN ===== --}}
+                        <div class="field-group">
+                            <label class="form-label">Perusahaan / Instansi <span style="color:#ef4444">*</span></label>
+
+                            <div class="company-mode-tabs">
+                                <button type="button" class="mode-tab active" id="tab-pilih" onclick="switchMode('pilih')">
+                                    Pilih dari Daftar
+                                </button>
+                                <button type="button" class="mode-tab" id="tab-manual" onclick="switchMode('manual')">
+                                    Ketik Manual (Baru)
                                 </button>
                             </div>
 
+                            {{-- Panel: Pilih dari Dropdown --}}
+                            <div class="company-panel show" id="panel-pilih">
+                                <select name="perusahaan_id" id="perusahaan_id" class="form-select {{ $errors->has('perusahaan_id') ? 'is-error' : '' }}">
+                                    <option value="">— Pilih Perusahaan —</option>
+                                    @foreach($perusahaan as $p)
+                                        <option value="{{ $p->id }}" {{ old('perusahaan_id') == $p->id ? 'selected' : '' }}>
+                                            {{ $p->nama }} — {{ $p->lokasi }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('perusahaan_id')
+                                    <div class="field-error">
+                                        <span class="material-icons-outlined">warning</span>{{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+                            {{-- Panel: Ketik Manual --}}
+                            <div class="company-panel" id="panel-manual">
+                                <div class="grid-2" style="margin-top:0">
+                                    <div>
+                                        <input type="text" name="perusahaan_nama_manual" id="perusahaan_nama_manual"
+                                            class="form-input {{ $errors->has('perusahaan_nama_manual') ? 'is-error' : '' }}"
+                                            placeholder="Nama perusahaan / instansi"
+                                            value="{{ old('perusahaan_nama_manual') }}">
+                                        @error('perusahaan_nama_manual')
+                                            <div class="field-error">
+                                                <span class="material-icons-outlined">warning</span>{{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div>
+                                        <input type="text" name="perusahaan_lokasi_manual" id="perusahaan_lokasi_manual"
+                                            class="form-input"
+                                            placeholder="Kota / lokasi perusahaan"
+                                            value="{{ old('perusahaan_lokasi_manual') }}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            @error('perusahaan')
+                                <div class="field-error" style="margin-top:6px;">
+                                    <span class="material-icons-outlined">warning</span>{{ $message }}
+                                </div>
+                            @enderror
                         </div>
-                    </form>
-                </div>
 
+                        <hr class="divider">
+
+                        {{-- ===== DATA MAHASISWA & PERIODE ===== --}}
+                        <div class="section-heading">
+                            <span class="material-icons-outlined">person</span>
+                            Data Mahasiswa & Periode
+                        </div>
+
+                        <div class="grid-2">
+                            {{-- Nama Lengkap (readonly) --}}
+                            <div class="field-group">
+                                <label class="form-label">Nama Lengkap</label>
+                                <input type="text" class="form-input" value="{{ $user->nama_lengkap }}" readonly
+                                    style="background:#f9fafb;color:var(--text-2);cursor:not-allowed;">
+                            </div>
+
+                            {{-- Bidang / Divisi --}}
+                            <div class="field-group">
+                                <label class="form-label">Bidang / Divisi <span style="color:#ef4444">*</span></label>
+                                <input type="text" name="angkatan"
+                                    class="form-input {{ $errors->has('angkatan') ? 'is-error' : '' }}"
+                                    placeholder="Contoh: Product & Technology"
+                                    value="{{ old('angkatan', $user->angkatan) }}" required>
+                                @error('angkatan')
+                                    <div class="field-error"><span class="material-icons-outlined">warning</span>{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Periode Mulai --}}
+                            <div class="field-group">
+                                <label class="form-label">Periode Mulai <span style="color:#ef4444">*</span></label>
+                                <input type="date" name="periode"
+                                    class="form-input {{ $errors->has('periode') ? 'is-error' : '' }}"
+                                    value="{{ old('periode') }}" required>
+                                @error('periode')
+                                    <div class="field-error"><span class="material-icons-outlined">warning</span>{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <hr class="divider">
+
+                        {{-- ===== UPLOAD DOKUMEN ===== --}}
+                        <div class="section-heading">
+                            <span class="material-icons-outlined">upload_file</span>
+                            Upload Dokumen
+                        </div>
+
+                        <div class="upload-grid">
+                            {{-- CV/Resume --}}
+                            <label class="file-upload-box" for="cv_file">
+                                <input type="file" id="cv_file" name="cv_file" accept=".pdf" required
+                                    onchange="updateFileName(this, 'cv-name')">
+                                <span class="material-icons-outlined">description</span>
+                                <div class="file-title">
+                                    CV / Resume
+                                    <span class="required-badge">Wajib</span>
+                                </div>
+                                <div class="file-desc">Format PDF, maks. 2MB</div>
+                                <div class="file-name" id="cv-name">Belum ada file dipilih</div>
+                            </label>
+
+                            {{-- Transkrip Nilai --}}
+                            <label class="file-upload-box" for="transkrip_file">
+                                <input type="file" id="transkrip_file" name="transkrip_file" accept=".pdf" required
+                                    onchange="updateFileName(this, 'transkrip-name')">
+                                <span class="material-icons-outlined">article</span>
+                                <div class="file-title">
+                                    Transkrip Nilai
+                                    <span class="required-badge">Wajib</span>
+                                </div>
+                                <div class="file-desc">Format PDF, maks. 2MB</div>
+                                <div class="file-name" id="transkrip-name">Belum ada file dipilih</div>
+                            </label>
+                        </div>
+
+                        @error('cv_file')
+                            <div class="field-error" style="margin-top:8px;"><span class="material-icons-outlined">warning</span>{{ $message }}</div>
+                        @enderror
+                        @error('transkrip_file')
+                            <div class="field-error" style="margin-top:4px;"><span class="material-icons-outlined">warning</span>{{ $message }}</div>
+                        @enderror
+
+                        {{-- ===== FORM ACTIONS ===== --}}
+                        <div class="form-actions">
+                            <a href="{{ route('user.dashboard') }}" class="btn btn-secondary">
+                                <span class="material-icons-outlined">arrow_back</span>
+                                Kembali
+                            </a>
+                            <button type="submit" class="btn btn-primary" id="btn-submit">
+                                <span class="material-icons-outlined">send</span>
+                                Submit Pengajuan
+                            </button>
+                        </div>
+
+                    </div>
+                </form>
             </div>
-        </main>
 
+        </main>
     </div>
 </div>
 
 <script>
-function updateFileName(input, elementId) {
-    const fileName = input.files[0]?.name || 'File: PDF, Max 2MB';
-    document.getElementById(elementId).textContent = fileName;
+// Toggle company mode
+let currentMode = '{{ old("perusahaan_id") ? "pilih" : (old("perusahaan_nama_manual") ? "manual" : "pilih") }}';
+
+function switchMode(mode) {
+    currentMode = mode;
+
+    document.getElementById('tab-pilih').classList.toggle('active', mode === 'pilih');
+    document.getElementById('tab-manual').classList.toggle('active', mode === 'manual');
+    document.getElementById('panel-pilih').classList.toggle('show', mode === 'pilih');
+    document.getElementById('panel-manual').classList.toggle('show', mode === 'manual');
+
+    // Clear opposite fields
+    if (mode === 'pilih') {
+        document.getElementById('perusahaan_nama_manual').value = '';
+        document.getElementById('perusahaan_lokasi_manual').value = '';
+    } else {
+        document.getElementById('perusahaan_id').value = '';
+    }
 }
+
+// Restore mode if there's old input
+@if(old('perusahaan_nama_manual'))
+    switchMode('manual');
+@endif
+
+// File name display
+function updateFileName(input, elementId) {
+    const el = document.getElementById(elementId);
+    el.textContent = input.files[0] ? input.files[0].name : 'Belum ada file dipilih';
+}
+
+// Submit loading state
+document.querySelector('form').addEventListener('submit', function() {
+    const btn = document.getElementById('btn-submit');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="material-icons-outlined" style="animation:spin 1s linear infinite">sync</span> Mengirim...';
+});
+
+// CSS spin
+const style = document.createElement('style');
+style.textContent = '@keyframes spin { to { transform: rotate(360deg); } }';
+document.head.appendChild(style);
 </script>
 </body>
 </html>
