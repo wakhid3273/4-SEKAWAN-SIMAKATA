@@ -303,7 +303,7 @@
                 <span class="material-icons-outlined">work_outline</span>
                 <span>Input KP/Magang</span>
             </a>
-            <a href="{{ route('judul-ta.index') }}" class="nav-item">
+            <a href="{{ route('user.tugas-akhir.create') }}" class="nav-item">
                 <span class="material-icons-outlined">description</span>
                 <span>Input Tugas Akhir</span>
             </a>
@@ -341,8 +341,12 @@
                         <div class="topbar-user-name">{{ $user->nama_lengkap }}</div>
                         <div class="topbar-user-role">Mahasiswa</div>
                     </div>
-                    <div class="topbar-avatar">
-                        {{ strtoupper(substr($user->nama_lengkap, 0, 1)) }}
+                    <div class="topbar-avatar" style="overflow:hidden;">
+                        @if($user->avatar)
+                            <img src="{{ Storage::url($user->avatar) }}" alt="Avatar" style="width:100%;height:100%;object-fit:cover;">
+                        @else
+                            {{ strtoupper(substr($user->nama_lengkap, 0, 1)) }}
+                        @endif
                     </div>
                 </div>
             </div>
@@ -466,17 +470,18 @@
                                         $badgeClass = 'badge-pending';
                                         $badgeText = 'Menunggu Verifikasi';
                                         
-                                        if ($magang->status === 'Disetujui') {
+                                        if ($magang->status === 'approved') {
                                             $dotClass = 'td-blue';
                                             $icon = 'check_circle';
                                             $badgeClass = 'badge-approved';
                                             $badgeText = 'Disetujui';
-                                        } elseif ($magang->status === 'Ditolak') {
+                                        } elseif ($magang->status === 'rejected') {
                                             $dotClass = 'td-red';
                                             $icon = 'cancel';
                                             $badgeClass = 'badge-rejected';
                                             $badgeText = 'Ditolak';
-                                        } elseif ($magang->status === 'Pending Review') {
+                                        } else {
+                                            // default: pending
                                             $dotClass = 'td-amber';
                                             $icon = 'pending_actions';
                                         }
