@@ -82,23 +82,60 @@ class ProfileController extends Controller
             'email' => 'required|email|max:255|unique:users,email,' . $admin->id,
             'nim' => 'required|string|max:50|unique:users,nim,' . $admin->id,
             'password' => 'nullable|min:6',
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120', // 5MB
+            'cover_file' => 'nullable|file|mimes:jpeg,png,jpg,webp,mp4,webm|max:10240', // 10MB
+            'cover_type' => 'nullable|in:image,video',
         ];
 
         $request->validate($rules);
 
+        // Update basic info
         $admin->nama_lengkap = $request->nama_lengkap;
         $admin->email = $request->email;
         $admin->nim = $request->nim;
 
-        if ($request->hasFile('avatar')) {
-            if ($admin->avatar && Storage::disk('public')->exists($admin->avatar)) {
-                Storage::disk('public')->delete($admin->avatar);
+        // Handle delete profile photo FIRST before upload
+        if ($request->input('delete_profile_photo') === '1') {
+            if ($admin->profile_photo && Storage::disk('public')->exists($admin->profile_photo)) {
+                Storage::disk('public')->delete($admin->profile_photo);
             }
-            $avatarPath = $request->file('avatar')->store('avatars', 'public');
-            $admin->avatar = $avatarPath;
+            $admin->profile_photo = null;
         }
 
+        // Handle profile photo upload (NEW)
+        if ($request->hasFile('profile_photo')) {
+            if ($admin->profile_photo && Storage::disk('public')->exists($admin->profile_photo)) {
+                Storage::disk('public')->delete($admin->profile_photo);
+            }
+            $profilePhotoPath = $request->file('profile_photo')->store('profile_photos', 'public');
+            $admin->profile_photo = $profilePhotoPath;
+        }
+
+        // Handle delete cover FIRST before upload
+        if ($request->input('delete_cover') === '1') {
+            if ($admin->cover_file && Storage::disk('public')->exists($admin->cover_file)) {
+                Storage::disk('public')->delete($admin->cover_file);
+            }
+            $admin->cover_file = null;
+            $admin->cover_type = null;
+        }
+
+        // Handle cover upload (NEW)
+        if ($request->hasFile('cover_file')) {
+            // Delete old cover
+            if ($admin->cover_file && Storage::disk('public')->exists($admin->cover_file)) {
+                Storage::disk('public')->delete($admin->cover_file);
+            }
+
+            $coverFile = $request->file('cover_file');
+            $coverType = $request->input('cover_type', 'image');
+
+            $coverPath = $coverFile->store('covers', 'public');
+            $admin->cover_file = $coverPath;
+            $admin->cover_type = $coverType;
+        }
+
+        // Update password if provided
         if ($request->filled('password')) {
             $admin->password = \Illuminate\Support\Facades\Hash::make($request->password);
         }

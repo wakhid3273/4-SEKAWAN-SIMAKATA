@@ -476,7 +476,9 @@
         <a href="{{ route('admin.profil') }}" style="text-decoration:none;">
             <div class="sidebar-user" style="cursor:pointer; {{ request()->routeIs('admin.profil') ? 'background: rgba(255,255,255,0.08);' : '' }}">
                 <div class="sidebar-user-avatar">
-                    @if(auth()->check() && auth()->user()->avatar)
+                    @if(auth()->check() && auth()->user()->profile_photo)
+                        <img src="{{ Storage::url(auth()->user()->profile_photo) }}" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                    @elseif(auth()->check() && auth()->user()->avatar)
                         <img src="{{ Storage::url(auth()->user()->avatar) }}" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
                     @else
                         {{ strtoupper(substr(auth()->user()->nama_lengkap ?? 'A', 0, 1)) }}

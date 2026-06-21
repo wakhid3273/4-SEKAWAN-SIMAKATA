@@ -284,11 +284,12 @@
                         Upload Foto
                     </label>
                     @if($admin->profile_photo)
-                    <button type="submit" name="delete_profile_photo" value="1" class="delete-btn" onclick="return confirm('Yakin ingin menghapus foto profil?')">
+                    <button type="button" class="delete-btn" id="deletePhotoBtn" onclick="deleteProfilePhoto()">
                         <span class="material-icons-outlined" style="font-size: 14px; vertical-align: middle; margin-right: 4px;">delete</span>
                         Hapus Foto
                     </button>
                     @endif
+                    <input type="hidden" name="delete_profile_photo" id="deleteProfilePhotoFlag" value="0">
                     <div class="info-box" style="margin-top: 12px;">
                         <span class="material-icons-outlined">info</span>
                         <span>Format: JPG, JPEG, PNG, WEBP. Maksimal 5MB. Rasio 1:1 disarankan.</span>
@@ -319,10 +320,11 @@
                     @endif
                     
                     <div style="margin-top: 12px;">
-                        <button type="submit" name="delete_cover" value="1" class="delete-btn" onclick="return confirm('Yakin ingin menghapus cover profil?')">
+                        <button type="button" class="delete-btn" onclick="deleteCover()">
                             <span class="material-icons-outlined" style="font-size: 14px; vertical-align: middle; margin-right: 4px;">delete</span>
                             Hapus Cover
                         </button>
+                        <input type="hidden" name="delete_cover" id="deleteCoverFlag" value="0">
                     </div>
                 </div>
             @else

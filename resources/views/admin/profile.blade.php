@@ -15,6 +15,19 @@
             margin-bottom: 24px;
             position: relative;
             overflow: hidden;
+            min-height: 200px;
+        }
+
+        .profile-header-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1;
+            pointer-events: none;
         }
 
         .profile-header-card::after {
@@ -27,10 +40,27 @@
             background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
             pointer-events: none;
+            z-index: 2;
+        }
+        
+        .profile-cover-media {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+        
+        .profile-cover-media video {
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
         }
 
         .profile-avatar-wrapper {
             position: relative;
+            z-index: 3;
         }
 
         .profile-avatar {
@@ -54,6 +84,11 @@
             justify-content: center;
             border-radius: 8px;
             font-size: 14px;
+            z-index: 4;
+        }
+
+        .profile-info {
+            z-index: 3;
         }
 
         .profile-info h2 {
@@ -337,9 +372,30 @@
         </div>
     </div>
 
+    @if(session('success'))
+    <div style="background: #d1fae5; border: 1px solid #6ee7b7; color: #065f46; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+        <span class="material-icons-outlined" style="font-size: 20px; color: #10b981;">check_circle</span>
+        <span style="font-weight: 600;">{{ session('success') }}</span>
+    </div>
+    @endif
+
     <div class="profile-header-card">
+        <!-- Cover Media (Image or Video) -->
+        @if($admin->cover_file)
+            @if($admin->cover_type === 'video')
+                <video class="profile-cover-media" autoplay muted loop playsinline preload="auto">
+                    <source src="{{ Storage::url($admin->cover_file) }}" type="video/mp4">
+                    <source src="{{ Storage::url($admin->cover_file) }}" type="video/webm">
+                </video>
+            @else
+                <img class="profile-cover-media" src="{{ Storage::url($admin->cover_file) }}" alt="Cover" loading="eager">
+            @endif
+        @endif
+        
         <div class="profile-avatar-wrapper">
-            @if($admin->avatar)
+            @if($admin->profile_photo)
+                <img src="{{ Storage::url($admin->profile_photo) }}" alt="Profile Photo" class="profile-avatar">
+            @elseif($admin->avatar)
                 <img src="{{ Storage::url($admin->avatar) }}" alt="Avatar" class="profile-avatar">
             @else
                 <img src="https://ui-avatars.com/api/?name={{ urlencode($admin->nama_lengkap ?? 'Admin') }}&background=0D8ABC&color=fff&size=128" alt="Avatar" class="profile-avatar">
