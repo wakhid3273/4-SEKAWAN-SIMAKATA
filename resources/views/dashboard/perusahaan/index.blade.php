@@ -27,6 +27,124 @@
         font-size: 18px;
     }
     
+    /* Search Bar Styles */
+    .search-container {
+        background: #ffffff;
+        border-radius: 14px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+        border: 1px solid rgba(0,0,0,0.04);
+        padding: 20px 24px;
+        margin-bottom: 20px;
+        animation: fade-up 0.3s ease both;
+    }
+    
+    .search-form {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+    }
+    
+    .search-input-group {
+        flex: 1;
+        position: relative;
+    }
+    
+    .search-input-icon {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #9ca3af;
+        pointer-events: none;
+    }
+    
+    .search-input {
+        width: 100%;
+        padding: 11px 14px 11px 44px;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        font-size: 13px;
+        font-family: inherit;
+        color: #111827;
+        background: #fff;
+        transition: all 0.2s;
+    }
+    
+    .search-input:focus {
+        outline: none;
+        border-color: #1a5fb4;
+        box-shadow: 0 0 0 3px rgba(26, 95, 180, 0.1);
+    }
+    
+    .search-input::placeholder {
+        color: #9ca3af;
+    }
+    
+    .btn-search {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 11px 20px;
+        border-radius: 10px;
+        background: #1a5fb4;
+        color: #fff;
+        font-size: 13px;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+    }
+    
+    .btn-search:hover {
+        background: #1e40af;
+        box-shadow: 0 2px 8px rgba(26,95,180,0.25);
+    }
+    
+    .btn-search .material-icons-outlined {
+        font-size: 18px;
+    }
+    
+    .btn-clear {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 11px 20px;
+        border-radius: 10px;
+        background: #fff;
+        color: #6b7280;
+        font-size: 13px;
+        font-weight: 600;
+        border: 1px solid #e5e7eb;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+    }
+    
+    .btn-clear:hover {
+        background: #f9fafb;
+        border-color: #d1d5db;
+        color: #374151;
+    }
+    
+    .btn-clear .material-icons-outlined {
+        font-size: 18px;
+    }
+    
+    .search-info {
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 1px solid #f3f4f6;
+        font-size: 13px;
+        color: #6b7280;
+    }
+    
+    .search-info strong {
+        color: #1a5fb4;
+        font-weight: 600;
+    }
+    
     .table-container {
         background: #ffffff;
         border-radius: 14px;
@@ -229,6 +347,14 @@
     }
     
     @media (max-width: 768px) {
+        .search-form {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .btn-search,
+        .btn-clear {
+            justify-content: center;
+        }
         .pagination-container {
             flex-direction: column;
             gap: 12px;
@@ -270,6 +396,41 @@
     {{ session('success') }}
 </div>
 @endif
+
+{{-- Search Container --}}
+<div class="search-container">
+    <form action="{{ route('admin.perusahaan.index') }}" method="GET" class="search-form">
+        <div class="search-input-group">
+            <span class="material-icons-outlined search-input-icon">search</span>
+            <input 
+                type="text" 
+                name="search" 
+                class="search-input" 
+                placeholder="Cari nama perusahaan... (contoh: Telkom, Gojek, Shopee)" 
+                value="{{ request('search') }}"
+                autofocus>
+        </div>
+        <button type="submit" class="btn-search">
+            <span class="material-icons-outlined">search</span>
+            Cari
+        </button>
+        @if(request('search'))
+        <a href="{{ route('admin.perusahaan.index') }}" class="btn-clear">
+            <span class="material-icons-outlined">close</span>
+            Reset
+        </a>
+        @endif
+    </form>
+    
+    @if(request('search'))
+    <div class="search-info">
+        Menampilkan hasil pencarian untuk: <strong>"{{ request('search') }}"</strong>
+        @if($perusahaan->total() > 0)
+            - Ditemukan <strong>{{ $perusahaan->total() }}</strong> perusahaan
+        @endif
+    </div>
+    @endif
+</div>
 
 <div class="table-container">
     <table class="data-table">
@@ -313,8 +474,20 @@
                 <tr>
                     <td colspan="4">
                         <div class="empty-state">
-                            <span class="material-icons-outlined">domain_disabled</span>
-                            <p>Belum ada data perusahaan.</p>
+                            <span class="material-icons-outlined">
+                                @if(request('search'))
+                                    search_off
+                                @else
+                                    domain_disabled
+                                @endif
+                            </span>
+                            <p>
+                                @if(request('search'))
+                                    Data perusahaan dengan nama "<strong>{{ request('search') }}</strong>" tidak ditemukan.
+                                @else
+                                    Belum ada data perusahaan.
+                                @endif
+                            </p>
                         </div>
                     </td>
                 </tr>

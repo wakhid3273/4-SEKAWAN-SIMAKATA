@@ -61,9 +61,18 @@ class PerusahaanController extends Controller
         return view('perusahaan.detail', compact('perusahaan', 'riwayatMagang'));
     }
 
-    public function manage()
+    public function manage(Request $request)
     {
-        $perusahaan = Perusahaan::orderBy('nama', 'asc')->paginate(10);
+        $query = Perusahaan::orderBy('nama', 'asc');
+        
+        // Search by nama perusahaan
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where('nama', 'like', "%{$search}%");
+        }
+        
+        $perusahaan = $query->paginate(10)->withQueryString();
+        
         return view('dashboard.perusahaan.index', compact('perusahaan'));
     }
 
@@ -163,6 +172,7 @@ class PerusahaanController extends Controller
     {
         $perusahaan = Perusahaan::findOrFail($id);
         $namaPerusahaan = $perusahaan->nama;
+        
         $perusahaan->delete();
         
         // Log aktivitas admin
