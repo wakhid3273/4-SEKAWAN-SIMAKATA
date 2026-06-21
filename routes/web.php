@@ -112,6 +112,20 @@ Route::middleware('auth')->group(function () {
         ->middleware('role:user')
         ->name('user.kp-magang.update');
 
+    // User Input Tugas Akhir
+    Route::get('/user/input-tugas-akhir', [\App\Http\Controllers\User\TugasAkhirController::class, 'create'])
+        ->middleware('role:user')
+        ->name('user.tugas-akhir.create');
+    Route::post('/user/input-tugas-akhir', [\App\Http\Controllers\User\TugasAkhirController::class, 'store'])
+        ->middleware('role:user')
+        ->name('user.tugas-akhir.store');
+    Route::get('/user/tugas-akhir/{id}/edit', [\App\Http\Controllers\User\TugasAkhirController::class, 'edit'])
+        ->middleware('role:user')
+        ->name('user.tugas-akhir.edit');
+    Route::put('/user/tugas-akhir/{id}', [\App\Http\Controllers\User\TugasAkhirController::class, 'update'])
+        ->middleware('role:user')
+        ->name('user.tugas-akhir.update');
+
     // User Riwayat Aktivitas (spesifik untuk user yang login)
     Route::get('/user/riwayat-aktivitas', [\App\Http\Controllers\User\RiwayatAktivitasController::class, 'index'])
         ->middleware('role:user')

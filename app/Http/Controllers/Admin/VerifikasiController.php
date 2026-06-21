@@ -185,8 +185,8 @@ class VerifikasiController extends Controller
                 'nama' => $pengajuan->student->nama_lengkap ?? 'N/A',
                 'nim' => $pengajuan->student->nim ?? 'N/A',
                 'title' => $pengajuan->title,
-                'abstract' => $pengajuan->abstract,
                 'status' => $pengajuan->status,
+                'submitted_at' => $pengajuan->submitted_at,
             ]
         ]);
     }
