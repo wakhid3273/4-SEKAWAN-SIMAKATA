@@ -105,6 +105,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/user/input-kp-magang', [\App\Http\Controllers\User\KpMagangController::class, 'store'])
         ->middleware('role:user')
         ->name('user.kp-magang.store');
+    Route::get('/user/kp-magang/{id}/edit', [\App\Http\Controllers\User\KpMagangController::class, 'edit'])
+        ->middleware('role:user')
+        ->name('user.kp-magang.edit');
+    Route::put('/user/kp-magang/{id}', [\App\Http\Controllers\User\KpMagangController::class, 'update'])
+        ->middleware('role:user')
+        ->name('user.kp-magang.update');
 
     // User Riwayat Aktivitas (spesifik untuk user yang login)
     Route::get('/user/riwayat-aktivitas', [\App\Http\Controllers\User\RiwayatAktivitasController::class, 'index'])

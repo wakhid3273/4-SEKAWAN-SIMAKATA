@@ -17,4 +17,32 @@ class FinalProject extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    // Helper methods for status
+    public function isPending()
+    {
+        return $this->status === 'pending';
+    }
+
+    public function isApproved()
+    {
+        return $this->status === 'approved';
+    }
+
+    public function isRejected()
+    {
+        return $this->status === 'rejected';
+    }
+
+    // Status display for frontend
+    public function getStatusDisplayAttribute()
+    {
+        $statuses = [
+            'pending' => 'Pending Review',
+            'approved' => 'Disetujui',
+            'rejected' => 'Ditolak'
+        ];
+        
+        return $statuses[$this->status] ?? $this->status;
+    }
 }

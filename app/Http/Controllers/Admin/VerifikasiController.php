@@ -63,9 +63,9 @@ class VerifikasiController extends Controller
             $pengajuan = $query->paginate(10)->withQueryString();
 
             $totalPengajuan = MahasiswaMagang::count();
-            $pendingReview = MahasiswaMagang::where('status', 'Pending Review')->count();
-            $disetujui = MahasiswaMagang::where('status', 'Disetujui')->count();
-            $ditolak = MahasiswaMagang::where('status', 'Ditolak')->count();
+            $pendingReview = MahasiswaMagang::where('status', 'pending')->count();
+            $disetujui = MahasiswaMagang::where('status', 'approved')->count();
+            $ditolak = MahasiswaMagang::where('status', 'rejected')->count();
         }
 
         return view('admin.verifikasi.index', compact(
@@ -106,7 +106,7 @@ class VerifikasiController extends Controller
     {
         $pengajuan = MahasiswaMagang::findOrFail($id);
         $pengajuan->update([
-            'status' => 'Disetujui',
+            'status' => 'approved', // Standardized to lowercase
             'alasan_penolakan' => null,
         ]);
 
@@ -144,7 +144,7 @@ class VerifikasiController extends Controller
 
         $pengajuan = MahasiswaMagang::findOrFail($id);
         $pengajuan->update([
-            'status' => 'Ditolak',
+            'status' => 'rejected', // Standardized to lowercase
             'alasan_penolakan' => $request->alasan_penolakan,
         ]);
 
