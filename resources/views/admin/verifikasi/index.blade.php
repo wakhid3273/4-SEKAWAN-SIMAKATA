@@ -4,6 +4,7 @@
 
 @section('extra_styles')
 <style>
+    /* ===== PREMIUM STAT CARDS ===== */
     .stats-card-group {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
@@ -18,7 +19,37 @@
         display: flex;
         align-items: center;
         gap: 16px;
+        /* Premium Enhancement */
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
     }
+    
+    /* Accent Line */
+    .stat-card-v::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, currentColor, transparent);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    /* Premium Hover Effect */
+    .stat-card-v:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.06);
+        border-color: #d1d5db;
+    }
+    
+    .stat-card-v:hover::before {
+        opacity: 1;
+    }
+    
     .stat-icon {
         width: 48px;
         height: 48px;
@@ -27,23 +58,49 @@
         align-items: center;
         justify-content: center;
         font-size: 24px;
+        transition: all 0.3s ease;
     }
+    
+    /* Icon Animation on Hover */
+    .stat-card-v:hover .stat-icon {
+        transform: scale(1.1);
+    }
+    
     .icon-blue { background: #e8f0fb; color: #1a5fb4; }
     .icon-amber { background: #fef3c7; color: #d97706; }
     .icon-green { background: #dcfce7; color: #15803d; }
     .icon-red { background: #fee2e2; color: #dc2626; }
+    
+    /* Set accent color per card */
+    .stat-card-v:nth-child(1)::before { color: #1a5fb4; }
+    .stat-card-v:nth-child(2)::before { color: #d97706; }
+    .stat-card-v:nth-child(3)::before { color: #15803d; }
+    .stat-card-v:nth-child(4)::before { color: #dc2626; }
     
     .stat-info-v .stat-title {
         font-size: 12px;
         color: #6b7280;
         font-weight: 600;
         margin-bottom: 4px;
+        transition: color 0.3s ease;
     }
+    
+    .stat-card-v:hover .stat-title {
+        color: #1a5fb4;
+    }
+    
     .stat-info-v .stat-value {
         font-size: 24px;
         font-weight: 800;
         color: #111827;
         line-height: 1;
+        transition: all 0.3s ease;
+    }
+    
+    /* Number Emphasis on Hover */
+    .stat-card-v:hover .stat-value {
+        transform: scale(1.02);
+        transform-origin: left;
     }
 
     .tabs {
@@ -109,11 +166,20 @@
         cursor: pointer;
     }
 
+    /* ===== PREMIUM TABLE CONTAINER ===== */
     .table-container {
         background: white;
         border: 1px solid #e5e7eb;
         border-radius: 12px;
         overflow: hidden;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    /* Subtle Hover on Table Container */
+    .table-container:hover {
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+        border-color: #d1d5db;
     }
     table {
         width: 100%;

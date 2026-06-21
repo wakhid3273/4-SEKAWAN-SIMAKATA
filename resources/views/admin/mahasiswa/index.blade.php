@@ -65,7 +65,7 @@
     .btn-outline:hover { background: #1a5fb4; color: #fff; }
     .btn-outline .material-icons-outlined { font-size: 18px; }
 
-    /* Summary cards */
+    /* ===== PREMIUM SUMMARY CARDS ===== */
     .summary-row {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -76,29 +76,93 @@
         padding: 20px 22px;
         display: flex; align-items: center; gap: 14px;
         animation: fade-up .4s ease both;
+        /* Premium Enhancement */
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
     }
+    
+    /* Accent Line */
+    .summary-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, currentColor, transparent);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    /* Premium Hover Effect */
+    .summary-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.06);
+        border-color: #d1d5db;
+    }
+    
+    .summary-card:hover::before {
+        opacity: 1;
+    }
+    
     .summary-card:nth-child(1) { animation-delay: .05s; }
     .summary-card:nth-child(2) { animation-delay: .10s; }
     .summary-card:nth-child(3) { animation-delay: .15s; }
+    
+    /* Set accent colors */
+    .summary-card:nth-child(1)::before { color: #1a5fb4; }
+    .summary-card:nth-child(2)::before { color: #15803d; }
+    .summary-card:nth-child(3)::before { color: #ea580c; }
+    
     .summary-icon {
         width: 46px; height: 46px; border-radius: 12px;
         display: flex; align-items: center; justify-content: center;
         flex-shrink: 0;
+        transition: all 0.3s ease;
     }
+    
+    /* Icon Animation */
+    .summary-card:hover .summary-icon {
+        transform: scale(1.1);
+    }
+    
     .summary-icon.blue   { background: #eff6ff; color: #1a5fb4; }
     .summary-icon.green  { background: #f0fdf4; color: #15803d; }
     .summary-icon.orange { background: #fff7ed; color: #ea580c; }
     .summary-icon .material-icons-outlined { font-size: 22px; }
-    .summary-label { font-size: 11px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: .6px; margin-bottom: 4px; }
-    .summary-value { font-size: 26px; font-weight: 700; color: #111827; }
+    .summary-label { font-size: 11px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: .6px; margin-bottom: 4px; transition: color 0.3s ease; }
+    
+    .summary-card:hover .summary-label {
+        color: #1a5fb4;
+    }
+    
+    .summary-value { font-size: 26px; font-weight: 700; color: #111827; transition: all 0.3s ease; }
+    
+    /* Number Emphasis */
+    .summary-card:hover .summary-value {
+        transform: scale(1.02);
+        transform-origin: left;
+    }
 
     @keyframes fade-up {
         from { opacity: 0; transform: translateY(14px); }
         to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* Table card */
-    .table-card { animation: fade-up .4s ease .2s both; }
+    /* ===== PREMIUM TABLE CARD ===== */
+    .table-card { 
+        animation: fade-up .4s ease .2s both; 
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    /* Subtle Hover */
+    .table-card:hover {
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+        border-color: #d1d5db;
+    }
     .table-card-header {
         display: flex; align-items: center; justify-content: space-between;
         padding: 20px 24px 16px;

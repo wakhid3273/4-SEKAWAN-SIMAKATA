@@ -116,13 +116,42 @@
     .chart-slide { display: none; }
     .chart-slide.active { display: block; }
     .chart-dot {
-        width: 8px; height: 8px;
+        width: 10px; height: 10px;
         border-radius: 50%;
         background: #d1d5db;
         cursor: pointer;
-        transition: background 0.2s;
+        transition: all 0.2s;
     }
-    .chart-dot.active { background: #1a5fb4; }
+    .chart-dot:hover { background: #9ca3af; }
+    .chart-dot.active { background: #1a5fb4; width: 24px; border-radius: 5px; }
+    
+    /* Chart Navigation Buttons */
+    .chart-nav-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        border: 1.5px solid #e5e7eb;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: #6b7280;
+        transition: all 0.2s;
+        font-family: inherit;
+    }
+    .chart-nav-btn:hover {
+        border-color: #1a5fb4;
+        background: #e8f0fb;
+        color: #1a5fb4;
+        transform: scale(1.05);
+    }
+    .chart-nav-btn:active {
+        transform: scale(0.95);
+    }
+    .chart-nav-btn .material-icons-outlined {
+        font-size: 22px;
+    }
     .bar-chart-area {
         display: flex;
         align-items: flex-end;
@@ -379,6 +408,20 @@
             width: 100%;
             justify-content: center;
         }
+        .chart-nav-btn {
+            width: 32px;
+            height: 32px;
+        }
+        .chart-nav-btn .material-icons-outlined {
+            font-size: 20px;
+        }
+        .chart-dot {
+            width: 8px;
+            height: 8px;
+        }
+        .chart-dot.active {
+            width: 20px;
+        }
     }
     @media (max-width: 600px) {
         .stats-grid { grid-template-columns: 1fr; }
@@ -515,7 +558,7 @@
 
 {{-- ===== MIDDLE ROW: Charts ===== --}}
 <div class="mid-row">
-    {{-- Sebaran Bar Charts (auto-slide) --}}
+    {{-- Sebaran Bar Charts (auto-slide with manual navigation) --}}
     <div class="card chart-card" data-animate>
         <div class="chart-header">
             <h2 id="chart-title">Sebaran Tempat Kerja Praktik</h2>
@@ -556,10 +599,23 @@
                 </div>
             </div>
         </div>
-        {{-- Dots --}}
-        <div style="display:flex;gap:6px;justify-content:center;margin-top:14px;">
-            <span class="chart-dot active" id="dot-kp" onclick="showSlide('kp')"></span>
-            <span class="chart-dot" id="dot-magang" onclick="showSlide('magang')"></span>
+        {{-- Navigation Controls --}}
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:20px;">
+            {{-- Previous Button --}}
+            <button id="chartPrevBtn" class="chart-nav-btn" onclick="navigateChart('prev')" title="Previous">
+                <span class="material-icons-outlined">chevron_left</span>
+            </button>
+            
+            {{-- Dot Indicators --}}
+            <div style="display:flex;gap:8px;">
+                <span class="chart-dot active" id="dot-kp" onclick="showSlide('kp')"></span>
+                <span class="chart-dot" id="dot-magang" onclick="showSlide('magang')"></span>
+            </div>
+            
+            {{-- Next Button --}}
+            <button id="chartNextBtn" class="chart-nav-btn" onclick="navigateChart('next')" title="Next">
+                <span class="material-icons-outlined">chevron_right</span>
+            </button>
         </div>
     </div>
 </div>
@@ -669,38 +725,89 @@
         });
     }
 
-    // ===== Chart Autoplay =====
+    // ===== Chart Navigation System =====
     const slides = ['kp', 'magang'];
-    const titles = { kp: 'Sebaran Tempat Kerja Praktik', magang: 'Sebaran Tempat Magang' };
+    const titles = { 
+        kp: 'Sebaran Tempat Kerja Praktik', 
+        magang: 'Sebaran Tempat Magang' 
+    };
     let currentSlide = 0;
     let autoplayTimer = null;
 
+    // Show specific slide by name
     function showSlide(name) {
+        // Reset autoplay timer when manual navigation occurs
+        stopAutoplay();
+        
         slides.forEach(s => {
             const el = document.getElementById('slide-' + s);
             const dot = document.getElementById('dot-' + s);
             if (el) el.classList.toggle('active', s === name);
             if (dot) dot.classList.toggle('active', s === name);
         });
+        
         const title = document.getElementById('chart-title');
         if (title) title.textContent = titles[name] || '';
+        
         currentSlide = slides.indexOf(name);
+        
+        // Restart autoplay after manual navigation
+        startAutoplay();
     }
 
+    // Navigate using prev/next buttons
+    function navigateChart(direction) {
+        let nextIndex;
+        
+        if (direction === 'next') {
+            nextIndex = (currentSlide + 1) % slides.length;
+        } else if (direction === 'prev') {
+            nextIndex = (currentSlide - 1 + slides.length) % slides.length;
+        }
+        
+        const nextSlide = slides[nextIndex];
+        showSlide(nextSlide);
+    }
+
+    // Autoplay functionality
     function startAutoplay() {
+        stopAutoplay(); // Clear any existing timer
         autoplayTimer = setInterval(() => {
             const next = slides[(currentSlide + 1) % slides.length];
-            showSlide(next);
-        }, 4000);
+            
+            // Update slides without resetting autoplay
+            slides.forEach(s => {
+                const el = document.getElementById('slide-' + s);
+                const dot = document.getElementById('dot-' + s);
+                if (el) el.classList.toggle('active', s === next);
+                if (dot) dot.classList.toggle('active', s === next);
+            });
+            
+            const title = document.getElementById('chart-title');
+            if (title) title.textContent = titles[next] || '';
+            
+            currentSlide = slides.indexOf(next);
+        }, 4000); // 4 seconds autoplay
     }
 
-    function stopAutoplay() { clearInterval(autoplayTimer); }
+    function stopAutoplay() { 
+        if (autoplayTimer) {
+            clearInterval(autoplayTimer);
+            autoplayTimer = null;
+        }
+    }
 
+    // Pause autoplay on hover, resume on leave
     const chartCard = document.querySelector('.chart-card');
     if (chartCard) {
         chartCard.addEventListener('mouseenter', stopAutoplay);
         chartCard.addEventListener('mouseleave', startAutoplay);
     }
+    
+    // Start autoplay on page load
     startAutoplay();
+    
+    // Initialize first slide
+    showSlide('kp');
 </script>
 @endsection

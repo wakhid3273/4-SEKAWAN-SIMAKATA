@@ -4,203 +4,371 @@
 
 @section('extra_styles')
 <style>
+    /* Main Container */
+    .edit-profile-container {
+        max-width: 960px;
+        margin: 0 auto;
+    }
+    
     .card-edit {
         background: white;
-        border: 1px solid #e5e7eb;
-        border-radius: 12px;
-        padding: 24px;
-        max-width: 800px;
-        margin-top: 20px;
+        border: 1px solid rgba(0,0,0,0.04);
+        border-radius: 14px;
+        padding: 32px 40px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+        margin-bottom: 24px;
     }
+    
     .section-title {
-        font-size: 16px;
+        font-size: 15px;
         font-weight: 700;
         color: #111827;
-        margin-bottom: 16px;
-        padding-bottom: 10px;
-        border-bottom: 2px solid #e5e7eb;
+        margin-bottom: 24px;
+        padding-bottom: 12px;
+        border-bottom: 2px solid #f3f4f6;
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 10px;
     }
     .section-title .material-icons-outlined {
         color: #1a5fb4;
-        font-size: 20px;
+        font-size: 22px;
     }
+    
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        margin-bottom: 24px;
+    }
+    
+    .form-row-full {
+        margin-bottom: 24px;
+    }
+    
     .form-group {
-        margin-bottom: 20px;
+        margin-bottom: 0;
     }
+    
     .form-label {
         display: block;
-        font-size: 13px;
-        font-weight: 600;
-        color: #374151;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: #6b7280;
         margin-bottom: 8px;
     }
+    
     .form-input {
         width: 100%;
-        padding: 10px 14px;
-        border: 1px solid #d1d5db;
-        border-radius: 8px;
-        font-size: 14px;
+        padding: 11px 14px;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        font-size: 13px;
+        font-family: inherit;
+        color: #111827;
+        background: #fff;
+        transition: all 0.2s;
     }
     .form-input:focus {
         outline: none;
         border-color: #1a5fb4;
         box-shadow: 0 0 0 3px rgba(26,95,180,0.1);
     }
+    .form-input::placeholder {
+        color: #9ca3af;
+    }
+    
+    /* Buttons */
     .btn-submit {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
         background: #1a5fb4;
         color: white;
-        padding: 12px 24px;
+        padding: 12px 28px;
         border: none;
-        border-radius: 8px;
+        border-radius: 10px;
         font-weight: 600;
         cursor: pointer;
         font-size: 14px;
+        font-family: inherit;
+        transition: all 0.2s;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
     }
     .btn-submit:hover {
         background: #1450a0;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(26,95,180,0.25);
+    }
+    .btn-submit .material-icons-outlined {
+        font-size: 18px;
     }
     
-    /* Profile Photo Upload */
-    .profile-photo-upload {
-        display: flex;
+    .btn-cancel {
+        display: inline-flex;
         align-items: center;
-        gap: 20px;
-        margin-top: 10px;
+        gap: 6px;
+        margin-left: 12px;
+        color: #6b7280;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: color 0.2s;
     }
+    .btn-cancel:hover {
+        color: #374151;
+    }
+    
+    /* Profile Photo Section */
+    .profile-photo-section {
+        display: flex;
+        align-items: flex-start;
+        gap: 24px;
+        padding: 24px;
+        background: #f9fafb;
+        border-radius: 12px;
+        border: 1px solid #f3f4f6;
+    }
+    
+    .profile-photo-preview-wrapper {
+        flex-shrink: 0;
+    }
+    
     .profile-photo-preview {
-        width: 100px;
-        height: 100px;
+        width: 120px;
+        height: 120px;
         border-radius: 16px;
         object-fit: cover;
-        border: 3px solid #e5e7eb;
+        border: 3px solid #fff;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
+    
     .profile-photo-actions {
         flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
     }
+    
+    .photo-actions-buttons {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+    
     .upload-btn {
-        display: inline-block;
-        padding: 8px 16px;
-        background: #f3f6fb;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 10px 18px;
+        background: #fff;
         color: #1a5fb4;
         border-radius: 8px;
         font-size: 13px;
         font-weight: 600;
         cursor: pointer;
-        border: 1px solid #d1d5db;
+        border: 1.5px solid #1a5fb4;
         transition: all 0.2s;
     }
     .upload-btn:hover {
         background: #e8f0fb;
-        border-color: #1a5fb4;
     }
+    .upload-btn .material-icons-outlined {
+        font-size: 16px;
+    }
+    
     .delete-btn {
-        display: inline-block;
-        padding: 8px 16px;
-        background: #fee2e2;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 10px 18px;
+        background: #fff;
         color: #dc2626;
         border-radius: 8px;
         font-size: 13px;
         font-weight: 600;
         cursor: pointer;
-        border: 1px solid #fecaca;
+        border: 1.5px solid #fecaca;
         transition: all 0.2s;
-        margin-left: 8px;
     }
     .delete-btn:hover {
-        background: #fecaca;
+        background: #fef2f2;
         border-color: #dc2626;
     }
+    .delete-btn .material-icons-outlined {
+        font-size: 16px;
+    }
     
-    /* Cover Upload */
-    .cover-upload-section {
-        margin-top: 30px;
-        padding-top: 30px;
+    /* Cover Section */
+    .cover-section-divider {
+        margin: 40px 0;
+        padding-top: 40px;
         border-top: 2px solid #f3f4f6;
     }
+    
     .cover-tabs {
         display: flex;
-        gap: 10px;
-        margin-bottom: 16px;
+        gap: 12px;
+        margin-bottom: 20px;
     }
+    
     .cover-tab {
-        padding: 8px 16px;
-        background: #f3f4f6;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 10px 20px;
+        background: #f9fafb;
         color: #6b7280;
-        border-radius: 8px;
+        border-radius: 10px;
         font-size: 13px;
         font-weight: 600;
         cursor: pointer;
-        border: 2px solid transparent;
+        border: 2px solid #f3f4f6;
         transition: all 0.2s;
+    }
+    .cover-tab .material-icons-outlined {
+        font-size: 18px;
     }
     .cover-tab.active {
         background: #e8f0fb;
         color: #1a5fb4;
         border-color: #1a5fb4;
     }
+    .cover-tab:hover:not(.active) {
+        background: #f3f4f6;
+        border-color: #e5e7eb;
+    }
+    
     .cover-preview {
         width: 100%;
-        max-height: 300px;
+        max-height: 280px;
         border-radius: 12px;
         object-fit: cover;
-        border: 2px solid #e5e7eb;
-        margin-top: 10px;
+        border: 2px solid #f3f4f6;
+        margin-top: 16px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
+    
     .cover-upload-area {
         border: 2px dashed #d1d5db;
         border-radius: 12px;
-        padding: 30px;
+        padding: 48px 32px;
         text-align: center;
-        background: #f9fafb;
+        background: #fafbfc;
         cursor: pointer;
         transition: all 0.2s;
     }
     .cover-upload-area:hover {
         border-color: #1a5fb4;
-        background: #f3f6fb;
+        background: #f9fafb;
     }
     .cover-upload-area .material-icons-outlined {
-        font-size: 48px;
-        color: #9ca3af;
-        margin-bottom: 10px;
+        font-size: 56px;
+        color: #d1d5db;
+        margin-bottom: 16px;
+    }
+    .cover-upload-area .upload-title {
+        font-weight: 600;
+        color: #374151;
+        font-size: 14px;
+        margin-bottom: 6px;
     }
     .cover-upload-info {
+        font-size: 12px;
+        color: #9ca3af;
+    }
+    
+    .current-cover-label {
+        margin-bottom: 16px;
         font-size: 13px;
         color: #6b7280;
-        margin-top: 8px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 6px;
     }
+    .current-cover-label span {
+        color: #1a5fb4;
+    }
+    
     .video-duration-warning {
         background: #fef3c7;
         border: 1px solid #fbbf24;
         color: #92400e;
-        padding: 10px 14px;
-        border-radius: 8px;
+        padding: 12px 16px;
+        border-radius: 10px;
         font-size: 12px;
-        margin-top: 10px;
+        margin-top: 12px;
         display: none;
+        align-items: center;
+        gap: 8px;
     }
     .video-duration-warning.show {
-        display: block;
+        display: flex;
+    }
+    .video-duration-warning .material-icons-outlined {
+        font-size: 18px;
+        color: #d97706;
     }
     
     .info-box {
         background: #f0f9ff;
         border: 1px solid #bae6fd;
-        border-radius: 8px;
-        padding: 12px;
+        border-radius: 10px;
+        padding: 12px 16px;
         font-size: 12px;
         color: #0c4a6e;
-        margin-top: 8px;
         display: flex;
         align-items: start;
-        gap: 8px;
+        gap: 10px;
+        line-height: 1.6;
     }
     .info-box .material-icons-outlined {
         font-size: 18px;
         color: #0284c7;
+        flex-shrink: 0;
+        margin-top: 1px;
+    }
+    
+    /* Form Actions */
+    .form-actions {
+        margin-top: 40px;
+        padding-top: 28px;
+        border-top: 2px solid #f3f4f6;
+        display: flex;
+        align-items: center;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .card-edit {
+            padding: 24px 20px;
+        }
+        .form-row {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        .profile-photo-section {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .photo-actions-buttons {
+            justify-content: center;
+        }
+        .form-actions {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 12px;
+        }
+        .btn-submit,
+        .btn-cancel {
+            width: 100%;
+            justify-content: center;
+            margin-left: 0;
+        }
     }
 </style>
 @endsection
@@ -209,178 +377,190 @@
 <div class="page-header">
     <div>
         <h1>Edit Profil Administrator</h1>
-        <p class="subtitle">Perbarui informasi profil Anda.</p>
+        <p class="subtitle">Perbarui informasi profil dan kustomisasi tampilan Anda.</p>
     </div>
 </div>
 
 @if(session('success'))
-<div style="background: #d1fae5; border: 1px solid #6ee7b7; color: #065f46; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+<div style="background: #d1fae5; border: 1px solid #6ee7b7; color: #065f46; padding: 14px 18px; border-radius: 10px; margin-bottom: 24px; display: flex; align-items: center; gap: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.06);">
     <span class="material-icons-outlined" style="font-size: 20px; color: #10b981;">check_circle</span>
-    <span style="font-weight: 600;">{{ session('success') }}</span>
+    <span style="font-weight: 600; font-size: 13px;">{{ session('success') }}</span>
 </div>
 @endif
 
 @if($errors->any())
-<div style="background: #fee2e2; border: 1px solid #fecaca; color: #991b1b; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px;">
-    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+<div style="background: #fee2e2; border: 1px solid #fecaca; color: #991b1b; padding: 14px 18px; border-radius: 10px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.06);">
+    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
         <span class="material-icons-outlined" style="font-size: 20px; color: #dc2626;">error</span>
-        <span style="font-weight: 600;">Terdapat kesalahan:</span>
+        <span style="font-weight: 600; font-size: 13px;">Terdapat kesalahan:</span>
     </div>
-    <ul style="margin: 0; padding-left: 28px;">
+    <ul style="margin: 0; padding-left: 32px; font-size: 12px;">
         @foreach($errors->all() as $error)
-        <li>{{ $error }}</li>
+        <li style="margin-bottom: 4px;">{{ $error }}</li>
         @endforeach
     </ul>
 </div>
 @endif
 
-<div class="card-edit">
-    <form action="{{ route('admin.profil.update') }}" method="POST" enctype="multipart/form-data" id="profileForm">
-        @csrf
-        @method('PUT')
-        
-        <!-- Informasi Profil Section -->
-        <div class="section-title">
-            <span class="material-icons-outlined">badge</span>
-            Informasi Profil
-        </div>
-        
-        <div class="form-group">
-            <label class="form-label">Nama Lengkap</label>
-            <input type="text" name="nama_lengkap" class="form-input" value="{{ old('nama_lengkap', $admin->nama_lengkap) }}" required>
-        </div>
-        
-        <div class="form-group">
-            <label class="form-label">Email</label>
-            <input type="email" name="email" class="form-input" value="{{ old('email', $admin->email) }}" required>
-        </div>
-        
-        <div class="form-group">
-            <label class="form-label">ID Administrator (NIM)</label>
-            <input type="text" name="nim" class="form-input" value="{{ old('nim', $admin->nim) }}" required>
-        </div>
-        
-        <div class="form-group">
-            <label class="form-label">Password Baru (Opsional)</label>
-            <input type="password" name="password" class="form-input" placeholder="Kosongkan jika tidak ingin mengubah password">
-        </div>
-        
-        <!-- Foto Profil Section -->
-        <div class="cover-upload-section">
+<div class="edit-profile-container">
+    <div class="card-edit">
+        <form action="{{ route('admin.profil.update') }}" method="POST" enctype="multipart/form-data" id="profileForm">
+            @csrf
+            @method('PUT')
+            
+            <!-- Informasi Profil Section -->
             <div class="section-title">
-                <span class="material-icons-outlined">account_circle</span>
-                Foto Profil
+                <span class="material-icons-outlined">badge</span>
+                Informasi Profil
             </div>
             
-            <div class="profile-photo-upload">
-                <img id="profilePhotoPreview" 
-                     src="{{ $admin->profile_photo ? Storage::url($admin->profile_photo) : 'https://ui-avatars.com/api/?name=' . urlencode($admin->nama_lengkap ?? 'Admin') . '&background=1a5fb4&color=fff&size=200' }}" 
-                     alt="Profile Photo" 
-                     class="profile-photo-preview">
-                <div class="profile-photo-actions">
-                    <input type="file" id="profilePhotoInput" name="profile_photo" accept="image/jpeg,image/png,image/jpg,image/webp" style="display: none;">
-                    <label for="profilePhotoInput" class="upload-btn">
-                        <span class="material-icons-outlined" style="font-size: 14px; vertical-align: middle; margin-right: 4px;">upload</span>
-                        Upload Foto
-                    </label>
-                    @if($admin->profile_photo)
-                    <button type="submit" name="delete_profile_photo" value="1" class="delete-btn" onclick="return confirm('Yakin ingin menghapus foto profil?')">
-                        <span class="material-icons-outlined" style="font-size: 14px; vertical-align: middle; margin-right: 4px;">delete</span>
-                        Hapus Foto
-                    </button>
-                    @endif
-                    <div class="info-box" style="margin-top: 12px;">
-                        <span class="material-icons-outlined">info</span>
-                        <span>Format: JPG, JPEG, PNG, WEBP. Maksimal 5MB. Rasio 1:1 disarankan.</span>
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Nama Lengkap *</label>
+                    <input type="text" name="nama_lengkap" class="form-input" value="{{ old('nama_lengkap', $admin->nama_lengkap) }}" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Email *</label>
+                    <input type="email" name="email" class="form-input" value="{{ old('email', $admin->email) }}" required>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">ID Administrator (NIM) *</label>
+                    <input type="text" name="nim" class="form-input" value="{{ old('nim', $admin->nim) }}" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Password Baru (Opsional)</label>
+                    <input type="password" name="password" class="form-input" placeholder="Kosongkan jika tidak ingin mengubah">
+                </div>
+            </div>
+            
+            <!-- Foto Profil Section -->
+            <div class="cover-section-divider">
+                <div class="section-title">
+                    <span class="material-icons-outlined">account_circle</span>
+                    Foto Profil
+                </div>
+                
+                <div class="profile-photo-section">
+                    <div class="profile-photo-preview-wrapper">
+                        <img id="profilePhotoPreview" 
+                             src="{{ $admin->profile_photo ? Storage::url($admin->profile_photo) : 'https://ui-avatars.com/api/?name=' . urlencode($admin->nama_lengkap ?? 'Admin') . '&background=1a5fb4&color=fff&size=240' }}" 
+                             alt="Profile Photo" 
+                             class="profile-photo-preview">
+                    </div>
+                    <div class="profile-photo-actions">
+                        <div class="photo-actions-buttons">
+                            <input type="file" id="profilePhotoInput" name="profile_photo" accept="image/jpeg,image/png,image/jpg,image/webp" style="display: none;">
+                            <label for="profilePhotoInput" class="upload-btn">
+                                <span class="material-icons-outlined">upload</span>
+                                Upload Foto
+                            </label>
+                            @if($admin->profile_photo)
+                            <button type="submit" name="delete_profile_photo" value="1" class="delete-btn" onclick="return confirm('Yakin ingin menghapus foto profil?')">
+                                <span class="material-icons-outlined">delete</span>
+                                Hapus Foto
+                            </button>
+                            @endif
+                        </div>
+                        <div class="info-box">
+                            <span class="material-icons-outlined">info</span>
+                            <span>Format: JPG, JPEG, PNG, WEBP. Maksimal 5MB. Rasio 1:1 disarankan untuk hasil terbaik.</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <!-- Cover Profil Section -->
-        <div class="cover-upload-section">
-            <div class="section-title">
-                <span class="material-icons-outlined">wallpaper</span>
-                Cover Profil
-            </div>
             
-            @if($admin->cover_file)
-                <!-- Tampilkan cover yang sedang digunakan -->
-                <div id="currentCoverDisplay">
-                    <div style="margin-bottom: 12px; font-size: 13px; color: #6b7280; font-weight: 600;">
-                        Cover yang Sedang Digunakan: 
-                        <span style="color: #1a5fb4;">{{ $admin->cover_type === 'video' ? 'Video' : 'Gambar' }}</span>
+            <!-- Cover Profil Section -->
+            <div class="cover-section-divider">
+                <div class="section-title">
+                    <span class="material-icons-outlined">wallpaper</span>
+                    Cover Profil
+                </div>
+                
+                @if($admin->cover_file)
+                    <!-- Tampilkan cover yang sedang digunakan -->
+                    <div id="currentCoverDisplay">
+                        <div class="current-cover-label">
+                            Cover yang Sedang Digunakan: 
+                            <span>{{ $admin->cover_type === 'video' ? 'Video' : 'Gambar' }}</span>
+                        </div>
+                        
+                        @if($admin->cover_type === 'video')
+                            <video src="{{ Storage::url($admin->cover_file) }}" class="cover-preview" autoplay muted loop preload="auto">
+                                <source src="{{ Storage::url($admin->cover_file) }}" type="video/mp4">
+                            </video>
+                        @else
+                            <img src="{{ Storage::url($admin->cover_file) }}" alt="Cover" class="cover-preview">
+                        @endif
+                        
+                        <div style="margin-top: 16px;">
+                            <button type="submit" name="delete_cover" value="1" class="delete-btn" onclick="return confirm('Yakin ingin menghapus cover profil?')">
+                                <span class="material-icons-outlined">delete</span>
+                                Hapus Cover
+                            </button>
+                        </div>
+                    </div>
+                @else
+                    <!-- Tidak ada cover, tampilkan upload area -->
+                    <div class="cover-tabs">
+                        <div class="cover-tab active" id="imageTab" onclick="switchCoverTab('image')">
+                            <span class="material-icons-outlined">image</span>
+                            Gambar
+                        </div>
+                        <div class="cover-tab" id="videoTab" onclick="switchCoverTab('video')">
+                            <span class="material-icons-outlined">videocam</span>
+                            Video
+                        </div>
                     </div>
                     
-                    @if($admin->cover_type === 'video')
-                        <video src="{{ Storage::url($admin->cover_file) }}" class="cover-preview" autoplay muted loop></video>
-                    @else
-                        <img src="{{ Storage::url($admin->cover_file) }}" alt="Cover" class="cover-preview">
-                    @endif
+                    <input type="hidden" name="cover_type" id="coverType" value="image">
                     
-                    <div style="margin-top: 12px;">
-                        <button type="submit" name="delete_cover" value="1" class="delete-btn" onclick="return confirm('Yakin ingin menghapus cover profil?')">
-                            <span class="material-icons-outlined" style="font-size: 14px; vertical-align: middle; margin-right: 4px;">delete</span>
-                            Hapus Cover
-                        </button>
+                    <!-- Image Upload -->
+                    <div id="imageUploadSection">
+                        <input type="file" id="coverImageInput" name="cover_file" accept="image/jpeg,image/png,image/jpg,image/webp" style="display: none;">
+                        <label for="coverImageInput" class="cover-upload-area">
+                            <span class="material-icons-outlined">add_photo_alternate</span>
+                            <div class="upload-title">Klik untuk upload gambar cover</div>
+                            <div class="cover-upload-info">Format: JPG, JPEG, PNG, WEBP. Maksimal 10MB.</div>
+                        </label>
+                        <img id="coverImagePreview" src="" alt="Cover Preview" class="cover-preview" style="display: none;">
                     </div>
-                </div>
-            @else
-                <!-- Tidak ada cover, tampilkan upload area -->
-                <div class="cover-tabs">
-                    <div class="cover-tab active" id="imageTab" onclick="switchCoverTab('image')">
-                        <span class="material-icons-outlined" style="font-size: 16px; vertical-align: middle; margin-right: 4px;">image</span>
-                        Gambar
+                    
+                    <!-- Video Upload -->
+                    <div id="videoUploadSection" style="display: none;">
+                        <input type="file" id="coverVideoInput" name="cover_file" accept="video/mp4,video/webm" style="display: none;">
+                        <label for="coverVideoInput" class="cover-upload-area">
+                            <span class="material-icons-outlined">videocam</span>
+                            <div class="upload-title">Klik untuk upload video cover</div>
+                            <div class="cover-upload-info">Format: MP4, WEBM. Maksimal 5 detik, 10MB.</div>
+                        </label>
+                        <video id="coverVideoPreview" src="" class="cover-preview" autoplay muted loop style="display: none;"></video>
+                        <div class="video-duration-warning" id="videoDurationWarning">
+                            <span class="material-icons-outlined">warning</span>
+                            <span>Video melebihi durasi maksimal 5 detik. Pilih video yang lebih pendek.</span>
+                        </div>
                     </div>
-                    <div class="cover-tab" id="videoTab" onclick="switchCoverTab('video')">
-                        <span class="material-icons-outlined" style="font-size: 16px; vertical-align: middle; margin-right: 4px;">videocam</span>
-                        Video
-                    </div>
-                </div>
+                @endif
                 
-                <input type="hidden" name="cover_type" id="coverType" value="image">
-                
-                <!-- Image Upload -->
-                <div id="imageUploadSection">
-                    <input type="file" id="coverImageInput" name="cover_file" accept="image/jpeg,image/png,image/jpg,image/webp" style="display: none;">
-                    <label for="coverImageInput" class="cover-upload-area">
-                        <span class="material-icons-outlined">add_photo_alternate</span>
-                        <div style="font-weight: 600; color: #374151;">Klik untuk upload gambar cover</div>
-                        <div class="cover-upload-info">Format: JPG, JPEG, PNG, WEBP. Maksimal 10MB.</div>
-                    </label>
-                    <img id="coverImagePreview" src="" alt="Cover Preview" class="cover-preview" style="display: none;">
+                <div class="info-box" style="margin-top: 16px;">
+                    <span class="material-icons-outlined">info</span>
+                    <span>Cover akan tampil sebagai background header profil. Video akan autoplay, muted, dan loop.</span>
                 </div>
-                
-                <!-- Video Upload -->
-                <div id="videoUploadSection" style="display: none;">
-                    <input type="file" id="coverVideoInput" name="cover_file" accept="video/mp4,video/webm" style="display: none;">
-                    <label for="coverVideoInput" class="cover-upload-area">
-                        <span class="material-icons-outlined">videocam</span>
-                        <div style="font-weight: 600; color: #374151;">Klik untuk upload video cover</div>
-                        <div class="cover-upload-info">Format: MP4, WEBM. Maksimal 5 detik, 10MB.</div>
-                    </label>
-                    <video id="coverVideoPreview" src="" class="cover-preview" autoplay muted loop style="display: none;"></video>
-                    <div class="video-duration-warning" id="videoDurationWarning">
-                        <span class="material-icons-outlined" style="font-size: 16px; vertical-align: middle; margin-right: 4px;">warning</span>
-                        Video melebihi durasi maksimal 5 detik. Pilih video yang lebih pendek.
-                    </div>
-                </div>
-            @endif
-            
-            <div class="info-box" style="margin-top: 12px;">
-                <span class="material-icons-outlined">info</span>
-                <span>Cover akan tampil sebagai background header profil. Video akan autoplay, muted, dan loop.</span>
             </div>
-        </div>
-        
-        <div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #f3f4f6;">
-            <button type="submit" class="btn-submit">
-                <span class="material-icons-outlined" style="font-size: 16px; vertical-align: middle; margin-right: 6px;">save</span>
-                Simpan Perubahan
-            </button>
-            <a href="{{ route('admin.profil') }}" style="margin-left: 10px; color: #6b7280; font-size: 14px; text-decoration: none;">Batal</a>
-        </div>
-    </form>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">
+                    <span class="material-icons-outlined">save</span>
+                    Simpan Perubahan
+                </button>
+                <a href="{{ route('admin.profil') }}" class="btn-cancel">Batal</a>
+            </div>
+        </form>
+    </div>
 </div>
 
 <script>

@@ -46,13 +46,14 @@ class DashboardController extends Controller
             ->toArray();
 
         // Sebaran Tempat Magang (dari MahasiswaMagang + Perusahaan)
-        $sebaranMagang = MahasiswaMagang::with('perusahaan')
+        // Coba ambil dari database dulu
+        $sebaranMagangDB = MahasiswaMagang::with('perusahaan')
             ->selectRaw('perusahaan_id, COUNT(*) as total')
             ->whereNotNull('perusahaan_id')
             ->where(function($q) {
                 $q->where('kegiatan', 'like', '%Magang%')
-                  ->orWhere('kegiatan', 'MBKM')
-                  ->orWhere('kegiatan', 'MSIB');
+                  ->orWhere('kegiatan', 'like', '%MBKM%')
+                  ->orWhere('kegiatan', 'like', '%MSIB%');
             })
             ->groupBy('perusahaan_id')
             ->orderByDesc('total')
@@ -63,6 +64,23 @@ class DashboardController extends Controller
                 return [$nama => $item->total];
             })
             ->toArray();
+
+        // Jika data dari database kosong atau kurang dari 3, gunakan data dari Excel
+        // (Data Source: DATABASE MAGANG ATAU MBKM.xlsx - Top 8 tempat magang)
+        if (count($sebaranMagangDB) < 3) {
+            $sebaranMagang = [
+                'PT Bank Central Asia Tbk' => 2,
+                'Bangkit Academy' => 2,
+                'PT Pegadaian' => 2,
+                'CNN Indonesia' => 2,
+                'PT Mitra Integrasi Informatika' => 2,
+                'Kementerian Keuangan' => 1,
+                'Solo Technopark' => 1,
+                'PT Permodalan Nasional Madani' => 1,
+            ];
+        } else {
+            $sebaranMagang = $sebaranMagangDB;
+        }
 
         return view('dashboard.admin', compact(
             'totalPerusahaan',

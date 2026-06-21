@@ -4,6 +4,7 @@
 
 @section('extra_styles')
     <style>
+        /* ===== PREMIUM CARD SYSTEM ===== */
         .profile-header-card {
             background: linear-gradient(135deg, #0a3d6b 0%, #1a5fb4 100%);
             border-radius: 16px;
@@ -16,6 +17,14 @@
             position: relative;
             overflow: hidden;
             min-height: 200px;
+            box-shadow: 0 4px 12px rgba(10, 61, 107, 0.15), 0 1px 3px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Premium Hover Effect - Profile Card */
+        .profile-header-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(10, 61, 107, 0.25), 0 4px 12px rgba(0, 0, 0, 0.12);
         }
 
         .profile-header-card::before {
@@ -51,6 +60,12 @@
             height: 100%;
             object-fit: cover;
             z-index: 0;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Subtle depth effect on cover */
+        .profile-header-card:hover .profile-cover-media {
+            transform: scale(1.02);
         }
         
         .profile-cover-media video {
@@ -61,6 +76,16 @@
         .profile-avatar-wrapper {
             position: relative;
             z-index: 3;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Premium Avatar Hover */
+        .profile-avatar-wrapper:hover {
+            transform: scale(1.05);
+        }
+        
+        .profile-avatar-wrapper:hover .profile-avatar {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 0 4px rgba(244, 168, 7, 0.3);
         }
 
         .profile-avatar {
@@ -68,7 +93,27 @@
             height: 100px;
             border-radius: 16px;
             object-fit: cover;
-            border: 4px solid rgba(255, 255, 255, 0.2);
+            /* Premium Ring Effect */
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 
+                0 4px 12px rgba(0, 0, 0, 0.2),
+                0 0 0 1px rgba(244, 168, 7, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            /* Subtle shine effect */
+            position: relative;
+        }
+        
+        .profile-avatar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, transparent 50%);
+            pointer-events: none;
         }
 
         .profile-avatar-icon {
@@ -85,16 +130,28 @@
             border-radius: 8px;
             font-size: 14px;
             z-index: 4;
+            box-shadow: 0 2px 8px rgba(244, 168, 7, 0.4);
+            transition: transform 0.2s ease;
+        }
+        
+        .profile-avatar-wrapper:hover .profile-avatar-icon {
+            transform: scale(1.1) rotate(5deg);
         }
 
         .profile-info {
             z-index: 3;
+            transition: transform 0.3s ease;
+        }
+        
+        .profile-header-card:hover .profile-info {
+            transform: translateY(-2px);
         }
 
         .profile-info h2 {
             font-size: 24px;
             font-weight: 700;
             margin-bottom: 4px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .profile-info p {
@@ -119,11 +176,18 @@
             gap: 8px;
             cursor: pointer;
             z-index: 1;
-            transition: background 0.2s;
+            box-shadow: 0 2px 8px rgba(244, 168, 7, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .btn-edit-profile:hover {
             background: #e59a05;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(244, 168, 7, 0.4);
+        }
+        
+        .btn-edit-profile:active {
+            transform: translateY(0);
         }
 
         .stats-grid-profile {
@@ -133,11 +197,40 @@
             margin-bottom: 24px;
         }
 
+        /* ===== PREMIUM STAT CARDS ===== */
         .stat-box {
             background: white;
             border: 1px solid #e5e7eb;
             border-radius: 12px;
             padding: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Subtle accent line on top */
+        .stat-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #1a5fb4, transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        /* Premium Hover - Stat Cards */
+        .stat-box:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.06);
+            border-color: #d1d5db;
+        }
+        
+        .stat-box:hover::before {
+            opacity: 1;
         }
 
         .stat-box-icon {
@@ -150,6 +243,13 @@
             justify-content: center;
             border-radius: 8px;
             margin-bottom: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        /* Icon Animation on Hover */
+        .stat-box:hover .stat-box-icon {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(26, 95, 180, 0.2);
         }
 
         .stat-box-title {
@@ -159,6 +259,11 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin-bottom: 4px;
+            transition: color 0.3s ease;
+        }
+        
+        .stat-box:hover .stat-box-title {
+            color: #1a5fb4;
         }
 
         .stat-box-value {
@@ -166,6 +271,14 @@
             font-weight: 800;
             color: #111827;
             margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        /* Number Emphasis on Hover */
+        .stat-box:hover .stat-box-value {
+            color: #1a5fb4;
+            transform: scale(1.02);
+            transform-origin: left;
         }
 
         .stat-box-trend {
@@ -183,12 +296,22 @@
             gap: 24px;
         }
 
+        /* ===== PREMIUM INFO CARDS ===== */
         .info-card {
             background: white;
             border: 1px solid #e5e7eb;
             border-radius: 12px;
             overflow: hidden;
             margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Subtle Hover - Info Cards */
+        .info-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+            border-color: #d1d5db;
         }
 
         .info-card-header {
@@ -200,11 +323,21 @@
             font-weight: 700;
             color: #111827;
             background: #f8fafc;
+            transition: background 0.3s ease;
+        }
+        
+        .info-card:hover .info-card-header {
+            background: #f3f6fb;
         }
 
         .info-card-header .material-icons-outlined {
             color: #1a5fb4;
             font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        .info-card:hover .info-card-header .material-icons-outlined {
+            transform: scale(1.1);
         }
 
         .info-card-body {
@@ -213,6 +346,13 @@
 
         .info-row {
             margin-bottom: 16px;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+        
+        .info-row:hover {
+            background: #f9fafb;
         }
 
         .info-row:last-child {
@@ -224,6 +364,11 @@
             color: #6b7280;
             font-weight: 600;
             margin-bottom: 4px;
+            transition: color 0.2s ease;
+        }
+        
+        .info-row:hover .info-label {
+            color: #1a5fb4;
         }
 
         .info-value {
@@ -241,6 +386,14 @@
             font-size: 12px;
             font-weight: 600;
             margin-top: 4px;
+            box-shadow: 0 1px 3px rgba(26, 95, 180, 0.1);
+            transition: all 0.2s ease;
+        }
+        
+        .info-badge:hover {
+            background: #dbeafe;
+            transform: scale(1.02);
+            box-shadow: 0 2px 6px rgba(26, 95, 180, 0.15);
         }
 
         .activity-list {
@@ -261,6 +414,7 @@
             z-index: 0;
         }
 
+        /* ===== PREMIUM ACTIVITY ITEMS ===== */
         .activity-item {
             display: flex;
             gap: 16px;
@@ -270,6 +424,15 @@
             padding: 16px;
             border-radius: 12px;
             border: 1px solid #e5e7eb;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Interactive Activity Items */
+        .activity-item:hover {
+            transform: translateX(4px);
+            background: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            border-color: #d1d5db;
         }
 
         .activity-icon {
@@ -281,6 +444,13 @@
             justify-content: center;
             color: white;
             flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+        
+        .activity-item:hover .activity-icon {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         .activity-icon.blue {
@@ -297,6 +467,11 @@
 
         .activity-content {
             flex: 1;
+            transition: transform 0.2s ease;
+        }
+        
+        .activity-item:hover .activity-content {
+            transform: translateX(2px);
         }
 
         .activity-title {
@@ -304,6 +479,11 @@
             font-weight: 700;
             color: #111827;
             margin-bottom: 2px;
+            transition: color 0.2s ease;
+        }
+        
+        .activity-item:hover .activity-title {
+            color: #1a5fb4;
         }
 
         .activity-desc {
@@ -331,6 +511,13 @@
             padding: 2px 8px;
             border-radius: 4px;
             letter-spacing: 0.5px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+        }
+        
+        .activity-item:hover .activity-status {
+            transform: scale(1.05);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
         }
 
         .status-success {
