@@ -263,10 +263,10 @@ This project is licensed under the MIT License.
 ## 👥 Team
 
 **4 SEKAWAN**
-- Developer 1
-- Developer 2
-- Developer 3
-- Developer 4
+- Developer 1 : Wakhid Nugroho
+- Developer 2 : Astria Dina Fitri
+- Developer 3 : Novia Rizky
+- Developer 4 : Naila Alifatul
 
 ## 📞 Contact
 
