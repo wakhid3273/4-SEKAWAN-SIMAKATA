@@ -132,12 +132,13 @@ php artisan serve
 ### Default Login
 
 **Admin:**
-- Email: `admin@example.com`
-- Password: `password123`
+- Email: wakhid@mhs.unsoed.ac.id
+- Password: wakhid3
 
 **User:**
-- NIM: `1234567890`
-- Password: `password123`
+Lakukan register terlebih dahulu kemudian login
+- Email: wann@mhs.unsoed.ac.id
+- Password: 123456
 
 ## 📚 Dokumentasi
 
